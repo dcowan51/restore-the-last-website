@@ -134,20 +134,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- Partner Videos -->
   <section class="bg-light section-padding">
-    <div class="container-narrow">
-      <p class="label text-primary mb-4">From Our Partners</p>
-      <h2 class="mb-4">Hear it directly from the field.</h2>
-      <p class="text-body max-w-2xl mb-12">
-        These are the people doing the work. See what nervous system restoration looks like when it reaches the people it was meant for.
-      </p>
+    <div class="max-w-5xl mx-auto px-6 md:px-12">
+      <div class="text-center mb-12">
+        <p class="label text-primary mb-4">From Our Partners</p>
+        <h2 class="mb-4">Hear it directly from the field.</h2>
+        <p class="text-body max-w-xl mx-auto">
+          These are the people doing the work. See what nervous system restoration looks like when it reaches the people it was meant for.
+        </p>
+      </div>
 
-      <div class="grid md:grid-cols-[1fr_auto] gap-8 items-start">
-        <!-- Regular video — landscape -->
-        <div>
-          <p class="label text-gold mb-3">ONUVA — El Salvador</p>
+      <!-- Videos: landscape + portrait balanced -->
+      <div class="flex flex-col md:flex-row gap-8 justify-center items-start">
+
+        <!-- Landscape video -->
+        <div class="w-full md:w-[500px] flex-shrink-0">
+          <p class="label text-gold mb-3">Thrive — Arizona</p>
           <div class="aspect-video rounded-lg overflow-hidden shadow-md">
             <iframe
               src="https://www.youtube.com/embed/utLjfuTNIU8"
+              title="Thrive Arizona — Restore the Last"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Portrait reel -->
+        <div class="w-[165px] mx-auto md:mx-0 flex-shrink-0">
+          <p class="label text-gold mb-3">ONUVA — El Salvador</p>
+          <div class="rounded-lg overflow-hidden shadow-md" style="aspect-ratio: 9/16;">
+            <iframe
+              src="https://www.youtube.com/embed/uTvgBmxbzeQ"
               title="ONUVA El Salvador — Restore the Last"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -157,20 +176,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
         </div>
 
-        <!-- YouTube Short — portrait -->
-        <div>
-          <p class="label text-gold mb-3">Thrive — Arizona</p>
-          <div class="w-[220px] mx-auto md:mx-0" style="aspect-ratio: 9/16;">
-            <iframe
-              src="https://www.youtube.com/embed/uTvgBmxbzeQ"
-              title="Thrive Arizona — Restore the Last"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full h-full rounded-lg shadow-md"
-              loading="lazy"
-            ></iframe>
-          </div>
-        </div>
       </div>
 
       <div class="mt-12 text-center">
