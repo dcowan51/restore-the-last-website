@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Partners" description="Who Restore the Last partners with and why. Current partners and how to apply.">
+
+  <!-- Hero -->
+  <section class="bg-deep text-white section-padding">
+    <div class="container-narrow">
+      <p class="label text-gold mb-4">Partners</p>
+      <div class="gold-line mb-8"></div>
+      <h1 class="text-white text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+        We equip the people already doing the work.
+      </h1>
+    </div>
+  </section>
+
+  <!-- Why Partners -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Our Approach</p>
+      <h2 class="mb-8">We don't build from scratch. We multiply what works.</h2>
+      <p class="text-body text-lg leading-relaxed mb-6">
+        There are organizations around the world already embedded in the communities that need healing most. They have the trust, the staff, the infrastructure. What they lack is the technology.
+      </p>
+      <p class="text-body text-lg leading-relaxed">
+        Restore the Last bridges that gap. We identify established partner facilities serving trauma-affected populations and fund the deployment of direct neurofeedback technology — with training, support, and full outcome tracking.
+      </p>
+    </div>
+  </section>
+
+  <!-- Current Partners -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow">
+      <p class="label text-primary mb-6">Current Partners</p>
+      <h2 class="mb-10">Where the work is happening now.</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="border border-primary/10 rounded-lg p-8">
+          <p class="label text-gold mb-2">El Salvador</p>
+          <h3 class="text-2xl mb-4">ONUVA Children's Home</h3>
+          <p class="text-body leading-relaxed mb-4">
+            Three homes serving children ages 2–17, plus house parents, teachers, and staff. All receiving daily neurofeedback sessions. 18,000+ sessions completed over two years. The whole-community model — when everyone heals, the environment transforms.
+          </p>
+          <p class="text-primary font-bold text-sm">97% showed measurable improvement</p>
+        </div>
+        <div class="border border-primary/10 rounded-lg p-8">
+          <p class="label text-gold mb-2">Arizona, USA</p>
+          <h3 class="text-2xl mb-4">Thrive</h3>
+          <p class="text-body leading-relaxed mb-4">
+            25-acre residential campus serving aged-out foster youth ages 18–25. 55 young adults housed. Part-time practitioner delivering 25–30 sessions weekly. Residents sleeping, communicating, and earning milestones that felt impossible before.
+          </p>
+          <p class="text-primary font-bold text-sm">10 residents earned driver's licenses</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Target Partners -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Expansion</p>
+      <h2 class="mb-8">Who we're reaching next.</h2>
+      <p class="text-body text-lg leading-relaxed mb-8">
+        We're actively building relationships with organizations serving the populations that stand to gain the most from nervous system restoration — including faith-based organizations, anti-trafficking networks, and international relief organizations.
+      </p>
+      <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-gold">
+        <h4 class="font-serif font-bold mb-2">Priority target: anti-trafficking and faith-based organizations</h4>
+        <p class="text-body text-sm">
+          Organizations working with trafficking survivors, at-risk youth, and trauma-affected communities in the developing world are our highest priority for next deployments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Inquiry Form -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow max-w-2xl">
+      <p class="label text-primary mb-6">Become a Partner</p>
+      <h2 class="mb-8">Think your organization could benefit?</h2>
+      <p class="text-body mb-8">
+        We're looking for established organizations serving trauma-affected populations with on-site delivery capacity and a commitment to tracking outcomes.
+      </p>
+
+      <form name="partner-inquiry" method="POST" data-netlify="true" class="space-y-6">
+        <input type="hidden" name="form-name" value="partner-inquiry" />
+
+        <div>
+          <label for="org-name" class="label text-dark block mb-2">Organization Name</label>
+          <input
+            type="text"
+            id="org-name"
+            name="organization"
+            required
+            class="w-full px-4 py-3 rounded-md border border-body/20 bg-white focus:outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label for="contact-name" class="label text-dark block mb-2">Your Name</label>
+          <input
+            type="text"
+            id="contact-name"
+            name="name"
+            required
+            class="w-full px-4 py-3 rounded-md border border-body/20 bg-white focus:outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="label text-dark block mb-2">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 rounded-md border border-body/20 bg-white focus:outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label for="population" class="label text-dark block mb-2">Population Served</label>
+          <input
+            type="text"
+            id="population"
+            name="population"
+            placeholder="e.g., Foster youth, trafficking survivors, at-risk families"
+            class="w-full px-4 py-3 rounded-md border border-body/20 bg-white focus:outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label for="message" class="label text-dark block mb-2">Tell Us About Your Work</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            class="w-full px-4 py-3 rounded-md border border-body/20 bg-white focus:outline-none focus:border-primary"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Submit Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-deep text-white section-padding text-center">
+    <div class="container-narrow">
+      <h2 class="text-white text-3xl mb-6">The work scales when more partners join.</h2>
+      <a href="/give" class="btn-gold text-lg">Fund a partnership</a>
+    </div>
+  </section>
+
+</BaseLayout>
