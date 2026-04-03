@@ -8,7 +8,7 @@ export default {
         deep: '#3A1470',
         medium: '#9040D0',
         light: '#EDE0FF',
-        gold: '#C9A84C',
+        gold: '#E07A5F',
         dark: '#1C1C2E',
         body: '#3D3D4F',
         offwhite: '#FAFAF7',

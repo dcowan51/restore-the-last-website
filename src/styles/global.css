@@ -30,7 +30,7 @@
     @apply inline-block bg-primary text-white font-sans font-bold px-8 py-3 rounded-md hover:bg-medium transition-colors duration-200;
   }
   .btn-gold {
-    @apply inline-block bg-gold text-dark font-sans font-bold px-8 py-3 rounded-md hover:brightness-110 transition-all duration-200;
+    @apply inline-block bg-gold text-white font-sans font-bold px-8 py-3 rounded-md hover:brightness-110 transition-all duration-200;
   }
   .section-padding {
     @apply py-20 px-6 md:px-12 lg:px-20;
