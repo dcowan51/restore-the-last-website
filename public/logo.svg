@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="10" fill="#712BBE"/>
+  <text
+    x="60"
+    y="82"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="58"
+    font-weight="700"
+    fill="white"
+    letter-spacing="-2"
+  >RTL</text>
+</svg>
