@@ -92,12 +92,64 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- Founding Team -->
   <section class="bg-offwhite section-padding">
-    <div class="container-narrow max-w-3xl">
+    <div class="container-narrow max-w-4xl">
       <p class="label text-primary mb-6">Founding Team</p>
-      <h2 class="mb-8">Built by people who've seen the proof.</h2>
-      <p class="text-body text-lg leading-relaxed">
-        Restore the Last was founded by Dallas Cowan and his father — two people who watched this technology change lives in El Salvador, Arizona, and beyond, and asked the only question that mattered: How do we get this to more people?
+      <h2 class="mb-4">Built by people who've seen the proof.</h2>
+      <p class="text-body text-lg leading-relaxed mb-12 max-w-3xl">
+        Restore the Last wasn't built in a boardroom. It was built by two people who watched this technology change lives — and couldn't justify not doing something about it.
       </p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Dallas -->
+        <div class="bg-white rounded-2xl p-8 border border-primary/10">
+          <div class="w-20 h-20 rounded-full bg-light border border-primary/10 mb-6 overflow-hidden">
+            <div class="w-full h-full flex items-center justify-center text-primary/30 text-xs font-bold">Photo</div>
+          </div>
+          <h3 class="text-xl font-serif font-bold mb-1">Dallas Cowan</h3>
+          <p class="label text-gold mb-4">Co-Founder, Operations</p>
+          <p class="text-body text-sm leading-relaxed mb-4">
+            Dallas leads the operational side of Restore the Last — partner development, program design, and deployment strategy. He has worked directly with kids in the foster care system and has seen firsthand the gap between what these populations need and what the system provides.
+          </p>
+          <p class="text-body text-sm leading-relaxed">
+            He has also been on the ground helping build brain health and performance centers across the country alongside CalmWaves — which means he understands both the technology and the organizational infrastructure needed to scale it.
+          </p>
+        </div>
+
+        <!-- Dr. Doug -->
+        <div class="bg-white rounded-2xl p-8 border border-primary/10">
+          <div class="w-20 h-20 rounded-full bg-light border border-primary/10 mb-6 overflow-hidden">
+            <div class="w-full h-full flex items-center justify-center text-primary/30 text-xs font-bold">Photo</div>
+          </div>
+          <h3 class="text-xl font-serif font-bold mb-1">Dr. Doug Cowan</h3>
+          <p class="label text-gold mb-4">Co-Founder</p>
+          <p class="text-body text-sm leading-relaxed mb-4">
+            Dr. Doug Cowan is a licensed therapist with over 30,000 brain improvement sessions to his name. His clinical work spans veterans, trauma survivors, PTSD, and people that traditional mental health care has struggled to reach. That body of work is the foundation this organization stands on.
+          </p>
+          <p class="text-body text-sm leading-relaxed">
+            He is also the founder of <a href="https://calmwaves.com" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:text-medium transition-colors">CalmWaves</a> — the organization behind the direct neurofeedback technology we deploy. Restore the Last exists to get that technology to the people who need it most.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Board of Directors -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Board of Directors</p>
+      <h2 class="mb-6">Taking shape.</h2>
+      <p class="text-body text-lg leading-relaxed mb-6">
+        We are currently forming our board of directors as we build toward full 501(c)(3) status. We are looking for people who bring expertise in nonprofit governance, trauma-informed care, faith-based community, fundraising, or international development — and who share the conviction that this work matters.
+      </p>
+      <div class="bg-light rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
+        <h4 class="font-serif font-bold mb-2">Interested in joining the board?</h4>
+        <p class="text-body text-sm mb-4">
+          If you're passionate about this mission and have experience you'd like to contribute, we'd love to hear from you.
+        </p>
+        <a href="mailto:dallas@restorethelast.org?subject=Board of Directors Inquiry" class="btn-primary text-sm">Reach out →</a>
+      </div>
     </div>
   </section>
 
