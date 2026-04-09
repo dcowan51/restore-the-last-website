@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+  <section class="bg-white min-h-[70vh] flex items-center section-padding">
+    <div class="container-narrow max-w-2xl text-center mx-auto">
+      <p class="font-serif text-8xl font-bold text-primary/20 mb-4">404</p>
+      <div class="gold-line mx-auto mb-8"></div>
+      <h1 class="text-dark text-3xl md:text-4xl font-serif font-bold mb-6">
+        This page doesn't exist.
+      </h1>
+      <p class="text-body text-lg mb-10 leading-relaxed">
+        But the work does. Head back and find what you're looking for.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="btn-primary">Back to home</a>
+        <a href="/impact" class="text-primary font-bold font-sans hover:text-medium transition-colors self-center">See our impact →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -9,6 +9,10 @@ interface Props {
 }
 
 const { title, description = 'Restore the Last funds nervous system restoration for survivors of trafficking, foster care, and violence.' } = Astro.props;
+
+const siteUrl = 'https://restore-the-last.netlify.app';
+const ogImage = `${siteUrl}/RTLlogo.png`;
+const fullTitle = `${title} | Restore the Last`;
 ---
 
 <!DOCTYPE html>
@@ -17,8 +21,22 @@ const { title, description = 'Restore the Last funds nervous system restoration 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | Restore the Last</title>
+    <link rel="icon" type="image/png" href="/RTLlogo.png" />
+    <title>{fullTitle}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Restore the Last" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body class="bg-offwhite">
     <Nav />

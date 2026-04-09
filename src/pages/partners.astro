@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const submitted = Astro.url.searchParams.get('success') === 'true';
 ---
 
 <BaseLayout title="Partners" description="Who Restore the Last partners with and why. Current partners and how to apply.">
@@ -88,8 +89,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         We're looking for established organizations serving trauma-affected populations with on-site delivery capacity and a commitment to tracking outcomes.
       </p>
 
-      <form name="partner-inquiry" method="POST" data-netlify="true" class="space-y-6">
+      {submitted && (
+        <div class="bg-light border border-primary/20 rounded-2xl p-6 mb-8 text-center">
+          <p class="font-serif font-bold text-dark text-xl mb-2">We received your inquiry.</p>
+          <p class="text-body text-sm">We'll be in touch soon. Thank you for the work you're doing.</p>
+        </div>
+      )}
+
+      <form name="partner-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/partners?success=true" class="space-y-6">
         <input type="hidden" name="form-name" value="partner-inquiry" />
+        <input type="hidden" name="bot-field" />
 
         <div>
           <label for="org-name" class="label text-dark block mb-2">Organization Name</label>
