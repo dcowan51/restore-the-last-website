@@ -109,6 +109,19 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
               You'll be connected directly with our team to complete your gift.
             </p>
 
+            {project.orgUrl && (
+              <div class="border-t border-primary/10 my-6">
+                <a
+                  href={project.orgUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mt-6 inline-block"
+                >
+                  Visit organization's website →
+                </a>
+              </div>
+            )}
+
             <div class="border-t border-primary/10 my-6"></div>
 
             <div class="space-y-3 text-sm text-body/70">

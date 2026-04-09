@@ -20,7 +20,8 @@ Add a new project by copying the template below into the array. The website auto
   "coverImage": "/your-photo-filename.jpg",
   "whatWeFund": "e.g. 2 CalmWaves calm boxes, 3-day practitioner training, 12 months of remote support and outcome tracking",
   "summary": "2–3 sentences about the project. What facility, what location, why now. This shows on both the card and the detail page.",
-  "whyThisPopulation": "1–2 paragraphs on why this population needs this. What trauma looks like for them, why traditional therapy falls short, why neurofeedback is the right tool."
+  "whyThisPopulation": "1–2 paragraphs on why this population needs this. What trauma looks like for them, why traditional therapy falls short, why neurofeedback is the right tool.",
+  "orgUrl": "https://www.example.org"
 }
 ```
 
@@ -41,6 +42,7 @@ Add a new project by copying the template below into the array. The website auto
 | `whatWeFund` | What the money specifically covers | One sentence or short list — calm boxes, training, support |
 | `summary` | Project overview | 2–3 sentences. Shown on the card (truncated) and top of detail page |
 | `whyThisPopulation` | Why this group needs this intervention | 1–2 paragraphs. Only shown on the detail page |
+| `orgUrl` | Link to the partner org's website | Optional. Full URL including `https://`. Leave as `""` or omit if not applicable |
 
 ---
 
