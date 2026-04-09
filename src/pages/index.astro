@@ -7,10 +7,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Hero -->
   <section
     class="relative text-white min-h-[85vh] flex items-center"
-    style="background-image: url('/IMG_3305.jpg'); background-size: cover; background-position: center top;"
+    style="background-image: url('/IMG_3305.jpg'); background-size: cover; background-position: right center;"
   >
-    <!-- Dark overlay -->
-    <div class="absolute inset-0 bg-deep/75"></div>
+    <!-- Gradient overlay: dark left (behind text), fades right (shows face) -->
+    <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(58,20,112,0.92) 40%, rgba(58,20,112,0.35) 100%);"></div>
     <div class="relative z-10 container-narrow section-padding">
       <div class="gold-line mb-8"></div>
       <p class="font-serif text-6xl md:text-8xl font-bold text-white leading-none mb-4">18,000+</p>
