@@ -5,23 +5,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Home" description="Restore the Last funds direct neurofeedback technology into partner facilities serving trafficking survivors, foster youth, and trauma-affected communities.">
 
   <!-- Hero -->
-  <section
-    class="relative text-white min-h-[85vh] flex items-center"
-    style="background-image: url('/IMG_3305.jpg'); background-size: cover; background-position: right center;"
-  >
-    <!-- Gradient overlay: dark left (behind text), fades right (shows face) -->
-    <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(58,20,112,0.92) 40%, rgba(58,20,112,0.35) 100%);"></div>
-    <div class="relative z-10 container-narrow section-padding">
-      <div class="gold-line mb-8"></div>
-      <p class="font-serif text-6xl md:text-8xl font-bold text-white leading-none mb-4">18,000+</p>
-      <p class="label text-white/60 mb-10">nervous system restoration sessions delivered</p>
-      <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6 max-w-3xl">
-        Healing reaches the people it was never supposed to miss.
-      </h1>
-      <p class="text-white/80 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
-        Restore the Last funds direct neurofeedback technology into partner facilities serving trafficking survivors, foster youth, and trauma-affected communities.
-      </p>
-      <a href="/how-it-works" class="btn-primary text-lg">See the work</a>
+  <section class="bg-white min-h-[88vh] flex items-center">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 w-full">
+      <div class="grid md:grid-cols-2 gap-12 items-center py-16">
+
+        <!-- Left: Text -->
+        <div>
+          <div class="gold-line mb-8"></div>
+          <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight mb-6">
+            Healing reaches the people it was
+            <span class="bg-primary text-white px-3 py-1 rounded-xl inline">never supposed to miss.</span>
+          </h1>
+          <p class="text-body text-lg max-w-md mb-10 leading-relaxed">
+            Restore the Last funds direct neurofeedback technology into partner facilities serving trafficking survivors, foster youth, and trauma-affected communities.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 mb-12">
+            <a href="/how-it-works" class="btn-primary text-base">See the work</a>
+            <a href="/give" class="text-primary font-bold font-sans hover:text-medium transition-colors">Give now →</a>
+          </div>
+
+          <!-- Proof card -->
+          <div class="flex items-center gap-4 bg-light rounded-xl p-4 max-w-sm">
+            <img src="/IMG_3776.jpeg" alt="ONUVA session" class="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+            <div>
+              <p class="text-primary font-bold font-sans text-sm">18,000+ sessions delivered</p>
+              <p class="text-body text-xs mt-1">Across partner facilities in El Salvador and Arizona</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Photo -->
+        <div class="hidden md:block">
+          <img
+            src="/IMG_3305.jpg"
+            alt="Young girl smiling during a neurofeedback session at ONUVA"
+            class="w-full rounded-2xl shadow-xl"
+            style="height: 580px; object-fit: cover; object-position: center top;"
+          />
+        </div>
+
+      </div>
     </div>
   </section>
 
