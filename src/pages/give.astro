@@ -5,20 +5,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Give" description="Every dollar has a destination. Fund a specific deployment and see exactly where your giving goes.">
 
   <!-- Hero -->
-  <section class="bg-deep text-white section-padding">
+  <section class="bg-white section-padding border-b border-primary/10">
     <div class="container-narrow">
-      <p class="label text-gold mb-4">Give</p>
+      <p class="label text-primary mb-4">Give</p>
       <div class="gold-line mb-8"></div>
-      <h1 class="text-white text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
         Every dollar has a destination.
       </h1>
-      <p class="text-white/80 text-lg max-w-2xl mt-6 leading-relaxed">
+      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
         Your giving doesn't disappear into a general fund. It goes to a specific project, a specific facility, a specific population. You see where it lands and what it changes.
       </p>
     </div>
   </section>
 
-  <!-- The Model -->
+  <!-- How Giving Works -->
   <section class="bg-offwhite section-padding">
     <div class="container-narrow max-w-3xl">
       <p class="label text-primary mb-6">How Giving Works</p>
@@ -26,18 +26,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="text-body text-lg leading-relaxed mb-8">
         We follow the Charity: Water model — the approach that proved people give more when they know exactly where their money goes. Each Restore the Last project is a specific deployment: one partner facility, one population, one set of measurable outcomes.
       </p>
-      <div class="space-y-6">
-        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-gold">
-          <h4 class="font-serif font-bold mb-2">You choose the project</h4>
-          <p class="text-body text-sm">Pick a deployment that resonates — a children's home in El Salvador, a foster care campus in Arizona, a partner yet to be funded.</p>
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-light border border-primary/20 flex items-center justify-center flex-shrink-0">
+            <span class="text-primary font-bold text-sm">1</span>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold mb-1">You choose the project</h4>
+            <p class="text-body text-sm">Pick a deployment that resonates — a children's home in El Salvador, a foster care campus in Arizona, a partner yet to be funded.</p>
+          </div>
         </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-gold">
-          <h4 class="font-serif font-bold mb-2">We deploy the technology</h4>
-          <p class="text-body text-sm">Equipment is purchased, delivered, and installed. Staff are trained. Sessions begin.</p>
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-light border border-primary/20 flex items-center justify-center flex-shrink-0">
+            <span class="text-primary font-bold text-sm">2</span>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold mb-1">We deploy the technology</h4>
+            <p class="text-body text-sm">Equipment is purchased, delivered, and installed. Staff are trained. Sessions begin.</p>
+          </div>
         </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-gold">
-          <h4 class="font-serif font-bold mb-2">You see the outcome</h4>
-          <p class="text-body text-sm">Progress reports with real data. Session counts. Symptom reduction. Stories from the field. Your project, tracked from funded to complete.</p>
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-light border border-primary/20 flex items-center justify-center flex-shrink-0">
+            <span class="text-primary font-bold text-sm">3</span>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold mb-1">You see the outcome</h4>
+            <p class="text-body text-sm">Progress reports with real data. Session counts. Symptom reduction. Stories from the field. Your project, tracked from funded to complete.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -48,31 +63,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container-narrow">
       <p class="label text-primary mb-6">Projects</p>
       <h2 class="mb-10">Where your giving goes.</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-lg overflow-hidden shadow-sm">
-          <div class="bg-primary h-2"></div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
+          <div class="bg-primary h-1"></div>
           <div class="p-6">
-            <p class="label text-gold text-xs mb-2">Active</p>
+            <p class="label text-gold text-xs mb-3">Active</p>
             <h3 class="text-lg mb-3">ONUVA Children's Home</h3>
             <p class="text-body text-sm mb-4">El Salvador — Ongoing support for 28+ participants receiving daily neurofeedback sessions.</p>
             <p class="text-primary font-bold text-sm">In progress</p>
           </div>
         </div>
-        <div class="bg-white rounded-lg overflow-hidden shadow-sm">
-          <div class="bg-primary h-2"></div>
+        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
+          <div class="bg-primary h-1"></div>
           <div class="p-6">
-            <p class="label text-gold text-xs mb-2">Active</p>
+            <p class="label text-gold text-xs mb-3">Active</p>
             <h3 class="text-lg mb-3">Thrive Campus</h3>
             <p class="text-body text-sm mb-4">Arizona — Supporting aged-out foster youth with on-campus neurofeedback integration.</p>
             <p class="text-primary font-bold text-sm">In progress</p>
           </div>
         </div>
-        <div class="bg-white rounded-lg overflow-hidden shadow-sm opacity-70">
-          <div class="bg-body/30 h-2"></div>
+        <div class="bg-white/60 rounded-2xl overflow-hidden border border-primary/5">
+          <div class="bg-body/10 h-1"></div>
           <div class="p-6">
-            <p class="label text-body/40 text-xs mb-2">Coming Soon</p>
-            <h3 class="text-lg mb-3">Next Deployment</h3>
-            <p class="text-body text-sm mb-4">New partner facility in development. Details and funding goals announced soon.</p>
+            <p class="label text-body/40 text-xs mb-3">Coming Soon</p>
+            <h3 class="text-lg mb-3 text-body/50">Next Deployment</h3>
+            <p class="text-body/50 text-sm mb-4">New partner facility in development. Details and funding goals announced soon.</p>
             <p class="text-body/40 font-bold text-sm">Pending</p>
           </div>
         </div>
