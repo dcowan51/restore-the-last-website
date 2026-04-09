@@ -35,74 +35,86 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
 
   <!-- Hero -->
   <section class="bg-white border-b border-primary/10">
-    <div class="container-narrow py-12 px-6 md:px-12">
+    <div class="container-narrow py-10 md:py-12 px-6 md:px-12">
       <a href="/projects" class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mb-6 inline-block">← All Projects</a>
-      <div class="grid md:grid-cols-[1fr_340px] gap-12 items-start">
 
-        <!-- Left -->
+      <!-- Mobile: funding box comes first on mobile, after content on desktop -->
+      <div class="block md:hidden mb-8">
+        <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-6">
+          <p class="label text-primary mb-3">Funding Goal</p>
+          <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
+          <p class="text-body/50 text-sm mb-5">total project cost</p>
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-primary font-bold text-sm">${project.raised.toLocaleString()} raised</span>
+            <span class="text-body/50 text-xs">{percent}%</span>
+          </div>
+          <div class="w-full bg-light rounded-full h-3 mb-2">
+            <div class="bg-primary rounded-full h-3 transition-all duration-500" style={`width: ${percent}%`}></div>
+          </div>
+          {project.status !== 'funded' && (
+            <p class="text-body/50 text-xs mb-5">${remaining.toLocaleString()} still needed</p>
+          )}
+          <a href={mailtoLink} class="btn-gold w-full text-center block text-base mt-4">Fund this project</a>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-[1fr_320px] gap-10 md:gap-12 items-start">
+
+        <!-- Left: Content -->
         <div>
           <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border mb-4 ${statusColor[project.status]}`}>
             {statusLabel[project.status]}
           </span>
           <p class="label text-gold mb-2">{project.location}</p>
-          <h1 class="text-dark text-3xl md:text-4xl font-serif font-bold leading-tight mb-4">
+          <h1 class="text-dark text-2xl md:text-4xl font-serif font-bold leading-tight mb-4">
             {project.title}
           </h1>
           <p class="text-body/70 text-sm font-semibold uppercase tracking-wide mb-6">{project.population}</p>
           <img
             src={project.coverImage}
             alt={project.title}
-            class="w-full rounded-2xl shadow-md mb-8"
-            style="max-height: 420px; object-fit: cover;"
+            class="w-full rounded-2xl shadow-md mb-8 object-cover"
+            style="max-height: 380px;"
           />
-          <div class="space-y-10">
+          <div class="space-y-8 md:space-y-10">
             <div>
               <p class="label text-primary mb-3">About This Project</p>
-              <p class="text-body text-lg leading-relaxed">{project.summary}</p>
+              <p class="text-body text-base md:text-lg leading-relaxed">{project.summary}</p>
             </div>
             <div>
               <p class="label text-primary mb-3">Why This Population</p>
-              <p class="text-body text-lg leading-relaxed">{project.whyThisPopulation}</p>
+              <p class="text-body text-base md:text-lg leading-relaxed">{project.whyThisPopulation}</p>
             </div>
             <div>
               <p class="label text-primary mb-3">What Your Funding Covers</p>
-              <div class="bg-light rounded-2xl p-6 border border-primary/10">
+              <div class="bg-light rounded-2xl p-5 md:p-6 border border-primary/10">
                 <p class="text-body leading-relaxed">{project.whatWeFund}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right: Funding sidebar -->
-        <div class="sticky top-24">
+        <!-- Right: Funding sidebar (desktop only) -->
+        <div class="hidden md:block md:sticky md:top-24">
           <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-7">
             <p class="label text-primary mb-4">Funding Goal</p>
             <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
             <p class="text-body/50 text-sm mb-6">total project cost</p>
 
-            <!-- Progress bar -->
-            <div class="mb-2">
-              <div class="flex justify-between items-baseline mb-2">
-                <span class="text-primary font-bold text-sm">${project.raised.toLocaleString()} raised</span>
-                <span class="text-body/50 text-xs">{percent}%</span>
-              </div>
-              <div class="w-full bg-light rounded-full h-3 mb-2">
-                <div
-                  class="bg-primary rounded-full h-3 transition-all duration-500"
-                  style={`width: ${percent}%`}
-                ></div>
-              </div>
-              {project.status !== 'funded' && (
-                <p class="text-body/50 text-xs">${remaining.toLocaleString()} still needed</p>
-              )}
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-primary font-bold text-sm">${project.raised.toLocaleString()} raised</span>
+              <span class="text-body/50 text-xs">{percent}%</span>
             </div>
+            <div class="w-full bg-light rounded-full h-3 mb-2">
+              <div class="bg-primary rounded-full h-3 transition-all duration-500" style={`width: ${percent}%`}></div>
+            </div>
+            {project.status !== 'funded' && (
+              <p class="text-body/50 text-xs mb-2">${remaining.toLocaleString()} still needed</p>
+            )}
 
             <div class="border-t border-primary/10 my-6"></div>
 
-            <a
-              href={mailtoLink}
-              class="btn-gold w-full text-center block text-base mb-3"
-            >
+            <a href={mailtoLink} class="btn-gold w-full text-center block text-base mb-3">
               Fund this project
             </a>
             <p class="text-body/40 text-xs text-center">
@@ -154,7 +166,7 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
   <!-- CTA -->
   <section class="bg-deep text-white section-padding text-center">
     <div class="container-narrow">
-      <h2 class="text-white text-3xl mb-6">Ready to fund this deployment?</h2>
+      <h2 class="text-white text-2xl md:text-3xl mb-6">Ready to fund this deployment?</h2>
       <a href={mailtoLink} class="btn-gold text-lg">Fund this project</a>
     </div>
   </section>

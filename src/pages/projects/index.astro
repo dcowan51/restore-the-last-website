@@ -34,7 +34,7 @@ const statusColor = {
   <!-- Project Cards -->
   <section class="bg-offwhite section-padding">
     <div class="container-narrow">
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid md:grid-cols-2 gap-5 md:gap-8">
         {projects.map(project => {
           const percent = Math.min(Math.round((project.raised / project.goal) * 100), 100);
           const remaining = project.goal - project.raised;

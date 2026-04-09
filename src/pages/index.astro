@@ -7,26 +7,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Hero -->
   <section class="bg-white min-h-[88vh] flex items-center">
     <div class="max-w-7xl mx-auto px-6 md:px-12 w-full">
-      <div class="grid md:grid-cols-2 gap-12 items-center py-16">
+      <div class="grid md:grid-cols-2 gap-12 items-center py-12 md:py-16">
 
         <!-- Left: Text -->
         <div>
-          <div class="gold-line mb-8"></div>
-          <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-[1.3] mb-6 max-w-[420px]">
+          <div class="gold-line mb-6 md:mb-8"></div>
+          <h1 class="text-dark text-3xl md:text-5xl font-serif font-bold leading-[1.3] mb-5 md:mb-6 max-w-[420px]">
             Healing reaches the people it was never supposed to miss.
           </h1>
-          <p class="text-body text-lg max-w-md mb-10 leading-relaxed">
+          <p class="text-body text-base md:text-lg max-w-md mb-8 md:mb-10 leading-relaxed">
             Restore the Last funds nervous system regulation technology into partner facilities serving
             <span class="text-primary font-bold">the least, the lost, and the last.</span>
           </p>
-          <div class="flex flex-wrap items-center gap-4 mb-12">
+          <div class="flex flex-wrap items-center gap-4 mb-8 md:mb-12">
             <a href="/how-it-works" class="btn-primary text-base">See the work</a>
             <a href="/give" class="text-primary font-bold font-sans hover:text-medium transition-colors">Give now →</a>
           </div>
 
           <!-- Proof card -->
           <div class="flex items-center gap-4 bg-light rounded-xl p-4 max-w-sm">
-            <img src="/IMG_3776.jpeg" alt="ONUVA session" class="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+            <img src="/IMG_3776.jpeg" alt="ONUVA session" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover flex-shrink-0" />
             <div>
               <p class="text-primary font-bold font-sans text-sm">18,000+ sessions delivered</p>
               <p class="text-body text-xs mt-1">Across partner facilities in El Salvador and Arizona</p>
@@ -39,8 +39,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <img
             src="/IMG_3305.jpg"
             alt="Young girl smiling during a neurofeedback session at ONUVA"
-            class="w-full rounded-2xl shadow-xl"
-            style="height: 580px; object-fit: cover; object-position: center top;"
+            class="w-full rounded-2xl shadow-xl object-cover object-top"
+            style="height: 520px;"
           />
         </div>
 
@@ -49,20 +49,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- Proof Bar -->
-  <section class="bg-light border-y border-primary/10 py-14 px-6">
+  <section class="bg-light border-y border-primary/10 py-10 md:py-14 px-6">
     <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-0 text-center divide-y md:divide-y-0 md:divide-x divide-primary/20">
       <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-5xl font-bold text-primary mb-3">97%</p>
+        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">97%</p>
         <p class="text-dark font-semibold text-sm mb-1">showed improvement over 7 sessions</p>
         <p class="text-body/50 text-xs">ONUVA Children's Home, El Salvador</p>
       </div>
       <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-5xl font-bold text-primary mb-3">50%</p>
+        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">50%</p>
         <p class="text-dark font-semibold text-sm mb-1">symptom reduction after first session</p>
         <p class="text-body/50 text-xs">ONUVA Children's Home, El Salvador</p>
       </div>
       <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-5xl font-bold text-primary mb-3">18,000+</p>
+        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">18,000+</p>
         <p class="text-dark font-semibold text-sm mb-1">sessions delivered in El Salvador alone</p>
         <p class="text-body/50 text-xs">Over 2 years of deployment</p>
       </div>
@@ -74,9 +74,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container-narrow">
       <p class="label text-primary mb-4">Who We're Reaching For</p>
       <h2 class="mb-4">The people hardest for the system to reach.</h2>
-      <p class="text-body text-lg max-w-2xl mb-12 leading-relaxed">These are examples of the populations we want to get this technology to — people whose nervous systems carry trauma that traditional therapy rarely reaches.</p>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
+      <p class="text-body text-base md:text-lg max-w-2xl mb-10 md:mb-12 leading-relaxed">These are examples of the populations we want to get this technology to — people whose nervous systems carry trauma that traditional therapy rarely reaches.</p>
+      <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
           <div class="w-10 h-10 rounded-full bg-light flex items-center justify-center mb-5">
             <div class="w-3 h-3 rounded-full bg-primary"></div>
           </div>
@@ -85,7 +85,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Survivors carry trauma in their nervous systems long after rescue. We want to get this technology into organizations already serving them.
           </p>
         </div>
-        <div class="bg-white rounded-2xl p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
           <div class="w-10 h-10 rounded-full bg-light flex items-center justify-center mb-5">
             <div class="w-3 h-3 rounded-full bg-primary"></div>
           </div>
@@ -94,7 +94,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Aged-out foster youth face the world with dysregulated nervous systems. We want to equip more of the organizations that house and support them.
           </p>
         </div>
-        <div class="bg-white rounded-2xl p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
           <div class="w-10 h-10 rounded-full bg-light flex items-center justify-center mb-5">
             <div class="w-3 h-3 rounded-full bg-primary"></div>
           </div>
@@ -111,31 +111,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="bg-light section-padding">
     <div class="container-narrow">
       <p class="label text-primary mb-4">The Model</p>
-      <h2 class="mb-12">Five steps. One mission.</h2>
-      <div class="grid md:grid-cols-5 gap-5">
-        <div class="bg-white rounded-2xl p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
-          <p class="font-serif text-4xl font-bold text-primary/20 mb-4">01</p>
-          <p class="font-serif text-lg font-bold text-dark mb-3">Find Projects</p>
+      <h2 class="mb-10 md:mb-12">Five steps. One mission.</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
+        <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left col-span-2 md:col-span-1">
+          <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4">01</p>
+          <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Find Projects</p>
           <p class="text-body text-sm leading-relaxed">We identify organizations where this technology can make the greatest impact and work alongside them to build a practical plan they can carry out.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
-          <p class="font-serif text-4xl font-bold text-primary/20 mb-4">02</p>
-          <p class="font-serif text-lg font-bold text-dark mb-3">Fund</p>
+        <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
+          <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4">02</p>
+          <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Fund</p>
           <p class="text-body text-sm leading-relaxed">Donors fund specific projects with full transparency into where every dollar goes.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
-          <p class="font-serif text-4xl font-bold text-primary/20 mb-4">03</p>
-          <p class="font-serif text-lg font-bold text-dark mb-3">Deploy</p>
+        <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
+          <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4">03</p>
+          <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Deploy</p>
           <p class="text-body text-sm leading-relaxed">We place neurofeedback technology directly into partner facilities where it is needed most.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
-          <p class="font-serif text-4xl font-bold text-primary/20 mb-4">04</p>
-          <p class="font-serif text-lg font-bold text-dark mb-3">Train</p>
+        <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
+          <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4">04</p>
+          <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Train</p>
           <p class="text-body text-sm leading-relaxed">On-site staff receive hands-on training so they can deliver sessions with confidence and consistency.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
-          <p class="font-serif text-4xl font-bold text-primary/20 mb-4">05</p>
-          <p class="font-serif text-lg font-bold text-dark mb-3">Support</p>
+        <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
+          <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4">05</p>
+          <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Support</p>
           <p class="text-body text-sm leading-relaxed">We do not walk away after deployment. We provide ongoing support and resources to help each partner succeed long term.</p>
         </div>
       </div>
@@ -146,7 +146,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="bg-offwhite section-padding">
     <div class="container-narrow flex items-start gap-6 max-w-3xl mx-auto">
       <div class="gold-line-left flex-shrink-0 hidden md:block"></div>
-      <blockquote class="font-serif italic text-2xl md:text-3xl text-dark leading-snug">
+      <blockquote class="font-serif italic text-xl md:text-3xl text-dark leading-snug">
         The technology exists. The need exists. The distance between them is what we close.
       </blockquote>
     </div>
@@ -156,20 +156,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="bg-white section-padding">
     <div class="container-narrow">
       <p class="label text-primary mb-4">Where It's Working</p>
-      <h2 class="mb-12">Proof, not promises.</h2>
-      <div class="grid md:grid-cols-2 gap-12">
+      <h2 class="mb-10 md:mb-12">Proof, not promises.</h2>
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12">
         <div>
           <p class="label text-gold mb-2">ONUVA Children's Home</p>
           <p class="text-sm text-body/60 mb-4">El Salvador</p>
-          <p class="font-serif text-3xl font-bold text-primary mb-4">97% showed improvement</p>
+          <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">97% showed improvement</p>
           <p class="text-body">
             28 participants across two years. 50% symptom reduction after a single session. 70% by session seven. 18,000+ sessions delivered. Teachers, children, and staff — all carrying trauma, all showing measurable recovery.
           </p>
         </div>
-        <div>
+        <div class="mt-8 md:mt-0">
           <p class="label text-gold mb-2">Thrive</p>
           <p class="text-sm text-body/60 mb-4">Arizona, USA</p>
-          <p class="font-serif text-3xl font-bold text-primary mb-4">25–30 sessions/week</p>
+          <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">25–30 sessions/week</p>
           <p class="text-body">
             Aged-out foster youth, ages 18–25. Residents are sleeping through the night. Ten earned their driver's licenses. Five graduated high school. The nervous system calmed down — and everything else followed.
           </p>
@@ -181,7 +181,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Partner Videos -->
   <section class="bg-offwhite section-padding">
     <div class="container-narrow">
-      <div class="text-center mb-12">
+      <div class="text-center mb-10 md:mb-12">
         <p class="label text-primary mb-4">From Our Partners</p>
         <h2 class="mb-4">Hear it directly from the field.</h2>
         <p class="text-body max-w-xl mx-auto">
@@ -203,7 +203,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               loading="lazy"
             ></iframe>
           </div>
-          <div class="p-5">
+          <div class="p-4 md:p-5">
             <p class="label text-gold mb-1">Thrive — Arizona</p>
             <p class="text-body text-sm">Aged-out foster youth. Hear directly from Steve Vogel, President & CEO.</p>
           </div>
@@ -211,18 +211,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- Portrait reel -->
         <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
-          <div class="aspect-video flex items-center justify-center bg-dark overflow-hidden">
+          <div class="aspect-video bg-dark flex items-center justify-center overflow-hidden">
             <iframe
               src="https://www.youtube.com/embed/uTvgBmxbzeQ"
               title="ONUVA El Salvador — Restore the Last"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
-              class="h-full w-auto max-w-none"
-              style="aspect-ratio: 9/16; height: 100%;"
+              class="w-full h-full"
               loading="lazy"
             ></iframe>
           </div>
-          <div class="p-5">
+          <div class="p-4 md:p-5">
             <p class="label text-gold mb-1">ONUVA — El Salvador</p>
             <p class="text-body text-sm">Children's home serving youth ages 2–17. 18,000+ sessions delivered.</p>
           </div>
@@ -230,7 +229,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       </div>
 
-      <div class="mt-10 text-center">
+      <div class="mt-8 md:mt-10 text-center">
         <a href="/partners" class="btn-primary">See all our partners</a>
       </div>
     </div>
@@ -239,8 +238,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- CTA -->
   <section class="bg-deep text-white section-padding">
     <div class="container-narrow text-center">
-      <h2 class="text-white text-3xl md:text-4xl mb-6">Every dollar has a destination.</h2>
-      <p class="text-white/80 max-w-xl mx-auto mb-10">
+      <h2 class="text-white text-2xl md:text-4xl mb-5 md:mb-6">Every dollar has a destination.</h2>
+      <p class="text-white/80 max-w-xl mx-auto mb-8 md:mb-10">
         Your giving funds a specific project. You see where it goes, who it reaches, and what changes. No black boxes. No overhead mystery.
       </p>
       <a href="/give" class="btn-gold text-lg">Partner with us</a>
