@@ -10,25 +10,24 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-
-const percent = Math.min(Math.round((project.raised / project.goal) * 100), 100);
-const remaining = project.goal - project.raised;
-
-const statusLabel = {
-  'seeking-funding': 'Seeking Funding',
-  'partially-funded': 'Partially Funded',
-  'funded': 'Fully Funded',
-};
-
-const statusColor = {
-  'seeking-funding': 'text-gold bg-gold/10 border-gold/20',
-  'partially-funded': 'text-primary bg-primary/10 border-primary/20',
-  'funded': 'text-green-700 bg-green-50 border-green-200',
-};
+const isMajor = project.type === 'major';
+const isClosed = project.type === 'specific' && project.status === 'closed';
 
 const subject = encodeURIComponent(`Funding inquiry: ${project.title}`);
 const body = encodeURIComponent(`Hi Dallas,\n\nI'm interested in funding the project: ${project.title} (${project.location}).\n\nPlease let me know how to proceed.\n\nThank you.`);
 const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${body}`;
+
+const badgeLabel = isMajor
+  ? 'Major Initiative'
+  : (project.status === 'open' ? 'Open' : 'Fully Funded');
+
+const badgeColor = isMajor
+  ? 'text-primary bg-primary/10 border-primary/20'
+  : (project.status === 'open' ? 'text-gold bg-gold/10 border-gold/20' : 'text-green-700 bg-green-50 border-green-200');
+
+const ctaLabel = isMajor
+  ? 'Contact us to fund this'
+  : (isClosed ? 'Project fully funded' : 'Fund this project');
 ---
 
 <BaseLayout title={project.title} description={project.summary}>
@@ -36,25 +35,31 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
   <!-- Hero -->
   <section class="bg-white border-b border-primary/10">
     <div class="container-narrow py-10 md:py-12 px-6 md:px-12">
-      <a href="/projects" class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mb-6 inline-block">← All Projects</a>
+      <a href="/projects" class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mb-6 inline-block">← All Current Projects</a>
 
-      <!-- Mobile: funding box comes first on mobile, after content on desktop -->
+      <!-- Mobile sidebar -->
       <div class="block md:hidden mb-8">
         <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-6">
-          <p class="label text-primary mb-3">Funding Goal</p>
-          <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-          <p class="text-body/50 text-sm mb-5">total project cost</p>
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-primary font-bold text-sm">${project.raised.toLocaleString()} raised</span>
-            <span class="text-body/50 text-xs">{percent}%</span>
-          </div>
-          <div class="w-full bg-light rounded-full h-3 mb-2">
-            <div class="bg-primary rounded-full h-3 transition-all duration-500" style={`width: ${percent}%`}></div>
-          </div>
-          {project.status !== 'funded' && (
-            <p class="text-body/50 text-xs mb-5">${remaining.toLocaleString()} still needed</p>
+          {isMajor ? (
+            <>
+              <p class="label text-primary mb-3">Ongoing Initiative</p>
+              <p class="text-body text-sm leading-relaxed mb-5">
+                This is a long-running deployment with continuing need. There's no single dollar goal — every gift goes toward keeping the work running and growing.
+              </p>
+            </>
+          ) : (
+            <>
+              <p class="label text-primary mb-3">Project Cost</p>
+              <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
+              <p class="text-body/50 text-sm mb-5">fully-costed deployment</p>
+              {isClosed && (
+                <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
+              )}
+            </>
           )}
-          <a href={mailtoLink} class="btn-gold w-full text-center block text-base mt-4">Fund this project</a>
+          {!isClosed && (
+            <a href={mailtoLink} class="btn-gold w-full text-center block text-base mt-2">{ctaLabel}</a>
+          )}
         </div>
       </div>
 
@@ -62,8 +67,8 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
 
         <!-- Left: Content -->
         <div>
-          <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border mb-4 ${statusColor[project.status]}`}>
-            {statusLabel[project.status]}
+          <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border mb-4 ${badgeColor}`}>
+            {badgeLabel}
           </span>
           <p class="label text-gold mb-2">{project.location}</p>
           <h1 class="text-dark text-2xl md:text-4xl font-serif font-bold leading-tight mb-4">
@@ -94,32 +99,43 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
           </div>
         </div>
 
-        <!-- Right: Funding sidebar (desktop only) -->
+        <!-- Right: Sidebar (desktop) -->
         <div class="hidden md:block md:sticky md:top-24">
           <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-7">
-            <p class="label text-primary mb-4">Funding Goal</p>
-            <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-            <p class="text-body/50 text-sm mb-6">total project cost</p>
-
-            <div class="flex justify-between items-baseline mb-2">
-              <span class="text-primary font-bold text-sm">${project.raised.toLocaleString()} raised</span>
-              <span class="text-body/50 text-xs">{percent}%</span>
-            </div>
-            <div class="w-full bg-light rounded-full h-3 mb-2">
-              <div class="bg-primary rounded-full h-3 transition-all duration-500" style={`width: ${percent}%`}></div>
-            </div>
-            {project.status !== 'funded' && (
-              <p class="text-body/50 text-xs mb-2">${remaining.toLocaleString()} still needed</p>
+            {isMajor ? (
+              <>
+                <p class="label text-primary mb-4">Ongoing Initiative</p>
+                <p class="text-body text-sm leading-relaxed mb-6">
+                  This is a long-running deployment with continuing need. There's no single dollar goal — every gift helps keep the work running and growing.
+                </p>
+              </>
+            ) : (
+              <>
+                <p class="label text-primary mb-4">Project Cost</p>
+                <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
+                <p class="text-body/50 text-sm mb-6">fully-costed deployment</p>
+                {isClosed && (
+                  <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
+                )}
+              </>
             )}
 
             <div class="border-t border-primary/10 my-6"></div>
 
-            <a href={mailtoLink} class="btn-gold w-full text-center block text-base mb-3">
-              Fund this project
-            </a>
-            <p class="text-body/40 text-xs text-center">
-              You'll be connected directly with our team to complete your gift.
-            </p>
+            {!isClosed ? (
+              <>
+                <a href={mailtoLink} class="btn-gold w-full text-center block text-base mb-3">
+                  {ctaLabel}
+                </a>
+                <p class="text-body/40 text-xs text-center">
+                  You'll be connected directly with our team to complete your gift.
+                </p>
+              </>
+            ) : (
+              <a href="/projects" class="btn-primary w-full text-center block text-base">
+                See other open projects
+              </a>
+            )}
 
             {project.orgUrl && (
               <div class="border-t border-primary/10 my-6">
@@ -164,11 +180,15 @@ const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${b
   </section>
 
   <!-- CTA -->
-  <section class="bg-deep text-white section-padding text-center">
-    <div class="container-narrow">
-      <h2 class="text-white text-2xl md:text-3xl mb-6">Ready to fund this deployment?</h2>
-      <a href={mailtoLink} class="btn-gold text-lg">Fund this project</a>
-    </div>
-  </section>
+  {!isClosed && (
+    <section class="bg-deep text-white section-padding text-center">
+      <div class="container-narrow">
+        <h2 class="text-white text-2xl md:text-3xl mb-6">
+          {isMajor ? 'Ready to partner on this initiative?' : 'Ready to fund this deployment?'}
+        </h2>
+        <a href={mailtoLink} class="btn-gold text-lg">{ctaLabel}</a>
+      </div>
+    </section>
+  )}
 
 </BaseLayout>

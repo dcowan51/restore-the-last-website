@@ -2,97 +2,120 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import projects from '../../data/projects.json';
 
-const statusLabel = {
-  'seeking-funding': 'Seeking Funding',
-  'partially-funded': 'Partially Funded',
-  'funded': 'Fully Funded',
+const majorProjects = projects.filter(p => p.type === 'major');
+const specificProjects = projects.filter(p => p.type === 'specific');
+
+const specificStatusLabel = {
+  'open': 'Open',
+  'closed': 'Fully Funded',
 };
 
-const statusColor = {
-  'seeking-funding': 'text-gold bg-gold/10',
-  'partially-funded': 'text-primary bg-primary/10',
-  'funded': 'text-green-700 bg-green-50',
+const specificStatusColor = {
+  'open': 'text-gold bg-gold/10',
+  'closed': 'text-green-700 bg-green-50',
 };
 ---
 
-<BaseLayout title="Fund a Project" description="Choose a specific deployment to fund. Every dollar goes directly to a named project with a named population.">
+<BaseLayout title="Current Projects" description="The work we're funding right now — major ongoing initiatives and specific, fully-costed deployments you can fund directly.">
 
   <!-- Hero -->
   <section class="bg-white section-padding border-b border-primary/10">
     <div class="container-narrow">
-      <p class="label text-primary mb-4">Fund a Project</p>
+      <p class="label text-primary mb-4">Current Projects</p>
       <div class="gold-line mb-8"></div>
       <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
-        Pick a project. Fund it. See what happens.
+        The work we're funding right now.
       </h1>
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        Every project below is a real deployment waiting for funding — a specific facility, a specific population, a specific dollar goal. Your giving goes directly to one of these.
+        We split our work into two kinds of projects. <strong>Major initiatives</strong> are large, ongoing deployments where there's always more need than funding — partner with us directly. <strong>Specific projects</strong> are small, fully-costed asks that close as soon as they're funded, so no project gets overfunded and every dollar moves something forward.
       </p>
     </div>
   </section>
 
-  <!-- Project Cards -->
-  <section class="bg-offwhite section-padding">
-    <div class="container-narrow">
-      <div class="grid md:grid-cols-2 gap-5 md:gap-8">
-        {projects.map(project => {
-          const percent = Math.min(Math.round((project.raised / project.goal) * 100), 100);
-          const remaining = project.goal - project.raised;
-          return (
+  <!-- Major Initiatives -->
+  {majorProjects.length > 0 && (
+    <section class="bg-offwhite section-padding">
+      <div class="container-narrow">
+        <p class="label text-primary mb-4">Major Initiatives</p>
+        <h2 class="mb-10">Ongoing deployments we're scaling.</h2>
+        <div class="grid md:grid-cols-2 gap-5 md:gap-8">
+          {majorProjects.map(project => (
             <a
               href={`/projects/${project.slug}`}
               class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 flex flex-col group"
             >
-              <!-- Photo -->
               <div class="relative overflow-hidden">
                 <img
                   src={project.coverImage}
                   alt={project.title}
-                  class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300"
+                  class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div class="absolute top-4 left-4">
-                  <span class={`text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full ${statusColor[project.status]}`}>
-                    {statusLabel[project.status]}
+                  <span class="text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full text-primary bg-white/95">
+                    Major Initiative
                   </span>
                 </div>
               </div>
-
-              <!-- Content -->
               <div class="p-7 flex flex-col flex-grow">
                 <p class="label text-gold mb-2">{project.location}</p>
                 <h3 class="text-xl font-serif font-bold text-dark mb-2">{project.title}</h3>
                 <p class="text-body/70 text-xs font-semibold uppercase tracking-wide mb-4">{project.population}</p>
-                <p class="text-body text-sm leading-relaxed mb-6 flex-grow line-clamp-3">{project.summary}</p>
+                <p class="text-body text-sm leading-relaxed mb-6 flex-grow">{project.summary}</p>
+                <span class="text-primary font-bold font-sans text-sm mt-auto">Contact us to fund this initiative →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
-                <!-- Progress -->
-                <div class="mt-auto">
-                  <div class="flex justify-between items-baseline mb-2">
-                    <span class="text-primary font-bold font-sans text-sm">${project.raised.toLocaleString()} raised</span>
-                    <span class="text-body/50 text-xs">Goal: ${project.goal.toLocaleString()}</span>
-                  </div>
-                  <div class="w-full bg-light rounded-full h-2 mb-2">
-                    <div
-                      class="bg-primary rounded-full h-2 transition-all duration-500"
-                      style={`width: ${percent}%`}
-                    ></div>
-                  </div>
-                  <div class="flex justify-between items-baseline">
-                    <span class="text-body/50 text-xs">{percent}% funded</span>
-                    {project.status !== 'funded' && (
-                      <span class="text-body/50 text-xs">${remaining.toLocaleString()} remaining</span>
-                    )}
-                  </div>
+  <!-- Specific Projects -->
+  {specificProjects.length > 0 && (
+    <section class="bg-white section-padding border-t border-primary/10">
+      <div class="container-narrow">
+        <p class="label text-primary mb-4">Specific Projects</p>
+        <h2 class="mb-4">Fully-costed deployments. Fund one and it's done.</h2>
+        <p class="text-body text-base max-w-2xl mb-10 leading-relaxed">
+          Each project below has a fixed cost and a defined scope. When the goal is met, the project closes and gifts get directed to the next open project — so nothing gets overfunded.
+        </p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+          {specificProjects.map(project => (
+            <a
+              href={`/projects/${project.slug}`}
+              class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 flex flex-col group"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src={project.coverImage}
+                  alt={project.title}
+                  class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4">
+                  <span class={`text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full ${specificStatusColor[project.status]}`}>
+                    {specificStatusLabel[project.status]}
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col flex-grow">
+                <p class="label text-gold mb-2">{project.location}</p>
+                <h3 class="text-lg font-serif font-bold text-dark mb-2 leading-snug">{project.title}</h3>
+                <p class="text-body/70 text-xs font-semibold uppercase tracking-wide mb-3">{project.population}</p>
+                <p class="text-body text-sm leading-relaxed mb-5 flex-grow">{project.summary}</p>
+                <div class="mt-auto pt-4 border-t border-primary/10 flex items-baseline justify-between">
+                  <span class="font-serif text-2xl font-bold text-dark">${project.goal.toLocaleString()}</span>
+                  <span class="text-primary font-bold font-sans text-sm">{project.status === 'open' ? 'Fund this →' : 'View →'}</span>
                 </div>
               </div>
             </a>
-          );
-        })}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Partner CTA -->
-  <section class="bg-white section-padding border-t border-primary/10">
+  <section class="bg-offwhite section-padding border-t border-primary/10">
     <div class="container-narrow max-w-3xl text-center mx-auto">
       <p class="label text-primary mb-4">Are You an Organization?</p>
       <h2 class="mb-6">Apply to become a funded partner.</h2>
