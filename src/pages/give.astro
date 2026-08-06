@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DonateButton from '../components/DonateButton.astro';
 ---
 
-<BaseLayout title="Give" description="Every dollar has a destination. Fund a specific deployment and see exactly where your giving goes.">
+<BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
 
   <!-- Hero -->
   <section class="bg-white section-padding border-b border-primary/10">
@@ -10,11 +11,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="label text-primary mb-4">Give</p>
       <div class="gold-line mb-8"></div>
       <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
-        Every dollar has a destination.
+        Every dollar reaches the field.
       </h1>
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        Your giving doesn't disappear into a general fund. It goes to a specific project, a specific facility, a specific population. You see where it lands and what it changes.
+        Your gift goes into one fund — and straight back out to the facilities doing the work. We deploy it where the need is most urgent, name every project it touches, and report what changed.
       </p>
+      <div class="mt-8">
+        <DonateButton label="Donate now" class="btn-gold text-lg" />
+      </div>
     </div>
   </section>
 
@@ -22,9 +26,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="bg-offwhite section-padding">
     <div class="container-narrow max-w-3xl">
       <p class="label text-primary mb-6">How Giving Works</p>
-      <h2 class="mb-8">Project-based. Transparent. Accountable.</h2>
+      <h2 class="mb-8">One fund. Named destinations. Real reports.</h2>
       <p class="text-body text-lg leading-relaxed mb-8">
-        We follow the Charity: Water model — the approach that proved people give more when they know exactly where their money goes. Each Restore the Last project is a specific deployment: one partner facility, one population, one set of measurable outcomes.
+        We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every deployment the fund touches is named publicly, with outcomes attached.
       </p>
       <div class="space-y-4">
         <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -32,8 +36,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-primary font-bold text-sm">1</span>
           </div>
           <div>
-            <h4 class="font-serif font-bold mb-1">You choose the project</h4>
-            <p class="text-body text-sm">Pick a deployment that resonates — La Casa de mi Padre in El Salvador, a foster care campus in Arizona, a partner yet to be funded.</p>
+            <h4 class="font-serif font-bold mb-1">You give to the fund</h4>
+            <p class="text-body text-sm">One gift, one place. Nothing sits stranded halfway to a goal, and no project gets overfunded while another waits.</p>
           </div>
         </div>
         <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -41,8 +45,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-primary font-bold text-sm">2</span>
           </div>
           <div>
-            <h4 class="font-serif font-bold mb-1">We deploy the technology</h4>
-            <p class="text-body text-sm">Equipment is purchased, delivered, and installed. Staff are trained. Sessions begin.</p>
+            <h4 class="font-serif font-bold mb-1">We deploy where it's needed most</h4>
+            <p class="text-body text-sm">Equipment is purchased, delivered, and installed. Staff are trained. Sessions begin — at the facility that's ready first.</p>
           </div>
         </div>
         <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -50,8 +54,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="text-primary font-bold text-sm">3</span>
           </div>
           <div>
-            <h4 class="font-serif font-bold mb-1">You see the outcome</h4>
-            <p class="text-body text-sm">Progress reports with real data. Session counts. Symptom reduction. Stories from the field. Your project, tracked from funded to complete.</p>
+            <h4 class="font-serif font-bold mb-1">You see where it went</h4>
+            <p class="text-body text-sm">Progress reports with real data. Session counts. Symptom reduction. Stories from the field. Named projects, tracked from funded to running.</p>
           </div>
         </div>
       </div>
@@ -62,7 +66,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="bg-light section-padding">
     <div class="container-narrow">
       <p class="label text-primary mb-6">Projects</p>
-      <h2 class="mb-10">Where your giving goes.</h2>
+      <h2 class="mb-4">Where the fund goes.</h2>
+      <p class="text-body text-lg max-w-2xl mb-10 leading-relaxed">
+        Every deployment below is funded out of the same pool. This is the work your giving is paying for right now.
+      </p>
       <div class="grid md:grid-cols-3 gap-6">
         <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
           <div class="bg-primary h-1"></div>
@@ -100,13 +107,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container-narrow max-w-2xl">
       <h2 class="text-white text-3xl md:text-4xl mb-6">Ready to fund restoration?</h2>
       <p class="text-white/80 mb-10">
-        Donate today to fund a specific project. You'll receive updates as the deployment progresses and outcome reports when sessions are complete.
+        Give once or monthly. Your gift joins the fund that keeps this technology moving into the facilities that need it — and you'll get reports from the field as deployments progress.
       </p>
-      <a href="mailto:dallas@restorethelast.org" class="btn-gold text-lg">
-        Contact us to give
-      </a>
+      <DonateButton label="Donate now" class="btn-gold text-lg" />
       <p class="text-white/40 text-sm mt-6">
-        Online donation portal coming soon. For now, reach out directly to fund a project.
+        Planning a larger gift, or giving another way?
+        <a href="mailto:dallas@restorethelast.org" class="underline hover:text-white/70 transition-colors">Email us</a>
+        and we'll walk you through it.
       </p>
     </div>
   </section>

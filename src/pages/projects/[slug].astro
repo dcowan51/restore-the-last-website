@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import projects from '../../data/projects.json';
+import DonateButton from '../../components/DonateButton.astro';
 
 export function getStaticPaths() {
   return projects.map(project => ({
@@ -25,9 +26,7 @@ const badgeColor = isMajor
   ? 'text-primary bg-primary/10 border-primary/20'
   : (project.status === 'open' ? 'text-gold bg-gold/10 border-gold/20' : 'text-green-700 bg-green-50 border-green-200');
 
-const ctaLabel = isMajor
-  ? 'Contact us to fund this'
-  : (isClosed ? 'Project fully funded' : 'Fund this project');
+const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
 ---
 
 <BaseLayout title={project.title} description={project.summary}>
@@ -51,14 +50,14 @@ const ctaLabel = isMajor
             <>
               <p class="label text-primary mb-3">Project Cost</p>
               <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-              <p class="text-body/50 text-sm mb-5">fully-costed deployment</p>
+              <p class="text-body/50 text-sm mb-5">what this deployment costs to run</p>
               {isClosed && (
                 <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
               )}
             </>
           )}
           {!isClosed && (
-            <a href={mailtoLink} class="btn-gold w-full text-center block text-base mt-2">{ctaLabel}</a>
+            <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mt-2" />
           )}
         </div>
       </div>
@@ -113,7 +112,7 @@ const ctaLabel = isMajor
               <>
                 <p class="label text-primary mb-4">Project Cost</p>
                 <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-                <p class="text-body/50 text-sm mb-6">fully-costed deployment</p>
+                <p class="text-body/50 text-sm mb-6">what this deployment costs to run</p>
                 {isClosed && (
                   <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
                 )}
@@ -124,11 +123,10 @@ const ctaLabel = isMajor
 
             {!isClosed ? (
               <>
-                <a href={mailtoLink} class="btn-gold w-full text-center block text-base mb-3">
-                  {ctaLabel}
-                </a>
+                <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mb-3" />
                 <p class="text-body/40 text-xs text-center">
-                  You'll be connected directly with our team to complete your gift.
+                  Gifts go to the general fund, which pays for this deployment and every other one in progress.
+                  <a href={mailtoLink} class="underline hover:text-body/70 transition-colors">Questions?</a>
                 </p>
               </>
             ) : (
@@ -157,13 +155,13 @@ const ctaLabel = isMajor
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
-                <p>100% of your gift goes to this specific project</p>
+                <p>100% of the fund goes to deployments in the field</p>
               </div>
               <div class="flex items-start gap-3">
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
-                <p>You'll receive progress updates as the deployment moves forward</p>
+                <p>You'll receive progress updates as deployments move forward</p>
               </div>
               <div class="flex items-start gap-3">
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -186,7 +184,7 @@ const ctaLabel = isMajor
         <h2 class="text-white text-2xl md:text-3xl mb-6">
           {isMajor ? 'Ready to partner on this initiative?' : 'Ready to fund this deployment?'}
         </h2>
-        <a href={mailtoLink} class="btn-gold text-lg">{ctaLabel}</a>
+        <DonateButton label={ctaLabel} class="btn-gold text-lg" />
       </div>
     </section>
   )}

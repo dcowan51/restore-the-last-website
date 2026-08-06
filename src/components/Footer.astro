@@ -1,4 +1,6 @@
 ---
+import { DONATE_URL } from '../config';
+
 const year = new Date().getFullYear();
 ---
 
@@ -22,6 +24,14 @@ const year = new Date().getFullYear();
           <a href="/impact" class="text-white/70 hover:text-white text-sm transition-colors">Impact</a>
           <a href="/partners" class="text-white/70 hover:text-white text-sm transition-colors">Partners</a>
           <a href="/give" class="text-white/70 hover:text-white text-sm transition-colors">Give</a>
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gold hover:brightness-110 text-sm font-bold transition-all"
+          >
+            Donate now →
+          </a>
         </div>
       </div>
 

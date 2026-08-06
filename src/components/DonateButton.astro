@@ -1,0 +1,14 @@
+---
+import { DONATE_URL } from '../config';
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = 'Donate now', class: className = 'btn-gold text-lg' } = Astro.props;
+---
+
+<a href={DONATE_URL} target="_blank" rel="noopener noreferrer" class={className}>
+  {label}
+</a>
