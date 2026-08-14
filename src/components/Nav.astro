@@ -21,7 +21,7 @@ const links = [
         <a
           href={link.href}
           class:list={[
-            'text-sm font-sans text-body hover:text-primary transition-colors',
+            'text-sm font-sans text-body hover:text-primary transition-colors py-2',
             currentPath.startsWith(link.href) && 'text-primary font-bold'
           ]}
         >
@@ -34,8 +34,10 @@ const links = [
     <!-- Mobile hamburger -->
     <button
       id="mobile-menu-btn"
-      class="md:hidden text-dark"
+      class="md:hidden text-dark p-2.5 -mr-2.5"
       aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -45,13 +47,13 @@ const links = [
 
   <!-- Mobile menu -->
   <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
-    <div class="px-6 py-4 flex flex-col gap-4">
+    <div class="px-6 py-4 flex flex-col gap-1">
       {links.map(link => (
-        <a href={link.href} class="text-body hover:text-primary font-sans text-sm">
+        <a href={link.href} class="text-body hover:text-primary font-sans text-sm py-3">
           {link.label}
         </a>
       ))}
-      <a href="/give" class="btn-gold text-sm py-2 px-6 text-center">Give</a>
+      <a href="/give" class="btn-gold text-sm py-3 px-6 text-center mt-2">Give</a>
     </div>
   </div>
 </nav>
@@ -60,6 +62,8 @@ const links = [
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
   btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+    const open = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
   });
 </script>

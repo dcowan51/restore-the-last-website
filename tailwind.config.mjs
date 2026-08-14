@@ -8,7 +8,11 @@ export default {
         deep: '#3A1470',
         medium: '#9040D0',
         light: '#EDE0FF',
-        gold: '#E07A5F',
+        // Two golds, split by the background they sit on — no single value clears
+        // WCAG AA on both. `gold` needs to stay light to read on `deep`; text and
+        // solid buttons on white/offwhite/light need something much darker.
+        gold: '#E07A5F',       // on `deep` only, plus decorative rules and borders
+        'gold-deep': '#A84018', // text on light backgrounds, and btn-gold's fill
         dark: '#1C1C2E',
         body: '#3D3D4F',
         offwhite: '#FAFAF7',

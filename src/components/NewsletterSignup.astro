@@ -29,8 +29,8 @@ const action = useKit
 const dark = variant === 'dark';
 
 const inputClass = dark
-  ? 'w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder:text-white/50 focus:outline-none focus:border-gold transition-colors'
-  : 'w-full px-4 py-3 rounded-xl bg-white border border-primary/20 text-dark placeholder:text-body/50 focus:outline-none focus:border-primary transition-colors';
+  ? 'w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder:text-white/60 focus:outline-none focus:border-gold transition-colors'
+  : 'w-full px-4 py-3 rounded-xl bg-white border border-primary/20 text-dark placeholder:text-body/80 focus:outline-none focus:border-primary transition-colors';
 
 const buttonClass = dark
   ? 'btn-gold whitespace-nowrap'
@@ -86,7 +86,7 @@ const buttonClass = dark
   </form>
 
   <p
-    class:list={['text-xs mt-3', dark ? 'text-white/40' : 'text-body/50']}
+    class:list={['text-xs mt-3', dark ? 'text-white/70' : 'text-body/80']}
     data-newsletter-note
   >
     No spam. Unsubscribe anytime. We never sell or share your email — <a
