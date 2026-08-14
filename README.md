@@ -56,6 +56,13 @@ left-aligned:
 </div>
 ```
 
+**Reading measure.** `global.css` caps `p` and `li` inside `.container-narrow`
+at `56ch`. `ch` rather than pixels because it scales with each element's own
+font size, so 18px body copy and 14px captions both land near 68–70 characters.
+A max-width only binds what's already wider, so card and column text is
+untouched. The rule lives in `@layer base`, so an explicit `max-w-*` utility on
+an element still wins if a block genuinely needs to be wider.
+
 **Minimum contrast.** `text-body` at `/80` or darker, `text-white` at `/40` or
 lighter (and `/40` only for decorative marks). Anything fainter fails AA.
 
@@ -64,10 +71,11 @@ smaller heading — apply `text-h4` and keep the correct tag.
 
 ## Known gaps
 
-- Body prose runs ~97 characters per line against an ideal of 45–75. Fixing it
-  needs per-section judgment, since most blocks mix prose with card grids.
 - `#FFFFFF` vs `#FAFAF7` section alternation is ~1.02:1 — effectively invisible.
   Only `bg-light` and `bg-deep` create a real seam.
+- Form inputs use `focus:outline-none` and signal focus with a 1px border colour
+  change only. Contrast is adequate (7.5:1 light, 4.7:1 dark) but it's subtle;
+  a proper ring would be better.
 
 ## Deployment
 

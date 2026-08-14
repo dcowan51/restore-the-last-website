@@ -20,6 +20,23 @@
   h2 { @apply text-h2; }
   h3 { @apply text-h3; }
   h4 { @apply text-h4; }
+
+  /* Reading measure.
+     Body copy ran 80-121 characters per line against a comfortable 45-75. `ch`
+     is used rather than a pixel cap because it scales with each element's own
+     font size: 1ch measures ~1.21-1.25x the average Lato prose character here,
+     so 56ch lands 18px body, 16px copy, and 14px captions all near 68-70.
+     A max-width only binds elements already wider than it, so text in cards and
+     grid columns is narrower than the cap and is left untouched.
+     This sits in `base` deliberately — Tailwind's utilities layer outranks it,
+     so an explicit max-w-* on an element still wins. */
+  .container-narrow :is(p, li) {
+    max-width: 56ch;
+  }
+  /* Centred blocks must stay centred once capped, or they'd sit off to the left. */
+  .text-center :is(p, li) {
+    margin-inline: auto;
+  }
 }
 
 @layer components {
