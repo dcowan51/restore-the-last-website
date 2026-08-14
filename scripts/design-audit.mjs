@@ -115,6 +115,21 @@ for (const file of pages) {
     if (re.test(body)) usageFindings.push({ page, why });
   }
 
+  // A capped block whose content is centred needs `mx-auto`, or it sits at the
+  // left of the rail with its text centred inside it — which reads as the whole
+  // block being off-centre. Two ways that happens: `text-center` on the block
+  // itself, or on an ancestor section.
+  const uncentred = (cls) => /\bmax-w-/.test(cls) && !/\bmx-auto\b/.test(cls);
+  for (const [, cls] of html.matchAll(/<div class="([^"]*\btext-center\b[^"]*)"/g)) {
+    if (uncentred(cls)) usageFindings.push({ page, why: `centred block missing mx-auto: "${cls.slice(0, 44)}"` });
+  }
+  for (const [, secCls, inner] of html.matchAll(/<section[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/section>/g)) {
+    if (!/\btext-center\b/.test(secCls)) continue;
+    for (const [, cls] of inner.matchAll(/<div class="([^"]*)"/g)) {
+      if (uncentred(cls)) usageFindings.push({ page, why: `capped block in a text-center section missing mx-auto: "${cls.slice(0, 40)}"` });
+    }
+  }
+
   // heading order
   const levels = [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => +m[1]);
   const h1s = levels.filter((l) => l === 1).length;
