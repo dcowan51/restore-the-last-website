@@ -95,6 +95,10 @@ const BANNED = [
   [/class="[^"]*\btext-gold\b(?!-deep)/, 'text-gold on a light background (use text-gold-deep)'],
   [/class="[^"]*text-body\/(40|50|60|70)\b/, 'text-body below /80 (fails AA on white and bg-light)'],
   [/class="[^"]*text-white\/(20|30)\b/, 'text-white below /40 on deep'],
+  // The Phase B regression: a width override on the container itself shrinks the
+  // rail AND re-centres it, so the left edge moves section to section. Width
+  // belongs on a nested, left-aligned child instead.
+  [/class="container-narrow[^"]*\bmax-w-/, 'width override on .container-narrow (nest it instead — it breaks the rail)'],
 ];
 
 for (const file of pages) {

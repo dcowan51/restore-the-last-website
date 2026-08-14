@@ -32,11 +32,15 @@
   .btn-gold {
     @apply inline-block bg-gold-deep text-white font-sans font-bold px-8 py-3 rounded-md hover:brightness-110 transition-all duration-200;
   }
-  .section-padding {
-    @apply py-20 px-6 md:px-12 lg:px-20;
-  }
+  /* The rail. Nav, every section, and the footer all use this one definition, so
+     content sits on a single left edge from the logo down to the copyright. The
+     horizontal padding lives here rather than on the section: a section that
+     also padded would push its container inward and break the shared edge. */
   .container-narrow {
-    @apply max-w-6xl mx-auto;
+    @apply max-w-7xl mx-auto px-6 md:px-12;
+  }
+  .section-padding {
+    @apply py-20;
   }
   .gold-line {
     @apply w-16 h-1 bg-gold;
