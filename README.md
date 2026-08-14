@@ -17,18 +17,57 @@ npm install
 npm run dev        # Start dev server at localhost:4321
 npm run build      # Build to ./dist/
 npm run preview    # Preview production build
+npm run audit      # Build, then check the design rules below
 ```
 
 ## Pages
 
-| Route            | Page           |
-| :--------------- | :------------- |
-| `/`              | Homepage       |
-| `/about`         | About/Mission  |
-| `/how-it-works`  | How It Works   |
-| `/impact`        | Impact         |
-| `/give`          | Give/Donate    |
-| `/partners`      | Partners       |
+| Route                | Page                    |
+| :------------------- | :---------------------- |
+| `/`                  | Homepage                |
+| `/about`             | About/Mission           |
+| `/how-it-works`      | How It Works            |
+| `/impact`            | Impact                  |
+| `/give`              | Give/Donate             |
+| `/partners`          | Partners                |
+| `/projects`          | Current Projects        |
+| `/projects/[slug]`   | Project detail          |
+| `/privacy`           | Privacy policy          |
+| `/404`               | Not found               |
+
+## Design rules
+
+`npm run audit` enforces these. It exits non-zero on a violation, so it works as
+a pre-push check.
+
+**Two golds.** No single value clears WCAG AA on both light and dark grounds —
+light backgrounds need luminance ≤0.135, the deep violet needs ≥0.290. Use
+`gold` on `bg-deep` and for decorative rules; use `gold-deep` for text on
+white/offwhite/light and for `btn-gold`'s fill.
+
+**One left rail.** Never put a width override on `.container-narrow` — it
+supplies `mx-auto`, so the override shrinks the block *and* re-centres it, and
+the left edge drifts section to section. Nest instead, and leave the child
+left-aligned:
+
+```html
+<div class="container-narrow">
+  <div class="max-w-3xl">…</div>
+</div>
+```
+
+**Minimum contrast.** `text-body` at `/80` or darker, `text-white` at `/40` or
+lighter (and `/40` only for decorative marks). Anything fainter fails AA.
+
+**Heading tags follow the outline, not the size.** Never skip a level to get a
+smaller heading — apply `text-h4` and keep the correct tag.
+
+## Known gaps
+
+- Body prose runs ~97 characters per line against an ideal of 45–75. Fixing it
+  needs per-section judgment, since most blocks mix prose with card grids.
+- `#FFFFFF` vs `#FAFAF7` section alternation is ~1.02:1 — effectively invisible.
+  Only `bg-light` and `bg-deep` create a real seam.
 
 ## Deployment
 
