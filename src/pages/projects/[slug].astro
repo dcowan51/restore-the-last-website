@@ -24,7 +24,7 @@ const badgeLabel = isMajor
 
 const badgeColor = isMajor
   ? 'text-primary bg-primary/10 border-primary/20'
-  : (project.status === 'open' ? 'text-gold bg-gold/10 border-gold/20' : 'text-green-700 bg-green-50 border-green-200');
+  : (project.status === 'open' ? 'text-gold-deep bg-gold-deep/10 border-gold-deep/20' : 'text-green-700 bg-green-50 border-green-200');
 
 const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
 ---
@@ -34,7 +34,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
   <!-- Hero -->
   <section class="bg-white border-b border-primary/10">
     <div class="container-narrow py-10 md:py-12 px-6 md:px-12">
-      <a href="/projects" class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mb-6 inline-block">← All Current Projects</a>
+      <a href="/projects" class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mb-6 inline-block py-2">← All Current Projects</a>
 
       <!-- Mobile sidebar -->
       <div class="block md:hidden mb-8">
@@ -50,7 +50,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
             <>
               <p class="label text-primary mb-3">Project Cost</p>
               <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-              <p class="text-body/50 text-sm mb-5">what this deployment costs to run</p>
+              <p class="text-body/80 text-sm mb-5">what this deployment costs to run</p>
               {isClosed && (
                 <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
               )}
@@ -69,11 +69,11 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
           <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border mb-4 ${badgeColor}`}>
             {badgeLabel}
           </span>
-          <p class="label text-gold mb-2">{project.location}</p>
+          <p class="label text-gold-deep mb-2">{project.location}</p>
           <h1 class="text-dark text-2xl md:text-4xl font-serif font-bold leading-tight mb-4">
             {project.title}
           </h1>
-          <p class="text-body/70 text-sm font-semibold uppercase tracking-wide mb-6">{project.population}</p>
+          <p class="text-body/80 text-sm font-semibold uppercase tracking-wide mb-6">{project.population}</p>
           <img
             src={project.coverImage}
             alt={project.title}
@@ -112,7 +112,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
               <>
                 <p class="label text-primary mb-4">Project Cost</p>
                 <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-                <p class="text-body/50 text-sm mb-6">what this deployment costs to run</p>
+                <p class="text-body/80 text-sm mb-6">what this deployment costs to run</p>
                 {isClosed && (
                   <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
                 )}
@@ -124,9 +124,9 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
             {!isClosed ? (
               <>
                 <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mb-3" />
-                <p class="text-body/40 text-xs text-center">
+                <p class="text-body/80 text-xs text-center">
                   Gifts go to the general fund, which pays for this deployment and every other one in progress.
-                  <a href={mailtoLink} class="underline hover:text-body/70 transition-colors">Questions?</a>
+                  <a href={mailtoLink} class="underline hover:text-body/80 transition-colors">Questions?</a>
                 </p>
               </>
             ) : (
@@ -141,7 +141,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
                   href={project.orgUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mt-6 inline-block"
+                  class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mt-6 inline-block py-2"
                 >
                   Visit organization's website →
                 </a>
@@ -150,7 +150,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
 
             <div class="border-t border-primary/10 my-6"></div>
 
-            <div class="space-y-3 text-sm text-body/70">
+            <div class="space-y-3 text-sm text-body/80">
               <div class="flex items-start gap-3">
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>

@@ -27,16 +27,16 @@ const year = new Date().getFullYear();
       <div>
         <p class="label text-gold mb-4">Navigate</p>
         <div class="flex flex-col gap-2">
-          <a href="/about" class="text-white/70 hover:text-white text-sm transition-colors">About</a>
-          <a href="/how-it-works" class="text-white/70 hover:text-white text-sm transition-colors">How It Works</a>
-          <a href="/impact" class="text-white/70 hover:text-white text-sm transition-colors">Impact</a>
-          <a href="/partners" class="text-white/70 hover:text-white text-sm transition-colors">Partners</a>
-          <a href="/give" class="text-white/70 hover:text-white text-sm transition-colors">Give</a>
+          <a href="/about" class="text-white/70 hover:text-white text-sm transition-colors py-2">About</a>
+          <a href="/how-it-works" class="text-white/70 hover:text-white text-sm transition-colors py-2">How It Works</a>
+          <a href="/impact" class="text-white/70 hover:text-white text-sm transition-colors py-2">Impact</a>
+          <a href="/partners" class="text-white/70 hover:text-white text-sm transition-colors py-2">Partners</a>
+          <a href="/give" class="text-white/70 hover:text-white text-sm transition-colors py-2">Give</a>
           <a
             href={DONATE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-gold hover:brightness-110 text-sm font-bold transition-all"
+            class="text-gold hover:brightness-110 text-sm font-bold transition-all py-2"
           >
             Donate now →
           </a>
@@ -46,7 +46,7 @@ const year = new Date().getFullYear();
       <!-- Contact -->
       <div>
         <p class="label text-gold mb-4">Contact</p>
-        <a href="mailto:dallas@restorethelast.org" class="text-white/70 hover:text-white text-sm transition-colors">
+        <a href="mailto:dallas@restorethelast.org" class="text-white/70 hover:text-white text-sm transition-colors py-2">
           dallas@restorethelast.org
         </a>
       </div>
@@ -57,10 +57,10 @@ const year = new Date().getFullYear();
       <p class="font-serif italic text-gold text-lg mb-4">
         "He restores my soul." — Psalm 23:3
       </p>
-      <p class="text-white/40 text-xs">
+      <p class="text-white/70 text-xs">
         &copy; {year} Restore the Last. All rights reserved.
-        <span class="mx-2 text-white/20">·</span>
-        <a href="/privacy" class="hover:text-white/70 transition-colors underline">Privacy</a>
+        <span class="mx-2 text-white/40" aria-hidden="true">·</span>
+        <a href="/privacy" class="hover:text-white transition-colors underline inline-block py-2">Privacy</a>
       </p>
     </div>
   </div>

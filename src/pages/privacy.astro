@@ -50,7 +50,7 @@ const services = [
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
         Plain English, no fine print. Here's exactly what we collect, why we collect it, and what we will never do with it.
       </p>
-      <p class="text-body/50 text-sm mt-6">Last updated: {PRIVACY_UPDATED}</p>
+      <p class="text-body/80 text-sm mt-6">Last updated: {PRIVACY_UPDATED}</p>
     </div>
   </section>
 
@@ -133,7 +133,7 @@ const services = [
         {services.map(service => (
           <div class="bg-white rounded-2xl p-6 border border-primary/10">
             <h3 class="font-serif text-lg font-bold text-dark mb-1">{service.name}</h3>
-            <p class="text-body/60 text-sm mb-4">{service.role}</p>
+            <p class="text-body/80 text-sm mb-4">{service.role}</p>
             <p class="label text-primary mb-2">What it sees</p>
             <p class="text-body text-sm leading-relaxed">{service.data}</p>
           </div>
@@ -150,19 +150,19 @@ const services = [
 
       <div class="space-y-4">
         <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
-          <h4 class="font-serif font-bold mb-2">See what we have</h4>
+          <h3 class="text-h4 font-serif font-bold mb-2">See what we have</h3>
           <p class="text-body text-sm">Ask us for a copy of the information we hold about you, and we'll send it.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
-          <h4 class="font-serif font-bold mb-2">Correct it</h4>
+          <h3 class="text-h4 font-serif font-bold mb-2">Correct it</h3>
           <p class="text-body text-sm">If something we have is wrong, tell us and we'll fix it.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
-          <h4 class="font-serif font-bold mb-2">Delete it</h4>
+          <h3 class="text-h4 font-serif font-bold mb-2">Delete it</h3>
           <p class="text-body text-sm">Ask us to erase your information and we will, except for donation records we're legally required to retain for tax and audit purposes.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
-          <h4 class="font-serif font-bold mb-2">Stop hearing from us</h4>
+          <h3 class="text-h4 font-serif font-bold mb-2">Stop hearing from us</h3>
           <p class="text-body text-sm">Use the unsubscribe link in any email, or write to us. No guilt, no retention offers, no delay.</p>
         </div>
       </div>
@@ -208,7 +208,7 @@ const services = [
       {MAILING_ADDRESS && (
         <p class="text-white/50 text-sm mt-8 leading-relaxed whitespace-pre-line">{MAILING_ADDRESS}</p>
       )}
-      <p class="text-white/40 text-sm mt-8 leading-relaxed">
+      <p class="text-white/70 text-sm mt-8 leading-relaxed">
         Restore the Last is a faith-based nonprofit organization. Our 501(c)(3) determination is pending; we'll note it here once it's granted.
       </p>
     </div>
