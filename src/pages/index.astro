@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 ---
 
 <BaseLayout title="Home" description="Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 97% improved.">
@@ -205,7 +206,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
           <div class="aspect-video">
             <iframe
-              src="https://www.youtube.com/embed/utLjfuTNIU8"
+              src="https://www.youtube-nocookie.com/embed/utLjfuTNIU8"
               title="Thrive Arizona — Restore the Last"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -223,7 +224,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
           <div class="aspect-video bg-dark flex items-center justify-center overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/uTvgBmxbzeQ"
+              src="https://www.youtube-nocookie.com/embed/uTvgBmxbzeQ"
               title="El Salvador — Restore the Last"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -253,6 +254,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Your giving funds real deployments. You see where it goes, who it reaches, and what changes. No black boxes. No overhead mystery.
       </p>
       <a href="/give" class="btn-gold text-lg">Partner with us</a>
+
+      <!-- Secondary ask: the low-commitment step for readers who aren't ready to give. -->
+      <div class="mt-12 md:mt-14 pt-10 border-t border-white/10 max-w-lg mx-auto text-left">
+        <NewsletterSignup
+          formId="home-newsletter"
+          variant="dark"
+          heading="Not ready to give? Follow the work."
+          body="Field Notes — the story of every deployment, straight from the facilities. One email a month."
+        />
+      </div>
     </div>
   </section>
 

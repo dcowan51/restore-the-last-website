@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL, MAILING_ADDRESS, PRIVACY_UPDATED } from '../config';
+
+// Every third party listed here is one the site actually loads or sends data to.
+// If you add analytics, a donor CRM, or another embed, add a row — an inaccurate
+// privacy policy is worse than none.
+const services = [
+  {
+    name: 'Netlify',
+    role: 'Website hosting and form handling',
+    data: 'Server logs (including IP address), and any form you submit',
+  },
+  {
+    name: 'Kit',
+    role: 'Newsletter delivery',
+    data: 'Your email address, plus whether you opened or clicked our emails',
+  },
+  {
+    name: 'Crowded',
+    role: 'Donation processing',
+    data: 'Your name, email, and payment details — handled entirely by Crowded',
+  },
+  {
+    name: 'YouTube (Google)',
+    role: 'Video hosting for the films embedded on our site',
+    data: 'Your IP address when a page with a video loads. We use YouTube\'s privacy-enhanced mode, so no tracking cookies are set unless you press play',
+  },
+  {
+    name: 'Google Fonts',
+    role: 'Typefaces used across the site',
+    data: 'Your IP address when a page loads',
+  },
+];
+---
+
+<BaseLayout
+  title="Privacy"
+  description="How Restore the Last collects, uses, and protects your information. We never sell, rent, or trade your data."
+>
+
+  <!-- Hero -->
+  <section class="bg-white section-padding border-b border-primary/10">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Privacy</p>
+      <div class="gold-line mb-8"></div>
+      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+        We treat your information the way we'd want ours treated.
+      </h1>
+      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
+        Plain English, no fine print. Here's exactly what we collect, why we collect it, and what we will never do with it.
+      </p>
+      <p class="text-body/50 text-sm mt-6">Last updated: {PRIVACY_UPDATED}</p>
+    </div>
+  </section>
+
+  <!-- The pledge -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Our Pledge</p>
+      <h2 class="mb-8">We will never sell, rent, or trade your information.</h2>
+      <p class="text-body text-lg leading-relaxed mb-6">
+        Not to other nonprofits. Not to data brokers. Not to CalmWaves or any other organization, related or otherwise. Your name will never appear on a list someone else bought.
+      </p>
+      <p class="text-body text-lg leading-relaxed">
+        We ask for the least we need, we tell you why, and you can ask us to delete it at any time.
+      </p>
+    </div>
+  </section>
+
+  <!-- What we collect -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">What We Collect</p>
+      <h2 class="mb-10">Four things, and only when you give them to us.</h2>
+
+      <div class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10">
+          <h3 class="text-xl mb-3">When you subscribe to Field Notes</h3>
+          <p class="text-body leading-relaxed">
+            We collect your email address so we can send you updates from the field. That's it — no name required, no phone number, nothing else. Every email we send includes a one-click unsubscribe link, and we honor it immediately.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10">
+          <h3 class="text-xl mb-3">When your organization applies to partner</h3>
+          <p class="text-body leading-relaxed">
+            We collect your organization's name, your name, your email address, the population you serve, and whatever you tell us about your work. We use this to evaluate the partnership and to follow up with you. We do not add partner applicants to our newsletter without asking.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10">
+          <h3 class="text-xl mb-3">When you give</h3>
+          <p class="text-body leading-relaxed">
+            Donations are processed by <strong class="text-dark">Crowded</strong>, not by us. Your card number never touches our website and we never see it. Crowded shares your name, email, and gift amount with us so we can thank you, send a receipt, and keep the records the IRS requires of us. Their handling of your payment information is governed by their own privacy policy.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-primary/10">
+          <h3 class="text-xl mb-3">When you simply visit</h3>
+          <p class="text-body leading-relaxed">
+            Our host, Netlify, keeps standard server logs that include your IP address, browser type, and which pages you loaded. We use these only to keep the site running and secure. <strong class="text-dark">We do not run Google Analytics, advertising pixels, or any other tracking software on this site.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cookies -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Cookies</p>
+      <h2 class="mb-8">We don't use any.</h2>
+      <p class="text-body text-lg leading-relaxed mb-6">
+        Restore the Last sets no cookies of its own and runs no advertising or analytics trackers. You won't see a cookie banner here because there's nothing to consent to.
+      </p>
+      <p class="text-body text-lg leading-relaxed">
+        Several of our pages embed films hosted on YouTube. We deliberately use YouTube's privacy-enhanced mode, which means Google sets no tracking cookies on your device unless you actually press play. Google still receives your IP address when the video player loads, because that's how the film reaches you. If you press play, Google's own privacy policy governs what happens next.
+      </p>
+    </div>
+  </section>
+
+  <!-- Third parties -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Who Else Touches Your Data</p>
+      <h2 class="mb-6">The complete list.</h2>
+      <p class="text-body text-lg leading-relaxed mb-10">
+        We use a small number of outside services to run this organization. Each one is listed below, along with what it sees. None of them are permitted to sell your information or use it for their own marketing.
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        {services.map(service => (
+          <div class="bg-white rounded-2xl p-6 border border-primary/10">
+            <h3 class="font-serif text-lg font-bold text-dark mb-1">{service.name}</h3>
+            <p class="text-body/60 text-sm mb-4">{service.role}</p>
+            <p class="label text-primary mb-2">What it sees</p>
+            <p class="text-body text-sm leading-relaxed">{service.data}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Your rights -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Your Choices</p>
+      <h2 class="mb-10">You can ask us for anything on this list.</h2>
+
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
+          <h4 class="font-serif font-bold mb-2">See what we have</h4>
+          <p class="text-body text-sm">Ask us for a copy of the information we hold about you, and we'll send it.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
+          <h4 class="font-serif font-bold mb-2">Correct it</h4>
+          <p class="text-body text-sm">If something we have is wrong, tell us and we'll fix it.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
+          <h4 class="font-serif font-bold mb-2">Delete it</h4>
+          <p class="text-body text-sm">Ask us to erase your information and we will, except for donation records we're legally required to retain for tax and audit purposes.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-primary/10 border-l-4 border-l-primary">
+          <h4 class="font-serif font-bold mb-2">Stop hearing from us</h4>
+          <p class="text-body text-sm">Use the unsubscribe link in any email, or write to us. No guilt, no retention offers, no delay.</p>
+        </div>
+      </div>
+
+      <p class="text-body leading-relaxed mt-8">
+        We extend these choices to everyone who contacts us, wherever you live. If you're in the European Union or the United Kingdom, you also hold these rights under the GDPR, including the right to lodge a complaint with your local data protection authority.
+      </p>
+    </div>
+  </section>
+
+  <!-- Children + security -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow max-w-3xl">
+      <p class="label text-primary mb-6">Children</p>
+      <h2 class="mb-8">This website is for adults.</h2>
+      <p class="text-body text-lg leading-relaxed mb-6">
+        Our work serves children and young people, but this website is intended for donors, partners, and supporters aged 18 and over. We do not knowingly collect information from children under 13. If you believe a child has given us their information, email us and we will delete it.
+      </p>
+      <p class="text-body text-lg leading-relaxed">
+        Separately: the people served at our partner facilities are never identified on this site without the informed consent of them or their guardians, and we never publish clinical records. The stories and outcomes we share are used with permission.
+      </p>
+
+      <div class="border-t border-primary/10 mt-12 pt-12">
+        <p class="label text-primary mb-6">Security &amp; Changes</p>
+        <p class="text-body text-lg leading-relaxed mb-6">
+          This site is served over encrypted connections, and we limit access to donor and subscriber information to the people who need it to do their jobs. No system is perfectly secure, and we won't pretend otherwise — but we will tell you promptly if something happens that affects your data.
+        </p>
+        <p class="text-body text-lg leading-relaxed">
+          If we change this policy, we'll update the date at the top of this page. If the change is significant — a new category of data, a new service handling it — we'll say so in Field Notes rather than quietly editing the page.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="bg-deep text-white section-padding text-center">
+    <div class="container-narrow max-w-2xl">
+      <h2 class="text-white text-3xl mb-6">Questions about any of this?</h2>
+      <p class="text-white/80 mb-8 leading-relaxed">
+        A real person reads this inbox. Ask us anything about your data, and we'll give you a straight answer.
+      </p>
+      <a href={`mailto:${CONTACT_EMAIL}`} class="btn-gold text-lg">{CONTACT_EMAIL}</a>
+      {MAILING_ADDRESS && (
+        <p class="text-white/50 text-sm mt-8 leading-relaxed whitespace-pre-line">{MAILING_ADDRESS}</p>
+      )}
+      <p class="text-white/40 text-sm mt-8 leading-relaxed">
+        Restore the Last is a faith-based nonprofit organization. Our 501(c)(3) determination is pending; we'll note it here once it's granted.
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>

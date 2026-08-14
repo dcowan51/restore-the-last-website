@@ -1,0 +1,167 @@
+---
+import { NEWSLETTER_FORM_ID } from '../config';
+
+interface Props {
+  variant?: 'dark' | 'light';
+  heading?: string;
+  body?: string;
+  buttonLabel?: string;
+  /** Must be unique per page — the footer and a page section can both appear at once. */
+  formId: string;
+}
+
+const {
+  variant = 'dark',
+  heading = 'Field Notes',
+  body = 'The story of every deployment, straight from the facilities. One email a month.',
+  buttonLabel = 'Subscribe',
+  formId,
+} = Astro.props;
+
+// Kit handles sending, the welcome email, and unsubscribes. Until NEWSLETTER_FORM_ID
+// is filled in, submissions fall back to Netlify Forms — already wired on this site —
+// so no signup is ever dropped while the Kit account is being set up.
+const useKit = Boolean(NEWSLETTER_FORM_ID);
+const action = useKit
+  ? `https://app.kit.com/forms/${NEWSLETTER_FORM_ID}/subscriptions`
+  : undefined;
+
+const dark = variant === 'dark';
+
+const inputClass = dark
+  ? 'w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder:text-white/50 focus:outline-none focus:border-gold transition-colors'
+  : 'w-full px-4 py-3 rounded-xl bg-white border border-primary/20 text-dark placeholder:text-body/50 focus:outline-none focus:border-primary transition-colors';
+
+const buttonClass = dark
+  ? 'btn-gold whitespace-nowrap'
+  : 'btn-primary whitespace-nowrap';
+---
+
+<div class="newsletter-signup" data-newsletter-root>
+  {heading && (
+    <p class:list={['label mb-2', dark ? 'text-gold' : 'text-primary']}>{heading}</p>
+  )}
+  {body && (
+    <p class:list={['text-sm leading-relaxed mb-5', dark ? 'text-white/70' : 'text-body']}>
+      {body}
+    </p>
+  )}
+
+  <form
+    name="newsletter"
+    method="POST"
+    action={action}
+    data-netlify={useKit ? undefined : 'true'}
+    netlify-honeypot={useKit ? undefined : 'bot-field'}
+    data-newsletter-form
+    data-kit={useKit ? 'true' : undefined}
+    class="flex flex-col sm:flex-row gap-3"
+  >
+    {!useKit && <input type="hidden" name="form-name" value="newsletter" />}
+
+    <!-- Honeypot — hidden from people, catches bots on both paths. -->
+    <p class="hidden" aria-hidden="true">
+      <label>
+        Leave this field empty
+        <input name="bot-field" tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <div class="flex-1">
+      <label for={`${formId}-email`} class="sr-only">Email address</label>
+      <input
+        type="email"
+        id={`${formId}-email`}
+        name="email_address"
+        required
+        placeholder="you@example.com"
+        autocomplete="email"
+        class={inputClass}
+      />
+    </div>
+
+    <button type="submit" class={buttonClass} data-newsletter-submit>
+      {buttonLabel}
+    </button>
+  </form>
+
+  <p
+    class:list={['text-xs mt-3', dark ? 'text-white/40' : 'text-body/50']}
+    data-newsletter-note
+  >
+    No spam. Unsubscribe anytime. We never sell or share your email — <a
+      href="/privacy"
+      class:list={['underline', dark ? 'hover:text-white/70' : 'hover:text-body']}
+    >privacy</a>.
+  </p>
+
+  <p
+    class:list={[
+      'hidden text-sm mt-4 font-sans font-bold',
+      dark ? 'text-gold' : 'text-primary',
+    ]}
+    role="status"
+    aria-live="polite"
+    data-newsletter-success
+  >
+    You're on the list. Watch your inbox for the first note from the field.
+  </p>
+
+  <p
+    class:list={['hidden text-sm mt-4', dark ? 'text-white/70' : 'text-body']}
+    role="alert"
+    data-newsletter-error
+  >
+    Something went wrong. Please try again, or email
+    <a href="mailto:dallas@restorethelast.org" class="underline">dallas@restorethelast.org</a>.
+  </p>
+</div>
+
+<script>
+  // Progressive enhancement: without JS the form still posts natively (to Kit, or
+  // to Netlify Forms while Kit is being set up). With JS we submit in the
+  // background so the reader is never bounced off the page mid-scroll.
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter-form]').forEach((form) => {
+    // Netlify's native POST already redirects to a success page — leave it alone.
+    if (form.dataset.kit !== 'true') return;
+
+    const root = form.closest('[data-newsletter-root]');
+    if (!root) return;
+
+    const success = root.querySelector('[data-newsletter-success]');
+    const error = root.querySelector('[data-newsletter-error]');
+    const note = root.querySelector('[data-newsletter-note]');
+    const button = form.querySelector<HTMLButtonElement>('[data-newsletter-submit]');
+    const originalLabel = button?.textContent ?? '';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error?.classList.add('hidden');
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { accept: 'application/json' },
+        });
+
+        if (!response.ok) throw new Error(`Kit responded ${response.status}`);
+
+        form.classList.add('hidden');
+        note?.classList.add('hidden');
+        success?.classList.remove('hidden');
+      } catch {
+        error?.classList.remove('hidden');
+        if (button) {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      }
+    });
+  });
+</script>

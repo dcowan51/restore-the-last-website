@@ -1,11 +1,19 @@
 ---
 import { DONATE_URL } from '../config';
+import NewsletterSignup from './NewsletterSignup.astro';
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="bg-deep text-white">
   <div class="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
+    <!-- Newsletter -->
+    <div class="pb-12 mb-12 border-b border-white/10">
+      <div class="max-w-xl">
+        <NewsletterSignup formId="footer-newsletter" variant="dark" />
+      </div>
+    </div>
+
     <div class="grid md:grid-cols-3 gap-8 md:gap-12">
       <!-- Brand -->
       <div>
@@ -51,6 +59,8 @@ const year = new Date().getFullYear();
       </p>
       <p class="text-white/40 text-xs">
         &copy; {year} Restore the Last. All rights reserved.
+        <span class="mx-2 text-white/20">·</span>
+        <a href="/privacy" class="hover:text-white/70 transition-colors underline">Privacy</a>
       </p>
     </div>
   </div>
