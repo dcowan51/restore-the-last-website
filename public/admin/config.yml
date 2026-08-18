@@ -1,0 +1,122 @@
+# Admin UI config. Fields here mirror src/content/config.ts -- that Zod schema is
+# what actually enforces correctness at build time, so if you add a field, add it
+# in both places or the build will reject what the editor saves.
+
+backend:
+  name: github
+  repo: dcowan51/restore-the-last-website
+  branch: main
+  # Netlify brokers the GitHub login, so there's no auth server to run.
+  # Requires the one-time OAuth setup in Netlify (see README-ADMIN.md).
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# Saves land as real commits, so the message explains itself in the repo history.
+commit_messages:
+  create: 'Add project: {{slug}}'
+  update: 'Update project: {{slug}}'
+  delete: 'Remove project: {{slug}}'
+  uploadMedia: 'Upload {{path}}'
+  deleteMedia: 'Delete {{path}}'
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: Project
+    description: >-
+      Everything the fund pays for. These appear on the homepage carousel (when
+      Featured is on), on the Give page, and on /projects.
+    folder: src/content/projects
+    extension: json
+    format: json
+    create: true
+    delete: true
+    # The filename becomes the URL: /projects/<filename>
+    slug: '{{fields.title | slugify}}'
+    summary: '{{title}} — {{location}}'
+    sortable_fields: [order, title, status]
+    view_groups:
+      - label: Type
+        field: type
+    fields:
+      - { name: title, label: Title, widget: string, hint: 'Shows on the card and as the page heading.' }
+
+      - name: type
+        label: Type
+        widget: select
+        default: deployment
+        options:
+          - { label: Deployment, value: deployment }
+          - { label: Documentary / Film, value: documentary }
+          - { label: Training, value: training }
+          - { label: Research, value: research }
+        hint: 'Documentary swaps the card and detail page to film fields.'
+
+      - name: status
+        label: Status
+        widget: select
+        default: open
+        options:
+          - { label: Open — needs funding, value: open }
+          - { label: Active — running now, value: active }
+          - { label: In Production — being made, value: in-production }
+          - { label: Fully Funded — closed, value: funded }
+
+      - { name: featured, label: Show on homepage, widget: boolean, default: true }
+      - { name: order, label: Sort order, widget: number, default: 100, value_type: int, hint: 'Lower shows first. Leave gaps (10, 20, 30) so you can reorder without renumbering everything.' }
+
+      - { name: location, label: Where, widget: string, hint: 'e.g. "Phoenix, Arizona" or "El Salvador".' }
+
+      - name: populations
+        label: Who it serves
+        widget: select
+        multiple: true
+        required: false
+        default: []
+        options:
+          - { label: Trafficking Survivors, value: trafficking-survivors }
+          - { label: Foster Youth, value: foster-youth }
+          - { label: Children in Residential Care, value: residential-care }
+          - { label: Caregivers & Staff, value: caregivers }
+          - { label: Veterans, value: veterans }
+        hint: 'Drives the "Serving" filter on /projects.'
+
+      - { name: purpose, label: Purpose, widget: text, required: false, hint: 'One sentence on why this exists. Shows as "The Purpose".' }
+
+      - name: partner
+        label: Partner organization
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: name, label: Name, widget: string, required: false }
+          - { name: url, label: Website, widget: string, required: false, hint: 'Full URL including https://. Leave blank to hide the link.' }
+
+      - { name: coverImage, label: Cover photo, widget: image, hint: 'Landscape works best. Keep it under ~1600px wide — bigger just slows the page down.' }
+
+      - { name: summary, label: Summary, widget: text, hint: '2–3 sentences. The card shows the first 4 lines; the full text shows on the detail page.' }
+      - { name: whatWeFund, label: What funding covers, widget: text }
+
+      - { name: goal, label: Funding goal ($), widget: number, required: false, value_type: int, min: 1, hint: 'Leave EMPTY for ongoing work with no fixed goal — the card then shows "Ongoing".' }
+
+      # ---- Deployment-shaped fields ----
+      - { name: population, label: 'Who it serves (in plain words)', widget: string, required: false, hint: 'Deployments only. Shows under the title on the card.' }
+      - { name: whyThisPopulation, label: Why this population, widget: text, required: false, hint: 'Deployments only. Blank line between paragraphs.' }
+
+      # ---- Film-shaped fields ----
+      - { name: subtitle, label: Subtitle / tagline, widget: string, required: false, hint: 'Documentaries only. Replaces the summary on the card.' }
+      - { name: whyThisMatters, label: Why this matters, widget: text, required: false, hint: 'Documentaries only. Blank line between paragraphs.' }
+
+      - name: media
+        label: Film details
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: productionPartner, label: Produced with, widget: string, required: false }
+          - { name: targetRelease, label: Target release, widget: string, required: false, hint: 'e.g. "Spring 2027".' }
+          - { name: runtime, label: Runtime, widget: string, required: false }
+          - { name: trailerUrl, label: Trailer URL, widget: string, required: false }

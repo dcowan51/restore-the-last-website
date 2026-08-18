@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DonateButton from '../components/DonateButton.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import ProjectBrowser from '../components/ProjectBrowser.astro';
-import projects from '../data/projects.json';
+import { getProjects } from '../data/projects.js';
+
+const projects = await getProjects();
 ---
 
 <BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
