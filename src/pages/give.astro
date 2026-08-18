@@ -9,7 +9,7 @@ import projects from '../data/projects.json';
 <BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
 
   <!-- Hero -->
-  <section class="bg-white section-padding border-b border-primary/10">
+  <section class="bg-white pt-16 pb-10 border-b border-primary/10">
     <div class="container-narrow">
       <p class="label text-primary mb-4">Give</p>
       <div class="gold-line mb-8"></div>
@@ -21,6 +21,27 @@ import projects from '../data/projects.json';
       </p>
       <div class="mt-8">
         <DonateButton label="Donate now" class="btn-gold text-lg" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="bg-light pt-12 pb-20">
+    <div class="container-narrow">
+      <p class="label text-primary mb-6">Projects</p>
+      <h2 class="mb-4">Where the fund goes.</h2>
+      <p class="text-body text-lg max-w-2xl mb-8 leading-relaxed">
+        Every project below is funded out of the same pool. This is the work your giving is paying for right now.
+      </p>
+      <ProjectBrowser
+        projects={projects}
+        layout="carousel"
+        filters="type"
+        label="Projects the fund pays for"
+      />
+
+      <div class="mt-10">
+        <a href="/projects" class="btn-primary">See every project</a>
       </div>
     </div>
   </section>
@@ -63,27 +84,6 @@ import projects from '../data/projects.json';
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section class="bg-light section-padding">
-    <div class="container-narrow">
-      <p class="label text-primary mb-6">Projects</p>
-      <h2 class="mb-4">Where the fund goes.</h2>
-      <p class="text-body text-lg max-w-2xl mb-10 leading-relaxed">
-        Every project below is funded out of the same pool. This is the work your giving is paying for right now.
-      </p>
-      <ProjectBrowser
-        projects={projects}
-        layout="carousel"
-        filters="type"
-        label="Projects the fund pays for"
-      />
-
-      <div class="mt-10">
-        <a href="/projects" class="btn-primary">See every project</a>
       </div>
     </div>
   </section>

@@ -57,8 +57,33 @@ const featuredProjects = featured.length ? featured : projects;
     </div>
   </section>
 
-  <!-- The Problem -->
+  <!-- Current Projects -->
   <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <div>
+          <p class="label text-primary mb-4">Current Projects</p>
+          <h2 class="mb-4">The work your giving is paying for.</h2>
+          <p class="text-body text-lg leading-relaxed">
+            Named projects, real places, published costs. Every one of them comes out of the same fund.
+          </p>
+        </div>
+        <a href="/projects" class="text-primary font-bold font-sans hover:text-medium transition-colors whitespace-nowrap py-2">
+          See all projects →
+        </a>
+      </div>
+
+      <ProjectBrowser
+        projects={featuredProjects}
+        layout="carousel"
+        label="Featured projects"
+        compact={true}
+      />
+    </div>
+  </section>
+
+  <!-- The Problem -->
+  <section class="bg-white section-padding">
     <div class="container-narrow">
       <div class="text-center max-w-3xl mx-auto">
         <h2 class="mb-5 md:mb-6">They got rescued. Their nervous systems didn't.</h2>
@@ -163,33 +188,8 @@ const featuredProjects = featured.length ? featured : projects;
     </div>
   </section>
 
-  <!-- Current Projects -->
-  <section class="bg-offwhite section-padding">
-    <div class="container-narrow">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-        <div>
-          <p class="label text-primary mb-4">Current Projects</p>
-          <h2 class="mb-4">The work your giving is paying for.</h2>
-          <p class="text-body text-lg leading-relaxed">
-            Named projects, real places, published costs. Every one of them comes out of the same fund.
-          </p>
-        </div>
-        <a href="/projects" class="text-primary font-bold font-sans hover:text-medium transition-colors whitespace-nowrap py-2">
-          See all projects →
-        </a>
-      </div>
-
-      <ProjectBrowser
-        projects={featuredProjects}
-        layout="carousel"
-        label="Featured projects"
-        compact={true}
-      />
-    </div>
-  </section>
-
   <!-- Pull Quote -->
-  <section class="bg-light section-padding">
+  <section class="bg-offwhite section-padding">
     <div class="container-narrow">
       <div class="flex items-start gap-6 max-w-3xl">
         <div class="gold-line-left flex-shrink-0 hidden md:block"></div>
