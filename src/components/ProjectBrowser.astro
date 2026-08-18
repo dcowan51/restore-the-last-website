@@ -257,7 +257,18 @@ const hasFilters = showTypeFilter || showPopulationFilter || showStatusFilter;
     prev?.addEventListener('click', () => step(-1));
     next?.addEventListener('click', () => step(1));
     rail.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
+
+    // Whether the rail overflows can change long after this script runs — a
+    // lazy image arrives, a web font swaps, the container reflows — and none of
+    // those fire a window resize. Watching that event alone leaves the arrows
+    // hidden and disabled over a rail that genuinely scrolls.
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(updateArrows);
+      ro.observe(rail);
+      cards.map(slotOf).forEach((slot) => ro.observe(slot));
+    } else {
+      window.addEventListener('resize', updateArrows);
+    }
     updateArrows();
   });
 </script>
