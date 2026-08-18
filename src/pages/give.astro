@@ -40,8 +40,25 @@ import projects from '../data/projects.json';
         label="Projects the fund pays for"
       />
 
-      <div class="mt-10">
-        <a href="/projects" class="btn-primary">See every project</a>
+      <!-- The pooled-fund ask, sitting directly under the projects it pays for.
+           Every donate link on the site resolves to the same collection, so this
+           states plainly what a gift actually does instead of implying the cards
+           above are separately fundable. -->
+      <div class="mt-10 bg-white rounded-2xl border border-primary/20 shadow-sm p-6 md:p-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="max-w-xl">
+            <h3 class="text-xl md:text-2xl font-serif font-bold text-dark mb-3">
+              Can't pick one? You don't have to.
+            </h3>
+            <p class="text-body leading-relaxed">
+              Every gift goes into one fund, and we move it to whatever is ready first — the projects above, and the ones we haven't announced yet. Nothing sits stranded waiting for a goal to be met, and no project gets overfunded while another waits.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
+            <DonateButton label="Give to the fund" class="btn-gold text-center whitespace-nowrap" />
+            <a href="/projects" class="btn-primary text-center whitespace-nowrap">See every project</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
