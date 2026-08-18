@@ -140,15 +140,29 @@ for (const file of pages) {
   }
   if (h1s !== 1) headingFindings.push({ page, issue: `${h1s} h1 tags (want exactly 1)` });
 
-  // tap targets: anchors/buttons with no vertical padding class are ~20px tall
-  // at text-sm, which is under the WCAG 2.2 AA minimum of 24x24.
+  // Tap targets. Checking only that *some* padding exists passed `py-2`, which
+  // at text-sm renders 36px -- under the 44px touch guidance, and it shipped
+  // that way across the nav and footer. So estimate the real height instead:
+  // line-height for the text size, plus vertical padding, and require 44.
+  //
+  // Only controls that already declare padding are measured. A link with none
+  // is almost always inline inside a sentence, which the guidance exempts and
+  // which would break line spacing if forced to 44px.
+  const LINE_H = { 'text-xs': 16, 'text-sm': 20, 'text-base': 24, 'text-lg': 28, 'text-xl': 28 };
   const controls = [...html.matchAll(/<(a|button)\s[^>]*class="([^"]*)"[^>]*>/g)];
   for (const [, tag, cls] of controls) {
     if (/\bhidden\b|sr-only/.test(cls)) continue;
-    const hasPad = /\bp-|\bpy-|\bh-\d|min-h-/.test(cls);
-    const isNavLike = /text-sm|text-xs/.test(cls);
-    if (isNavLike && !hasPad) {
-      tapFindings.push({ page, tag, cls: cls.slice(0, 56) });
+    if (/\bbtn-/.test(cls)) continue;                        // btn-* ship px-8 py-3
+    if (/\bh-\d|\bmin-h-|\baspect-/.test(cls)) continue;      // height set explicitly
+
+    const py = cls.match(/(?:^|\s)(?:py|p)-(\d+(?:\.\d+)?)/);
+    if (!py) continue;                                       // inline prose link -- exempt
+
+    const sizeKey = Object.keys(LINE_H).find((k) => new RegExp(`(^|\\s)${k}(\\s|$)`).test(cls));
+    const line = LINE_H[sizeKey] ?? 24;
+    const height = line + parseFloat(py[1]) * 4 * 2;
+    if (height < 44) {
+      tapFindings.push({ page, tag, cls: `${Math.round(height)}px — ${cls.slice(0, 44)}` });
     }
   }
 }
@@ -168,8 +182,8 @@ line('\n\x1b[1mHEADING ORDER\x1b[0m');
 if (!headingFindings.length) line('  \x1b[32mPASS\x1b[0m  no skipped levels, exactly one h1 per page');
 else for (const f of headingFindings) line(`  \x1b[31mFAIL\x1b[0m  ${f.page}  ${f.issue}`);
 
-line('\n\x1b[1mTAP TARGETS\x1b[0m  (small text controls with no vertical padding)');
-if (!tapFindings.length) line('  \x1b[32mPASS\x1b[0m  all small-text controls carry padding');
+line('\n\x1b[1mTAP TARGETS\x1b[0m  (padded controls must reach 44px)');
+if (!tapFindings.length) line('  \x1b[32mPASS\x1b[0m  all padded controls reach 44px');
 else for (const f of tapFindings.slice(0, 12)) line(`  \x1b[31mFAIL\x1b[0m  ${f.page}  <${f.tag}> ${f.cls}`);
 
 line('\n\x1b[1mTOKEN USAGE\x1b[0m  (right colour, wrong background)');

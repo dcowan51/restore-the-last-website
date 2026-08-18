@@ -1,22 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectBrowser from '../../components/ProjectBrowser.astro';
 import projects from '../../data/projects.json';
-
-const majorProjects = projects.filter(p => p.type === 'major');
-const specificProjects = projects.filter(p => p.type === 'specific');
-
-const specificStatusLabel = {
-  'open': 'Open',
-  'closed': 'Fully Funded',
-};
-
-const specificStatusColor = {
-  'open': 'text-gold-deep bg-gold-deep/10',
-  'closed': 'text-green-700 bg-green-50',
-};
 ---
 
-<BaseLayout title="Current Projects" description="The work we're funding right now — major ongoing initiatives and specific, fully-costed deployments, all paid for out of one fund.">
+<BaseLayout title="Current Projects" description="The work we're funding right now — deployments in the field, films that carry the story, all paid for out of one fund.">
 
   <!-- Hero -->
   <section class="bg-white section-padding border-b border-primary/10">
@@ -27,95 +15,26 @@ const specificStatusColor = {
         The work we're funding right now.
       </h1>
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        Everything here is paid for out of one fund. <strong>Major initiatives</strong> are large, ongoing deployments where there's always more need than funding. <strong>Specific projects</strong> are small, fully-costed pieces of work that close once they're covered. We publish both so you can see exactly what your giving is moving.
+        Everything here is paid for out of one fund. Some projects are ongoing deployments where there's always more need than funding. Others are fully-costed pieces of work that close the moment they're covered. We publish all of it so you can see exactly what your giving is moving.
       </p>
     </div>
   </section>
 
-  <!-- Major Initiatives -->
-  {majorProjects.length > 0 && (
-    <section class="bg-offwhite section-padding">
-      <div class="container-narrow">
-        <p class="label text-primary mb-4">Major Initiatives</p>
-        <h2 class="mb-10">Ongoing deployments we're scaling.</h2>
-        <div class="grid md:grid-cols-2 gap-5 md:gap-8">
-          {majorProjects.map(project => (
-            <a
-              href={`/projects/${project.slug}`}
-              class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 flex flex-col group"
-            >
-              <div class="relative overflow-hidden">
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div class="absolute top-4 left-4">
-                  <span class="text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full text-primary bg-white/95">
-                    Major Initiative
-                  </span>
-                </div>
-              </div>
-              <div class="p-7 flex flex-col flex-grow">
-                <p class="label text-gold-deep mb-2">{project.location}</p>
-                <h3 class="text-xl font-serif font-bold text-dark mb-2">{project.title}</h3>
-                <p class="text-body/80 text-xs font-semibold uppercase tracking-wide mb-4">{project.population}</p>
-                <p class="text-body text-sm leading-relaxed mb-6 flex-grow">{project.summary}</p>
-                <span class="text-primary font-bold font-sans text-sm mt-auto">Contact us to fund this initiative →</span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Specific Projects -->
-  {specificProjects.length > 0 && (
-    <section class="bg-white section-padding border-t border-primary/10">
-      <div class="container-narrow">
-        <p class="label text-primary mb-4">Specific Projects</p>
-        <h2 class="mb-4">Fully-costed deployments. Fund one and it's done.</h2>
-        <p class="text-body text-base max-w-2xl mb-10 leading-relaxed">
-          Each project below has a fixed cost and a defined scope. When the goal is met, the project closes and gifts get directed to the next open project — so nothing gets overfunded.
-        </p>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-          {specificProjects.map(project => (
-            <a
-              href={`/projects/${project.slug}`}
-              class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 flex flex-col group"
-            >
-              <div class="relative overflow-hidden">
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div class="absolute top-4 left-4">
-                  <span class={`text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full ${specificStatusColor[project.status]}`}>
-                    {specificStatusLabel[project.status]}
-                  </span>
-                </div>
-              </div>
-              <div class="p-6 flex flex-col flex-grow">
-                <p class="label text-gold-deep mb-2">{project.location}</p>
-                <h3 class="text-lg font-serif font-bold text-dark mb-2 leading-snug">{project.title}</h3>
-                <p class="text-body/80 text-xs font-semibold uppercase tracking-wide mb-3">{project.population}</p>
-                <p class="text-body text-sm leading-relaxed mb-5 flex-grow">{project.summary}</p>
-                <div class="mt-auto pt-4 border-t border-primary/10 flex items-baseline justify-between">
-                  <span class="font-serif text-2xl font-bold text-dark">${project.goal.toLocaleString()}</span>
-                  <span class="text-primary font-bold font-sans text-sm">{project.status === 'open' ? 'Fund this →' : 'View →'}</span>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
+  <!-- Browser -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <h2 class="mb-8">Everything we're funding.</h2>
+      <ProjectBrowser
+        projects={projects}
+        layout="grid"
+        filters="all"
+        label="All projects"
+      />
+    </div>
+  </section>
 
   <!-- Partner CTA -->
-  <section class="bg-offwhite section-padding border-t border-primary/10">
+  <section class="bg-white section-padding border-t border-primary/10">
     <div class="container-narrow">
       <div class="max-w-3xl text-center mx-auto">
         <p class="label text-primary mb-4">Are You an Organization?</p>

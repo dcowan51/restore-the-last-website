@@ -1,0 +1,92 @@
+---
+import { typeMeta, statusMeta } from '../data/projectMeta.js';
+
+const { project, compact = false } = Astro.props;
+
+const type = typeMeta(project);
+const status = statusMeta(project);
+const isDocumentary = project.type === 'documentary';
+
+// The secondary line under the title changes by type: a deployment is defined by
+// who it serves, a film by when it lands. Falling back to the populations list
+// keeps future types from rendering a blank line.
+const metaLine = isDocumentary
+  ? project.media?.targetRelease
+    ? `Releasing ${project.media.targetRelease}`
+    : 'In production'
+  : project.population ||
+    (project.populations || []).map((p) => p.replace(/-/g, ' ')).join(' · ');
+
+// The filter script reads these; a space-delimited list lets one project match
+// several populations without needing JSON parsing in the browser.
+const populationAttr = (project.populations || []).join(' ');
+---
+
+<a
+  href={`/projects/${project.slug}`}
+  data-project
+  data-type={project.type}
+  data-status={project.status}
+  data-populations={populationAttr}
+  class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-200 flex flex-col group h-full"
+>
+  <div class="relative overflow-hidden">
+    <img
+      src={project.coverImage}
+      alt=""
+      class={`w-full object-cover group-hover:scale-105 transition-transform duration-300 motion-reduce:transform-none ${compact ? 'h-44' : 'h-56'}`}
+      loading="lazy"
+    />
+    <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+      <span class={`text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border bg-white/95 ${type.badge}`}>
+        {type.label}
+      </span>
+    </div>
+    <div class="absolute top-4 right-4">
+      <span class={`text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border bg-white/95 ${status.badge}`}>
+        {status.label}
+      </span>
+    </div>
+    {isDocumentary && (
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200 motion-reduce:transform-none">
+          <svg class="w-5 h-5 text-primary ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <div class={`flex flex-col flex-grow ${compact ? 'p-6' : 'p-7'}`}>
+    <p class="label text-gold-deep mb-2">{project.location}</p>
+    <h3 class={`font-serif font-bold text-dark mb-2 leading-snug ${compact ? 'text-lg' : 'text-xl'}`}>
+      {project.title}
+    </h3>
+    {metaLine && (
+      <p class="text-body/80 text-xs font-semibold uppercase tracking-wide mb-3">{metaLine}</p>
+    )}
+    {/* Summaries are written for the detail page, where length is a virtue. On
+        a card next to two shorter ones it just makes the row look broken, so the
+        card takes the first few lines and the full text lives one click in.
+        No flex-grow here: it would stretch the box past the clamp, leaving the
+        overflow uncut and a stray ellipsis mid-paragraph. The footer's mt-auto is
+        what pins the price row to the bottom. */}
+    <p class="text-body text-sm leading-relaxed mb-5 line-clamp-4">
+      {isDocumentary && project.subtitle ? project.subtitle : project.summary}
+    </p>
+    <div class="mt-auto pt-4 border-t border-primary/10 flex items-baseline justify-between gap-3">
+      {project.goal ? (
+        <span class="font-serif text-2xl font-bold text-dark">${project.goal.toLocaleString()}</span>
+      ) : (
+        <span class="text-body/80 text-sm">Ongoing</span>
+      )}
+      {/* Navigation, not an ask. Every donate link on the site resolves to one
+          pooled collection, so a per-card giving verb would promise a designation
+          checkout cannot honour. The ask lives on the detail page. */}
+      <span class="text-primary font-bold font-sans text-sm whitespace-nowrap">
+        {project.status === 'funded' ? 'See the outcome →' : isDocumentary ? 'About the film →' : 'See the work →'}
+      </span>
+    </div>
+  </div>
+</a>

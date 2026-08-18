@@ -2,12 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DonateButton from '../components/DonateButton.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+import ProjectBrowser from '../components/ProjectBrowser.astro';
+import projects from '../data/projects.json';
 ---
 
 <BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
 
   <!-- Hero -->
-  <section class="bg-white section-padding border-b border-primary/10">
+  <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
     <div class="container-narrow">
       <p class="label text-primary mb-4">Give</p>
       <div class="gold-line mb-8"></div>
@@ -23,6 +25,44 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
     </div>
   </section>
 
+  <!-- Projects -->
+  <section class="bg-light pt-12 pb-20">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4 md:mb-6">Projects</p>
+      <h2 class="mb-4">Where the fund goes.</h2>
+      <p class="text-body text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed">
+        Every project below is funded out of the same pool. This is the work your giving is paying for right now.
+      </p>
+      <ProjectBrowser
+        projects={projects}
+        layout="carousel"
+        filters="type"
+        label="Projects the fund pays for"
+      />
+
+      {/* The pooled-fund ask, sitting directly under the projects it pays for.
+          Every donate link on the site resolves to the same collection, so this
+          states plainly what a gift actually does instead of implying the cards
+          above are separately fundable. */}
+      <div class="mt-10 bg-white rounded-2xl border border-primary/20 shadow-sm p-6 md:p-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="max-w-xl">
+            <h3 class="text-xl md:text-2xl font-serif font-bold text-dark mb-3">
+              Can't pick one? You don't have to.
+            </h3>
+            <p class="text-body leading-relaxed">
+              Every gift goes into one fund, and we move it to whatever is ready first — the projects above, and the ones we haven't announced yet. Nothing sits stranded waiting for a goal to be met, and no project gets overfunded while another waits.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
+            <DonateButton label="Give to the fund" class="btn-gold text-center whitespace-nowrap" />
+            <a href="/projects" class="btn-primary text-center whitespace-nowrap">See every project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- How Giving Works -->
   <section class="bg-offwhite section-padding">
     <div class="container-narrow">
@@ -30,7 +70,7 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
         <p class="label text-primary mb-6">How Giving Works</p>
         <h2 class="mb-8">One fund. Named destinations. Real reports.</h2>
         <p class="text-body text-lg leading-relaxed mb-8">
-          We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every deployment the fund touches is named publicly, with outcomes attached.
+          We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every project the fund touches is named publicly, with outcomes attached.
         </p>
         <div class="space-y-4">
           <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -59,46 +99,6 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
               <h3 class="text-h4 font-serif font-bold mb-1">You see where it went</h3>
               <p class="text-body text-sm">Progress reports with real data. Session counts. Symptom reduction. Stories from the field. Named projects, tracked from funded to running.</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section class="bg-light section-padding">
-    <div class="container-narrow">
-      <p class="label text-primary mb-6">Projects</p>
-      <h2 class="mb-4">Where the fund goes.</h2>
-      <p class="text-body text-lg max-w-2xl mb-10 leading-relaxed">
-        Every deployment below is funded out of the same pool. This is the work your giving is paying for right now.
-      </p>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
-          <div class="bg-primary h-1"></div>
-          <div class="p-6">
-            <p class="label text-gold-deep text-xs mb-3">Active</p>
-            <h3 class="text-lg mb-3">La Casa de mi Padre</h3>
-            <p class="text-body text-sm mb-4">El Salvador — Ongoing support for the children's home and partner school where 28+ participants receive daily neurofeedback sessions.</p>
-            <p class="text-primary font-bold text-sm">In progress</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
-          <div class="bg-primary h-1"></div>
-          <div class="p-6">
-            <p class="label text-gold-deep text-xs mb-3">Active</p>
-            <h3 class="text-lg mb-3">Thrive Campus</h3>
-            <p class="text-body text-sm mb-4">Arizona — Supporting aged-out foster youth with on-campus neurofeedback integration.</p>
-            <p class="text-primary font-bold text-sm">In progress</p>
-          </div>
-        </div>
-        <div class="bg-white/60 rounded-2xl overflow-hidden border border-primary/5">
-          <div class="bg-body/10 h-1"></div>
-          <div class="p-6">
-            <p class="label text-body/80 text-xs mb-3">Coming Soon</p>
-            <h3 class="text-lg mb-3 text-body/80">Next Deployment</h3>
-            <p class="text-body/80 text-sm mb-4">New partner facility in development. Details and funding goals announced soon.</p>
-            <p class="text-body/80 font-bold text-sm">Pending</p>
           </div>
         </div>
       </div>
