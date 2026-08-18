@@ -66,12 +66,12 @@ const populationAttr = (project.populations || []).join(' ');
     {metaLine && (
       <p class="text-body/80 text-xs font-semibold uppercase tracking-wide mb-3">{metaLine}</p>
     )}
-    <!-- Summaries are written for the detail page, where length is a virtue. On
-         a card next to two shorter ones it just makes the row look broken, so
-         the card takes the first few lines and the full text lives one click in.
-         No flex-grow here: it would stretch the box past the clamp, leaving the
-         overflow uncut and a stray ellipsis mid-paragraph. The footer's mt-auto
-         is what pins the price row to the bottom. -->
+    {/* Summaries are written for the detail page, where length is a virtue. On
+        a card next to two shorter ones it just makes the row look broken, so the
+        card takes the first few lines and the full text lives one click in.
+        No flex-grow here: it would stretch the box past the clamp, leaving the
+        overflow uncut and a stray ellipsis mid-paragraph. The footer's mt-auto is
+        what pins the price row to the bottom. */}
     <p class="text-body text-sm leading-relaxed mb-5 line-clamp-4">
       {isDocumentary && project.subtitle ? project.subtitle : project.summary}
     </p>
@@ -81,8 +81,11 @@ const populationAttr = (project.populations || []).join(' ');
       ) : (
         <span class="text-body/80 text-sm">Ongoing</span>
       )}
+      {/* Navigation, not an ask. Every donate link on the site resolves to one
+          pooled collection, so a per-card giving verb would promise a designation
+          checkout cannot honour. The ask lives on the detail page. */}
       <span class="text-primary font-bold font-sans text-sm whitespace-nowrap">
-        {project.status === 'funded' ? 'View →' : isDocumentary ? 'Back this film →' : 'Fund this →'}
+        {project.status === 'funded' ? 'See the outcome →' : isDocumentary ? 'About the film →' : 'See the work →'}
       </span>
     </div>
   </div>
