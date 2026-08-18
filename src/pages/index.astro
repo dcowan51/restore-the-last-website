@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+import ProjectBrowser from '../components/ProjectBrowser.astro';
+import projects from '../data/projects.json';
+
+// The homepage carousel is curated, not exhaustive — flip `featured` in
+// projects.json to change what shows here. Falling back to the full list keeps
+// the section from rendering empty if every flag is ever turned off.
+const featured = projects.filter(p => p.featured);
+const featuredProjects = featured.length ? featured : projects;
 ---
 
 <BaseLayout title="Home" description="Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 97% improved.">
@@ -134,7 +142,7 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
         <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
           <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4" aria-hidden="true">02</p>
           <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Fund</p>
-          <p class="text-body text-sm leading-relaxed">Donors give to one fund, with full transparency into every deployment it pays for.</p>
+          <p class="text-body text-sm leading-relaxed">Donors give to one fund, with full transparency into every project it pays for.</p>
         </div>
         <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
           <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4" aria-hidden="true">03</p>
@@ -155,8 +163,33 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
     </div>
   </section>
 
-  <!-- Pull Quote -->
+  <!-- Current Projects -->
   <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <div>
+          <p class="label text-primary mb-4">Current Projects</p>
+          <h2 class="mb-4">The work your giving is paying for.</h2>
+          <p class="text-body text-lg leading-relaxed">
+            Named projects, real places, published costs. Every one of them comes out of the same fund.
+          </p>
+        </div>
+        <a href="/projects" class="text-primary font-bold font-sans hover:text-medium transition-colors whitespace-nowrap py-2">
+          See all projects →
+        </a>
+      </div>
+
+      <ProjectBrowser
+        projects={featuredProjects}
+        layout="carousel"
+        label="Featured projects"
+        compact={true}
+      />
+    </div>
+  </section>
+
+  <!-- Pull Quote -->
+  <section class="bg-light section-padding">
     <div class="container-narrow">
       <div class="flex items-start gap-6 max-w-3xl">
         <div class="gold-line-left flex-shrink-0 hidden md:block"></div>
@@ -255,7 +288,7 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
     <div class="container-narrow text-center">
       <h2 class="text-white text-2xl md:text-4xl mb-5 md:mb-6">Every dollar reaches the field.</h2>
       <p class="text-white/80 max-w-xl mx-auto mb-8 md:mb-10">
-        Your giving funds real deployments. You see where it goes, who it reaches, and what changes. No black boxes. No overhead mystery.
+        Your giving funds real work in the field. You see where it goes, who it reaches, and what changes. No black boxes. No overhead mystery.
       </p>
       <a href="/give" class="btn-gold text-lg">Partner with us</a>
 

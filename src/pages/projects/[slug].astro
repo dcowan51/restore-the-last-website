@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import projects from '../../data/projects.json';
 import DonateButton from '../../components/DonateButton.astro';
+import { typeMeta, statusMeta, POPULATIONS } from '../../data/projectMeta.js';
 
 export function getStaticPaths() {
   return projects.map(project => ({
@@ -11,25 +12,46 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const isMajor = project.type === 'major';
-const isClosed = project.type === 'specific' && project.status === 'closed';
+
+const type = typeMeta(project);
+const status = statusMeta(project);
+const isDocumentary = project.type === 'documentary';
+const isClosed = project.status === 'funded';
+// No dollar goal means there's no finish line to fund toward — the sidebar
+// switches from a cost figure to an ongoing-need framing.
+const isOngoing = !project.goal;
 
 const subject = encodeURIComponent(`Funding inquiry: ${project.title}`);
 const body = encodeURIComponent(`Hi Dallas,\n\nI'm interested in funding the project: ${project.title} (${project.location}).\n\nPlease let me know how to proceed.\n\nThank you.`);
 const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${body}`;
 
-const badgeLabel = isMajor
-  ? 'Major Initiative'
-  : (project.status === 'open' ? 'Open' : 'Fully Funded');
+const ctaLabel = isClosed
+  ? 'Project fully funded'
+  : isDocumentary ? 'Back this film' : 'Give to the fund';
 
-const badgeColor = isMajor
-  ? 'text-primary bg-primary/10 border-primary/20'
-  : (project.status === 'open' ? 'text-gold-deep bg-gold-deep/10 border-gold-deep/20' : 'text-green-700 bg-green-50 border-green-200');
+const costLabel = isDocumentary ? 'Production Budget' : 'Project Cost';
+const costCaption = isDocumentary
+  ? 'what it costs to make and release this film'
+  : 'what this deployment costs to run';
 
-const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
+const metaLine = isDocumentary
+  ? [project.media?.runtime, project.media?.targetRelease && `Releasing ${project.media.targetRelease}`]
+      .filter(Boolean).join(' · ')
+  : project.population;
+
+const populationLabels = (project.populations || [])
+  .map(p => POPULATIONS[p]?.label)
+  .filter(Boolean);
+
+// A film's rationale is about reach, not about a single population, so the
+// section swaps label and source field.
+const rationaleHeading = isDocumentary ? 'Why This Matters' : 'Why This Population';
+const rationaleBody = isDocumentary ? project.whyThisMatters : project.whyThisPopulation;
+
+const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your Funding Covers';
 ---
 
-<BaseLayout title={project.title} description={project.summary}>
+<BaseLayout title={project.title} description={project.subtitle || project.summary}>
 
   <!-- Hero -->
   <section class="bg-white border-b border-primary/10">
@@ -39,7 +61,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
       <!-- Mobile sidebar -->
       <div class="block md:hidden mb-8">
         <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-6">
-          {isMajor ? (
+          {isOngoing ? (
             <>
               <p class="label text-primary mb-3">Ongoing Initiative</p>
               <p class="text-body text-sm leading-relaxed mb-5">
@@ -48,11 +70,11 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
             </>
           ) : (
             <>
-              <p class="label text-primary mb-3">Project Cost</p>
+              <p class="label text-primary mb-3">{costLabel}</p>
               <p class="font-serif text-3xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-              <p class="text-body/80 text-sm mb-5">what this deployment costs to run</p>
+              <p class="text-body/80 text-sm mb-5">{costCaption}</p>
               {isClosed && (
-                <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
+                <p class="text-green-800 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
               )}
             </>
           )}
@@ -66,31 +88,53 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
 
         <!-- Left: Content -->
         <div>
-          <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border mb-4 ${badgeColor}`}>
-            {badgeLabel}
-          </span>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border ${type.badge}`}>
+              {type.label}
+            </span>
+            <span class={`inline-block text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border ${status.badge}`}>
+              {status.label}
+            </span>
+          </div>
           <p class="label text-gold-deep mb-2">{project.location}</p>
           <h1 class="text-dark text-2xl md:text-4xl font-serif font-bold leading-tight mb-4">
             {project.title}
           </h1>
-          <p class="text-body/80 text-sm font-semibold uppercase tracking-wide mb-6">{project.population}</p>
+          {project.subtitle && (
+            <p class="text-body text-lg md:text-xl font-serif italic leading-relaxed mb-4 max-w-2xl">
+              {project.subtitle}
+            </p>
+          )}
+          {metaLine && (
+            <p class="text-body/80 text-sm font-semibold uppercase tracking-wide mb-6">{metaLine}</p>
+          )}
           <img
             src={project.coverImage}
-            alt={project.title}
+            alt=""
             class="w-full rounded-2xl shadow-md mb-8 object-cover"
             style="max-height: 380px;"
           />
           <div class="space-y-8 md:space-y-10">
+            {project.purpose && (
+              <div>
+                <p class="label text-primary mb-3">The Purpose</p>
+                <p class="text-body text-base md:text-lg leading-relaxed">{project.purpose}</p>
+              </div>
+            )}
             <div>
               <p class="label text-primary mb-3">About This Project</p>
               <p class="text-body text-base md:text-lg leading-relaxed">{project.summary}</p>
             </div>
+            {rationaleBody && (
+              <div>
+                <p class="label text-primary mb-3">{rationaleHeading}</p>
+                <div class="text-body text-base md:text-lg leading-relaxed space-y-4">
+                  {rationaleBody.split('\n\n').map(para => <p>{para}</p>)}
+                </div>
+              </div>
+            )}
             <div>
-              <p class="label text-primary mb-3">Why This Population</p>
-              <p class="text-body text-base md:text-lg leading-relaxed">{project.whyThisPopulation}</p>
-            </div>
-            <div>
-              <p class="label text-primary mb-3">What Your Funding Covers</p>
+              <p class="label text-primary mb-3">{fundingHeading}</p>
               <div class="bg-light rounded-2xl p-5 md:p-6 border border-primary/10">
                 <p class="text-body leading-relaxed">{project.whatWeFund}</p>
               </div>
@@ -101,7 +145,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
         <!-- Right: Sidebar (desktop) -->
         <div class="hidden md:block md:sticky md:top-24">
           <div class="bg-white rounded-2xl border border-primary/20 shadow-sm p-7">
-            {isMajor ? (
+            {isOngoing ? (
               <>
                 <p class="label text-primary mb-4">Ongoing Initiative</p>
                 <p class="text-body text-sm leading-relaxed mb-6">
@@ -110,11 +154,11 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
               </>
             ) : (
               <>
-                <p class="label text-primary mb-4">Project Cost</p>
+                <p class="label text-primary mb-4">{costLabel}</p>
                 <p class="font-serif text-4xl font-bold text-dark mb-1">${project.goal.toLocaleString()}</p>
-                <p class="text-body/80 text-sm mb-6">what this deployment costs to run</p>
+                <p class="text-body/80 text-sm mb-6">{costCaption}</p>
                 {isClosed && (
-                  <p class="text-green-700 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
+                  <p class="text-green-800 text-sm font-bold mb-4">✓ Fully funded — thank you.</p>
                 )}
               </>
             )}
@@ -125,7 +169,7 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
               <>
                 <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mb-3" />
                 <p class="text-body/80 text-xs text-center">
-                  Gifts go to the general fund, which pays for this deployment and every other one in progress.
+                  Gifts go to the general fund, which pays for this project and every other one in progress.
                   <a href={mailtoLink} class="underline hover:text-body/80 transition-colors">Questions?</a>
                 </p>
               </>
@@ -135,15 +179,48 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
               </a>
             )}
 
-            {project.orgUrl && (
-              <div class="border-t border-primary/10 my-6">
+            <!-- Project facts -->
+            <div class="border-t border-primary/10 my-6"></div>
+            <dl class="space-y-4 text-sm">
+              <div>
+                <dt class="label text-body/80 mb-1">Where</dt>
+                <dd class="text-body font-semibold">{project.location}</dd>
+              </div>
+              {isDocumentary && project.media?.productionPartner && (
+                <div>
+                  <dt class="label text-body/80 mb-1">Produced With</dt>
+                  <dd class="text-body font-semibold">{project.media.productionPartner}</dd>
+                </div>
+              )}
+              {isDocumentary && project.media?.targetRelease && (
+                <div>
+                  <dt class="label text-body/80 mb-1">Target Release</dt>
+                  <dd class="text-body font-semibold">{project.media.targetRelease}</dd>
+                </div>
+              )}
+              {!isDocumentary && project.partner?.name && (
+                <div>
+                  <dt class="label text-body/80 mb-1">Partner</dt>
+                  <dd class="text-body font-semibold">{project.partner.name}</dd>
+                </div>
+              )}
+              {populationLabels.length > 0 && (
+                <div>
+                  <dt class="label text-body/80 mb-1">Serving</dt>
+                  <dd class="text-body font-semibold">{populationLabels.join(', ')}</dd>
+                </div>
+              )}
+            </dl>
+
+            {project.partner?.url && (
+              <div class="border-t border-primary/10 mt-6 pt-2">
                 <a
-                  href={project.orgUrl}
+                  href={project.partner.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mt-6 inline-block py-2"
+                  class="text-primary text-sm font-bold font-sans hover:text-medium transition-colors mt-4 inline-block py-2"
                 >
-                  Visit organization's website →
+                  Visit {project.partner.name || 'organization'}'s website →
                 </a>
               </div>
             )}
@@ -155,19 +232,19 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
-                <p>100% of the fund goes to deployments in the field</p>
+                <p>100% of the fund goes to the work in the field</p>
               </div>
               <div class="flex items-start gap-3">
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
-                <p>You'll receive progress updates as deployments move forward</p>
+                <p>You'll receive progress updates as the work moves forward</p>
               </div>
               <div class="flex items-start gap-3">
                 <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
-                <p>Outcome report delivered when sessions are complete</p>
+                <p>Outcome report delivered when the project completes</p>
               </div>
             </div>
           </div>
@@ -182,7 +259,9 @@ const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
     <section class="bg-deep text-white section-padding text-center">
       <div class="container-narrow">
         <h2 class="text-white text-2xl md:text-3xl mb-6">
-          {isMajor ? 'Ready to partner on this initiative?' : 'Ready to fund this deployment?'}
+          {isDocumentary
+            ? 'Help us get this story on screen.'
+            : isOngoing ? 'Ready to partner on this initiative?' : 'Ready to fund this deployment?'}
         </h2>
         <DonateButton label={ctaLabel} class="btn-gold text-lg" />
       </div>

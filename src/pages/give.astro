@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DonateButton from '../components/DonateButton.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+import ProjectBrowser from '../components/ProjectBrowser.astro';
+import projects from '../data/projects.json';
 ---
 
 <BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
@@ -30,7 +32,7 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
         <p class="label text-primary mb-6">How Giving Works</p>
         <h2 class="mb-8">One fund. Named destinations. Real reports.</h2>
         <p class="text-body text-lg leading-relaxed mb-8">
-          We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every deployment the fund touches is named publicly, with outcomes attached.
+          We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every project the fund touches is named publicly, with outcomes attached.
         </p>
         <div class="space-y-4">
           <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -71,36 +73,17 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
       <p class="label text-primary mb-6">Projects</p>
       <h2 class="mb-4">Where the fund goes.</h2>
       <p class="text-body text-lg max-w-2xl mb-10 leading-relaxed">
-        Every deployment below is funded out of the same pool. This is the work your giving is paying for right now.
+        Every project below is funded out of the same pool. This is the work your giving is paying for right now.
       </p>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
-          <div class="bg-primary h-1"></div>
-          <div class="p-6">
-            <p class="label text-gold-deep text-xs mb-3">Active</p>
-            <h3 class="text-lg mb-3">La Casa de mi Padre</h3>
-            <p class="text-body text-sm mb-4">El Salvador — Ongoing support for the children's home and partner school where 28+ participants receive daily neurofeedback sessions.</p>
-            <p class="text-primary font-bold text-sm">In progress</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200">
-          <div class="bg-primary h-1"></div>
-          <div class="p-6">
-            <p class="label text-gold-deep text-xs mb-3">Active</p>
-            <h3 class="text-lg mb-3">Thrive Campus</h3>
-            <p class="text-body text-sm mb-4">Arizona — Supporting aged-out foster youth with on-campus neurofeedback integration.</p>
-            <p class="text-primary font-bold text-sm">In progress</p>
-          </div>
-        </div>
-        <div class="bg-white/60 rounded-2xl overflow-hidden border border-primary/5">
-          <div class="bg-body/10 h-1"></div>
-          <div class="p-6">
-            <p class="label text-body/80 text-xs mb-3">Coming Soon</p>
-            <h3 class="text-lg mb-3 text-body/80">Next Deployment</h3>
-            <p class="text-body/80 text-sm mb-4">New partner facility in development. Details and funding goals announced soon.</p>
-            <p class="text-body/80 font-bold text-sm">Pending</p>
-          </div>
-        </div>
+      <ProjectBrowser
+        projects={projects}
+        layout="carousel"
+        filters="type"
+        label="Projects the fund pays for"
+      />
+
+      <div class="mt-10">
+        <a href="/projects" class="btn-primary">See every project</a>
       </div>
     </div>
   </section>

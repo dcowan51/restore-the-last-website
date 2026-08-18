@@ -1,0 +1,263 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { activeFacets } from '../data/projectMeta.js';
+
+const {
+  projects,
+  layout = 'carousel',      // 'carousel' | 'grid'
+  filters = false,          // false | 'type' | 'all'
+  label = 'Projects',       // accessible name for the region
+  compact = false,
+} = Astro.props;
+
+const isCarousel = layout === 'carousel';
+const facets = activeFacets(projects);
+
+// Only worth rendering a filter row if there's more than one thing to choose
+// between — a lone "Deployments" pill next to "All" filters nothing.
+const showTypeFilter = filters && facets.types.length > 1;
+const showDetailFilters = filters === 'all';
+const showPopulationFilter = showDetailFilters && facets.populations.length > 1;
+const showStatusFilter = showDetailFilters && facets.statuses.length > 1;
+const hasFilters = showTypeFilter || showPopulationFilter || showStatusFilter;
+---
+
+<div data-browser data-layout={layout} class="project-browser">
+
+  {hasFilters && (
+    <div class="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      {showTypeFilter && (
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter projects by type">
+          <button
+            type="button"
+            data-filter="type"
+            data-value="all"
+            aria-pressed="true"
+            class="filter-pill"
+          >All</button>
+          {facets.types.map(t => (
+            <button
+              type="button"
+              data-filter="type"
+              data-value={t.value}
+              aria-pressed="false"
+              class="filter-pill"
+            >{t.plural}</button>
+          ))}
+        </div>
+      )}
+
+      {(showPopulationFilter || showStatusFilter) && (
+        <div class="flex flex-wrap gap-3">
+          {showPopulationFilter && (
+            <label class="flex items-center gap-2 text-sm">
+              <span class="text-body/80 font-semibold">Serving</span>
+              <select data-filter="population" class="filter-select">
+                <option value="all">Everyone</option>
+                {facets.populations.map(p => (
+                  <option value={p.value}>{p.label}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          {showStatusFilter && (
+            <label class="flex items-center gap-2 text-sm">
+              <span class="text-body/80 font-semibold">Status</span>
+              <select data-filter="status" class="filter-select">
+                <option value="all">Any</option>
+                {facets.statuses.map(s => (
+                  <option value={s.value}>{s.label}</option>
+                ))}
+              </select>
+            </label>
+          )}
+        </div>
+      )}
+    </div>
+  )}
+
+  {isCarousel ? (
+    <div class="relative">
+      <div
+        data-rail
+        role="region"
+        aria-label={label}
+        tabindex="0"
+        class="flex gap-5 md:gap-6 overflow-x-auto snap-x snap-proximity pb-4 -mx-6 px-6 md:mx-0 md:px-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-2xl"
+      >
+        {projects.map(project => (
+          <div class="snap-start shrink-0 w-[85%] sm:w-[60%] md:w-[46%] lg:w-[31.5%]">
+            <ProjectCard project={project} compact={compact} />
+          </div>
+        ))}
+      </div>
+
+      <div data-controls class="flex items-center justify-end gap-2 mt-2">
+        <button type="button" data-scroll="prev" class="carousel-arrow" aria-label={`Scroll ${label} left`}>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button" data-scroll="next" class="carousel-arrow" aria-label={`Scroll ${label} right`}>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div data-rail class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 items-stretch">
+      {projects.map(project => (
+        <ProjectCard project={project} compact={compact} />
+      ))}
+    </div>
+  )}
+
+  <p data-empty hidden class="text-body/80 text-base py-10 text-center">
+    No projects match that combination yet — try widening the filters.
+  </p>
+</div>
+
+<style>
+  .filter-pill {
+    @apply font-sans text-sm font-bold px-4 py-2 rounded-full border border-primary/20 text-body bg-white transition-colors duration-200;
+  }
+  .filter-pill:hover {
+    @apply border-primary/50 text-primary;
+  }
+  .filter-pill[aria-pressed='true'] {
+    @apply bg-primary text-white border-primary;
+  }
+  .filter-select {
+    @apply font-sans text-sm font-bold text-body bg-white border border-primary/20 rounded-full px-4 py-2 cursor-pointer;
+  }
+  .carousel-arrow {
+    @apply w-10 h-10 rounded-full border border-primary/20 bg-white text-primary flex items-center justify-center transition-all duration-200;
+  }
+  .carousel-arrow:hover:not(:disabled) {
+    @apply border-primary bg-primary text-white;
+  }
+  .carousel-arrow:disabled {
+    @apply opacity-30 cursor-default;
+  }
+  /* `hidden` is a display:none of the lowest specificity, so it loses to the
+     flex the control row already carries. */
+  [data-controls][hidden] {
+    display: none;
+  }
+  /* The rail scrolls, so its scrollbar is redundant next to the arrows. */
+  [data-rail]::-webkit-scrollbar {
+    display: none;
+  }
+  [data-rail] {
+    scrollbar-width: none;
+  }
+</style>
+
+<script>
+  // One script drives every browser instance on the page. Cards carry their own
+  // taxonomy in data attributes, so filtering never needs the JSON at runtime.
+  document.querySelectorAll('.project-browser').forEach((root) => {
+    const rail = root.querySelector('[data-rail]');
+    const empty = root.querySelector('[data-empty]');
+    const cards = Array.from(root.querySelectorAll('[data-project]'));
+    if (!rail || !cards.length) return;
+
+    // In the carousel the card is wrapped in a snap cell; in the grid the card
+    // is the direct child. Hiding the wrapper is what actually collapses the
+    // slot, so resolve to whichever element the rail owns.
+    const slotOf = (card) => (card.parentElement === rail ? card : card.parentElement);
+
+    const state = { type: 'all', population: 'all', status: 'all' };
+
+    function apply() {
+      let visible = 0;
+      cards.forEach((card) => {
+        const pops = (card.dataset.populations || '').split(' ').filter(Boolean);
+        const match =
+          (state.type === 'all' || card.dataset.type === state.type) &&
+          (state.status === 'all' || card.dataset.status === state.status) &&
+          (state.population === 'all' || pops.includes(state.population));
+
+        const slot = slotOf(card);
+        slot.hidden = !match;
+        // `hidden` loses to the flex/grid display the slot already carries, so
+        // the class has to come off too.
+        slot.classList.toggle('!hidden', !match);
+        if (match) visible++;
+      });
+
+      if (empty) empty.hidden = visible > 0;
+      // Filtering changes what's in the rail, so an inherited scroll offset
+      // would strand the user mid-list. Jump, never animate, back to the start.
+      rail.scrollLeft = 0;
+      updateArrows();
+    }
+
+    root.querySelectorAll('[data-filter="type"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        root.querySelectorAll('[data-filter="type"]').forEach((b) =>
+          b.setAttribute('aria-pressed', String(b === btn))
+        );
+        state.type = btn.dataset.value;
+        apply();
+      });
+    });
+
+    root.querySelectorAll('select[data-filter]').forEach((sel) => {
+      sel.addEventListener('change', () => {
+        state[sel.dataset.filter] = sel.value;
+        apply();
+      });
+    });
+
+    // ---- Carousel controls ----
+    const prev = root.querySelector('[data-scroll="prev"]');
+    const next = root.querySelector('[data-scroll="next"]');
+    const controls = root.querySelector('[data-controls]');
+
+    function updateArrows() {
+      if (!prev || !next) return;
+      // Wide viewports and narrow filter results both leave every card visible
+      // at once. Two permanently-disabled arrows read as broken, so the whole
+      // control row goes away until there's actually something to scroll.
+      const overflows = rail.scrollWidth - rail.clientWidth > 2;
+      if (controls) controls.hidden = !overflows;
+      // A 2px tolerance absorbs sub-pixel scroll positions on trackpads and
+      // fractional device pixel ratios, which otherwise leave "next" enabled
+      // at the true end of the rail.
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      prev.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= max;
+    }
+
+    // `scroll-behavior: smooth` in CSS silently swallowed these scrolls, so the
+    // behaviour is passed per-call instead — and dropped for anyone who has
+    // asked the OS to reduce motion.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const scrollBehavior = () => (reduceMotion.matches ? 'auto' : 'smooth');
+
+    function step(dir) {
+      const slot = cards.map(slotOf).find((s) => !s.hidden);
+      const amount = slot ? slot.getBoundingClientRect().width + 24 : rail.clientWidth * 0.8;
+      const from = rail.scrollLeft;
+      const target = Math.max(
+        0,
+        Math.min(from + dir * amount, rail.scrollWidth - rail.clientWidth)
+      );
+      rail.scrollTo({ left: target, behavior: scrollBehavior() });
+
+      // Scroll snapping and animated scrolling conflict in some engines, and
+      // when they do the smooth request is dropped silently — leaving the
+      // arrows looking dead. If nothing has moved once the animation should
+      // have started, jump straight there instead.
+      setTimeout(() => {
+        if (rail.scrollLeft === from && from !== target) {
+          rail.scrollTo({ left: target, behavior: 'auto' });
+        }
+      }, 250);
+    }
+
+    prev?.addEventListener('click', () => step(-1));
+    next?.addEventListener('click', () => step(1));
+    rail.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+  });
+</script>
