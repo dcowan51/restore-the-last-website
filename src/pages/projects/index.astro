@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectBrowser from '../../components/ProjectBrowser.astro';
-import projects from '../../data/projects.json';
+import { getProjects } from '../../data/projects.js';
+
+const projects = await getProjects();
 ---
 
 <BaseLayout title="Current Projects" description="The work we're funding right now — deployments in the field, films that carry the story, all paid for out of one fund.">

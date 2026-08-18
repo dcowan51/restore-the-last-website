@@ -1,8 +1,18 @@
 # How to Add and Manage Projects
 
-Projects live in one file: `src/data/projects.json`
+## The easy way: use the editor
 
-Add a project by copying a template below into the array. Everything else is automatic — the card, the detail page, the filters, the homepage carousel, and the give-page carousel all read from this one file. No code changes needed.
+Go to **`/admin`**, sign in, and fill in a form. No JSON, no code, drag-and-drop photos. See **[ADMIN-SETUP.md](ADMIN-SETUP.md)** for the one-time login setup.
+
+Everything below describes the files the editor writes — useful if you'd rather edit directly, or need to understand what a field does.
+
+---
+
+## The files
+
+Each project is **one JSON file** in `src/content/projects/`, and **the filename is the URL** — `hope-found-documentary.json` becomes `/projects/hope-found-documentary`.
+
+Every field is validated at build time against `src/content/config.ts`. A bad value fails the deploy with a message naming the file and field, rather than quietly publishing something broken.
 
 **Where projects show up**
 
@@ -19,10 +29,10 @@ Add a project by copying a template below into the array. Everything else is aut
 
 ```json
 {
-  "slug": "your-project-url-name",
   "type": "deployment",
   "status": "open",
   "featured": true,
+  "order": 40,
   "title": "Project Title Here",
   "location": "City, Country",
   "populations": ["foster-youth"],
@@ -33,7 +43,7 @@ Add a project by copying a template below into the array. Everything else is aut
   },
   "population": "Who is being served, in plain words",
   "goal": 10000,
-  "coverImage": "/your-photo-filename.jpg",
+  "coverImage": "/uploads/your-photo.jpg",
   "summary": "2–3 sentences. What facility, what location, why now. Shows on the card and at the top of the detail page.",
   "whatWeFund": "What the money specifically covers — calm boxes, training, support.",
   "whyThisPopulation": "1–2 paragraphs on why this population needs this. Separate paragraphs with a blank line (\\n\\n)."
@@ -44,10 +54,10 @@ Add a project by copying a template below into the array. Everything else is aut
 
 ```json
 {
-  "slug": "your-film-url-name",
   "type": "documentary",
   "status": "in-production",
   "featured": true,
+  "order": 40,
   "title": "Film Title",
   "subtitle": "One evocative line. Shows on the card instead of the summary.",
   "location": "Where it's filmed",
@@ -55,7 +65,7 @@ Add a project by copying a template below into the array. Everything else is aut
   "purpose": "One sentence on why this film exists.",
   "partner": { "name": "Production Company", "url": "" },
   "goal": 10000,
-  "coverImage": "/your-still.jpg",
+  "coverImage": "/uploads/your-still.jpg",
   "summary": "2–3 sentences about the film.",
   "whatWeFund": "Production, post, scoring, subtitling, distribution.",
   "whyThisMatters": "1–2 paragraphs on why this story needs telling.",
@@ -74,7 +84,8 @@ Add a project by copying a template below into the array. Everything else is aut
 
 | Field | What it is | Rules |
 |---|---|---|
-| `slug` | The URL for the project page | Lowercase, hyphens only, no spaces |
+| *(filename)* | The URL for the project page | Lowercase, hyphens only, no spaces. `my-project.json` → `/projects/my-project` |
+| `order` | Sort position | Number. Lower shows first. Use gaps (10, 20, 30) so you can reorder without renumbering |
 | `type` | What kind of project this is | `"deployment"`, `"documentary"`, `"training"`, or `"research"` |
 | `status` | The badge on the card | `"open"`, `"active"`, `"in-production"`, or `"funded"` |
 | `featured` | Whether it shows on the homepage carousel | `true` or `false` |
@@ -86,7 +97,7 @@ Add a project by copying a template below into the array. Everything else is aut
 | `partner` | The partner org | `{ "name": "...", "url": "..." }`. Leave either as `""` to hide it |
 | `population` | Plain-words description of who's served | Optional. Shown on deployment cards |
 | `goal` | Funding goal in dollars | Number only — no `$` or commas. **Omit entirely** for ongoing work with no fixed goal |
-| `coverImage` | Card and detail-page photo | Drop the file in `public/`, then reference as `/filename.jpg` |
+| `coverImage` | Card and detail-page photo | Upload via `/admin`, or drop into `public/uploads/` and reference as `/uploads/filename.jpg` |
 | `summary` | Project overview | 2–3 sentences |
 | `whatWeFund` | What the money covers | One sentence or a short list |
 | `whyThisPopulation` | Why this group needs this — **deployments** | 1–2 paragraphs. Blank line between paragraphs |
@@ -117,15 +128,18 @@ To add a new population, add it to `POPULATIONS` in `src/data/projectMeta.js`. F
 
 **Make a project ongoing with no dollar goal** — delete the `goal` line entirely. The card shows "Ongoing" and the detail page switches to ongoing-initiative language instead of a cost.
 
-**Reorder the carousels** — projects appear in the order they're listed in the file. Move an entry up to move it up.
+**Reorder the carousels** — change `order`. Lower shows first. The gaps (10, 20, 30) exist so you can slot something in at 15 without touching anything else.
 
 ---
 
 ## Adding a photo
 
-1. Drop the image into `website/public/`
-2. Reference it as `/filename.jpg` (or `.png`, `.jpeg`)
-3. At least 1200px wide, landscape works best
+Upload from `/admin` and it's handled for you. By hand:
+
+1. Drop the image into `website/public/uploads/`
+2. Reference it as `/uploads/filename.jpg`
+3. Landscape works best. **Cap it around 1600px wide** — everything displays at 1600px or less, so bigger is just load time.
+4. **Convert HEIC to JPEG first.** No browser renders HEIC; the image will silently not appear.
 
 ---
 

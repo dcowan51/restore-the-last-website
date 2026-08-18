@@ -75,12 +75,18 @@ for (const [fgTok, bgTok, alpha, px, bold, where] of PAIRS) {
 
 // ---------------------------------------------------------------- html walkers
 
+// The admin editor is a third-party app shell -- it renders itself at runtime,
+// so its built HTML is an empty <body> with a script tag. Auditing it reports a
+// missing h1 that no amount of editing on our side could fix.
+const SKIP_DIRS = new Set(['admin']);
+
 const pages = [];
 (function walk(dir) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
-    if (statSync(p).isDirectory()) walk(p);
-    else if (name.endsWith('.html')) pages.push(p);
+    if (statSync(p).isDirectory()) {
+      if (!SKIP_DIRS.has(name)) walk(p);
+    } else if (name.endsWith('.html')) pages.push(p);
   }
 })(DIST);
 

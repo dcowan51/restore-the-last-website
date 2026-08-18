@@ -2,11 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import ProjectBrowser from '../components/ProjectBrowser.astro';
-import projects from '../data/projects.json';
+import { getProjects } from '../data/projects.js';
 
-// The homepage carousel is curated, not exhaustive — flip `featured` in
-// projects.json to change what shows here. Falling back to the full list keeps
-// the section from rendering empty if every flag is ever turned off.
+// The homepage carousel is curated, not exhaustive — flip `featured` on a
+// project (in /admin, or its file in src/content/projects/) to change what
+// shows here. Falling back to the full list keeps the section from rendering
+// empty if every flag is ever turned off.
+const projects = await getProjects();
 const featured = projects.filter(p => p.featured);
 const featuredProjects = featured.length ? featured : projects;
 ---
