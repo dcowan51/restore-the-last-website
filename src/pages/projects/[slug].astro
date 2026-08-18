@@ -25,9 +25,9 @@ const subject = encodeURIComponent(`Funding inquiry: ${project.title}`);
 const body = encodeURIComponent(`Hi Dallas,\n\nI'm interested in funding the project: ${project.title} (${project.location}).\n\nPlease let me know how to proceed.\n\nThank you.`);
 const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${body}`;
 
-const ctaLabel = isClosed
-  ? 'Project fully funded'
-  : isDocumentary ? 'Back this film' : 'Give to the fund';
+// One pooled collection behind every donate link, so one honest label. A
+// per-project verb ("Back this film") would imply the gift is earmarked.
+const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
 
 const costLabel = isDocumentary ? 'Production Budget' : 'Project Cost';
 const costCaption = isDocumentary
@@ -261,7 +261,7 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
         <h2 class="text-white text-2xl md:text-3xl mb-6">
           {isDocumentary
             ? 'Help us get this story on screen.'
-            : isOngoing ? 'Ready to partner on this initiative?' : 'Ready to fund this deployment?'}
+            : isOngoing ? 'Ready to partner on this initiative?' : 'Ready to move this work forward?'}
         </h2>
         <DonateButton label={ctaLabel} class="btn-gold text-lg" />
       </div>
