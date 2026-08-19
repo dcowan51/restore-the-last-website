@@ -91,6 +91,38 @@ const submitted = Astro.url.searchParams.get('success') === 'true';
     </div>
   </section>
 
+  <!-- Partner Requirements -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">What We Look For</p>
+        <h2 class="mb-8">What makes a partner facility ready.</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">01</p>
+            <p class="font-bold text-dark mb-2">Established organization</p>
+            <p class="text-body text-sm">Currently serving trauma-affected populations with existing infrastructure and staff.</p>
+          </div>
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">02</p>
+            <p class="font-bold text-dark mb-2">On-site delivery model</p>
+            <p class="text-body text-sm">A physical location where sessions can be administered regularly (residential preferred).</p>
+          </div>
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">03</p>
+            <p class="font-bold text-dark mb-2">Willing to train</p>
+            <p class="text-body text-sm">At least one staff member committed to learning and administering sessions independently.</p>
+          </div>
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">04</p>
+            <p class="font-bold text-dark mb-2">Commitment to outcomes</p>
+            <p class="text-body text-sm">Willingness to track outcomes and report data for donor transparency and program improvement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Partner Inquiry Form -->
   <section id="apply" class="bg-offwhite section-padding">
     <div class="container-narrow">
@@ -98,7 +130,7 @@ const submitted = Astro.url.searchParams.get('success') === 'true';
         <p class="label text-primary mb-6">Become a Partner</p>
         <h2 class="mb-8">Think your organization could benefit?</h2>
         <p class="text-body mb-8">
-          We're looking for established organizations serving trauma-affected populations with on-site delivery capacity and a commitment to tracking outcomes.
+          If that sounds like your organization, tell us about your work. We fund the technology, the training, and the ongoing support — you bring the people and the commitment.
         </p>
 
         {submitted && (

@@ -59,33 +59,8 @@ const featuredProjects = featured.length ? featured : projects;
     </div>
   </section>
 
-  <!-- Current Projects -->
-  <section class="bg-offwhite pt-8 pb-20">
-    <div class="container-narrow">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-        <div>
-          <p class="label text-primary mb-2 md:mb-3">Current Projects</p>
-          <h2 class="mb-3">The work your giving is paying for.</h2>
-          <p class="text-body text-base md:text-lg leading-relaxed">
-            Named projects, real places, published costs. Every one of them comes out of the same fund.
-          </p>
-        </div>
-        <a href="/projects" class="text-primary font-bold font-sans hover:text-medium transition-colors whitespace-nowrap py-3 md:py-2">
-          See all projects →
-        </a>
-      </div>
-
-      <ProjectBrowser
-        projects={featuredProjects}
-        layout="carousel"
-        label="Featured projects"
-        compact={true}
-      />
-    </div>
-  </section>
-
   <!-- The Problem -->
-  <section class="bg-white section-padding">
+  <section class="bg-offwhite section-padding">
     <div class="container-narrow">
       <div class="text-center max-w-3xl mx-auto">
         <h2 class="mb-5 md:mb-6">They got rescued. Their nervous systems didn't.</h2>
@@ -114,6 +89,31 @@ const featuredProjects = featured.length ? featured : projects;
         <p class="text-dark font-semibold text-sm mb-1">sessions delivered in El Salvador alone</p>
         <p class="text-body/80 text-xs">Over 2 years of deployment</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Current Projects -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div>
+          <p class="label text-primary mb-2 md:mb-3">Current Projects</p>
+          <h2 class="mb-3">The work your giving is paying for.</h2>
+          <p class="text-body text-base md:text-lg leading-relaxed">
+            Named projects, real places, published costs. Give to one directly, or through the fund that backs them all.
+          </p>
+        </div>
+        <a href="/projects" class="text-primary font-bold font-sans hover:text-medium transition-colors whitespace-nowrap py-3 md:py-2">
+          See all projects →
+        </a>
+      </div>
+
+      <ProjectBrowser
+        projects={featuredProjects}
+        layout="carousel"
+        label="Featured projects"
+        compact={true}
+      />
     </div>
   </section>
 
@@ -169,7 +169,7 @@ const featuredProjects = featured.length ? featured : projects;
         <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
           <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4" aria-hidden="true">02</p>
           <p class="font-serif text-base md:text-lg font-bold text-dark mb-2 md:mb-3">Fund</p>
-          <p class="text-body text-sm leading-relaxed">Donors give to one fund, with full transparency into every project it pays for.</p>
+          <p class="text-body text-sm leading-relaxed">Donors give to a specific project, or to one shared fund — with full transparency into everything it pays for.</p>
         </div>
         <div class="bg-white rounded-2xl p-5 md:p-6 border border-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 text-left">
           <p class="font-serif text-2xl md:text-4xl font-bold text-primary/20 mb-3 md:mb-4" aria-hidden="true">03</p>
@@ -202,78 +202,63 @@ const featuredProjects = featured.length ? featured : projects;
     </div>
   </section>
 
-  <!-- Proof Partners -->
+  <!-- Where It's Working: proof + field video, one beat per partner -->
   <section class="bg-white section-padding">
     <div class="container-narrow">
       <p class="label text-primary mb-4">Where It's Working</p>
-      <h2 class="mb-10 md:mb-12">Proof, not promises.</h2>
-      <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-        <div>
+      <h2 class="mb-4">Proof, not promises.</h2>
+      <p class="text-body text-base md:text-lg max-w-xl mb-10 md:mb-12 leading-relaxed">
+        These are the people doing the work — and the numbers they're producing. Hear it directly from the field.
+      </p>
+      <div class="grid md:grid-cols-2 gap-10 md:gap-12">
+
+        <!-- La Casa de mi Padre -->
+        <div class="flex flex-col">
           <p class="label text-gold-deep mb-2">La Casa de mi Padre</p>
           <p class="text-sm text-body/80 mb-4">El Salvador — children's home</p>
           <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">97% showed improvement</p>
-          <p class="text-body">
+          <p class="text-body mb-6">
             28 participants across two years. 50% symptom reduction after a single session. 70% by session seven. 18,000+ sessions delivered. Children, house parents, and on-site staff — all carrying trauma, all showing measurable recovery.
           </p>
+          <div class="mt-auto bg-offwhite rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
+            <div class="aspect-video">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/uTvgBmxbzeQ"
+                title="El Salvador — Restore the Last"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="p-4 md:p-5">
+              <p class="text-body text-sm">Footage from our partner sites in El Salvador, narrated by the on-site psychologist at our partner school ONUVA.</p>
+            </div>
+          </div>
         </div>
-        <div class="mt-8 md:mt-0">
+
+        <!-- Thrive -->
+        <div class="flex flex-col">
           <p class="label text-gold-deep mb-2">Thrive</p>
           <p class="text-sm text-body/80 mb-4">Arizona, USA</p>
           <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">25–30 sessions/week</p>
-          <p class="text-body">
+          <p class="text-body mb-6">
             Aged-out foster youth, ages 18–25. Residents are sleeping through the night. Ten earned their driver's licenses. Five graduated high school. The nervous system calmed down — and everything else followed.
           </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Partner Videos -->
-  <section class="bg-offwhite section-padding">
-    <div class="container-narrow">
-      <div class="text-center mb-10 md:mb-12">
-        <p class="label text-primary mb-4">From Our Partners</p>
-        <h2 class="mb-4">Hear it directly from the field.</h2>
-        <p class="text-body max-w-xl mx-auto">
-          These are the people doing the work. See what nervous system restoration looks like when it reaches the people it was meant for.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-
-        <!-- Landscape video -->
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
-          <div class="aspect-video">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/utLjfuTNIU8"
-              title="Thrive Arizona — Restore the Last"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full h-full"
-              loading="lazy"
-            ></iframe>
-          </div>
-          <div class="p-4 md:p-5">
-            <p class="label text-gold-deep mb-1">Thrive — Arizona</p>
-            <p class="text-body text-sm">Aged-out foster youth. Hear directly from Steve Vogel, President & CEO.</p>
-          </div>
-        </div>
-
-        <!-- Portrait reel -->
-        <div class="bg-white rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
-          <div class="aspect-video bg-dark flex items-center justify-center overflow-hidden">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/uTvgBmxbzeQ"
-              title="El Salvador — Restore the Last"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full h-full"
-              loading="lazy"
-            ></iframe>
-          </div>
-          <div class="p-4 md:p-5">
-            <p class="label text-gold-deep mb-1">El Salvador — From the Field</p>
-            <p class="text-body text-sm">Footage from our partner sites in El Salvador, narrated by the on-site psychologist at our partner school ONUVA.</p>
+          <div class="mt-auto bg-offwhite rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
+            <div class="aspect-video">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/utLjfuTNIU8"
+                title="Thrive Arizona — Restore the Last"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="p-4 md:p-5">
+              <p class="text-body text-sm">Aged-out foster youth. Hear directly from Steve Vogel, President & CEO.</p>
+            </div>
           </div>
         </div>
 
