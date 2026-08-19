@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+const inputClass =
+  'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
+const labelClass = 'label text-dark block mb-2';
+const radioClass = 'w-4 h-4 accent-primary';
+---
+
+<BaseLayout
+  title="Apply for Funding"
+  description="Restore the Last funds direct neurofeedback deployments — equipment, training, and support — at organizations serving trauma-affected populations. Apply here."
+>
+
+  <!-- Hero -->
+  <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Apply for Funding</p>
+      <div class="gold-line mb-8"></div>
+      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+        Bring nervous system restoration to the people you serve.
+      </h1>
+      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
+        Restore the Last funds direct neurofeedback deployments at organizations already serving trauma-affected populations — the equipment, the training, and the ongoing support. If that's you, this application is the first step. It takes about ten minutes.
+      </p>
+    </div>
+  </section>
+
+  <!-- What a funded deployment includes -->
+  <section class="bg-white pt-12 pb-16">
+    <div class="container-narrow">
+      <p class="label text-primary mb-6">What We Fund</p>
+      <h2 class="mb-10">A deployment, end to end.</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">01</p>
+          <p class="font-bold text-dark mb-2">The equipment</p>
+          <p class="text-body text-sm">Direct neurofeedback technology, purchased, delivered, and installed at your facility.</p>
+        </div>
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">02</p>
+          <p class="font-bold text-dark mb-2">The training</p>
+          <p class="text-body text-sm">Your own staff learn to run sessions independently — no clinician on payroll required.</p>
+        </div>
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="font-serif text-3xl font-bold text-primary/20 mb-3" aria-hidden="true">03</p>
+          <p class="font-bold text-dark mb-2">The support</p>
+          <p class="text-body text-sm">Ongoing help as you go, plus simple outcome tracking so you can see — and show — what's changing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we look for -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">Before You Apply</p>
+        <h2 class="mb-8">What makes a partner facility ready.</h2>
+        <div class="grid md:grid-cols-2 gap-4 mb-8">
+          <div class="bg-white rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Established organization</p>
+            <p class="text-body text-sm">Currently serving trauma-affected populations with existing infrastructure and staff.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">On-site delivery</p>
+            <p class="text-body text-sm">A physical location where sessions can run regularly — residential settings preferred.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Willing to train</p>
+            <p class="text-body text-sm">At least one staff member committed to learning and administering sessions.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Commitment to outcomes</p>
+            <p class="text-body text-sm">Willingness to track outcomes and share the data — it's how we report to donors and improve the program.</p>
+          </div>
+        </div>
+        <p class="text-body leading-relaxed">
+          Missing one of these? <strong class="text-dark">Apply anyway</strong> and tell us where you are. Readiness is something we can often build toward together.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application form -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-6">The Application</p>
+        <h2 class="mb-4">Tell us about your work.</h2>
+        <p class="text-body mb-10 leading-relaxed">
+          Fields marked optional can be skipped. What you share stays with us — we never publish partner details without your permission.
+        </p>
+
+        <form
+          name="funding-application"
+          method="POST"
+          action="/apply/thank-you"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="space-y-10"
+        >
+          <input type="hidden" name="form-name" value="funding-application" />
+
+          <!-- Honeypot — hidden from people, catches bots. -->
+          <p class="hidden" aria-hidden="true">
+            <label>
+              Leave this field empty
+              <input name="bot-field" tabindex="-1" autocomplete="off" />
+            </label>
+          </p>
+
+          <!-- Your organization -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Your organization</legend>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="organization" class={labelClass}>Organization Name</label>
+                <input type="text" id="organization" name="organization" required class={inputClass} />
+              </div>
+              <div>
+                <label for="website" class={labelClass}>Website <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+                <input type="text" id="website" name="website" placeholder="https://yourorganization.org" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="location" class={labelClass}>City &amp; Country</label>
+                <input type="text" id="location" name="location" required placeholder="e.g., San Salvador, El Salvador" class={inputClass} />
+              </div>
+              <div>
+                <label for="legal-status" class={labelClass}>Legal Status</label>
+                <select id="legal-status" name="legal_status" required class={inputClass}>
+                  <option value="" disabled selected>Select one</option>
+                  <option>501(c)(3) nonprofit (US)</option>
+                  <option>Registered NGO / charity (outside the US)</option>
+                  <option>Faith-based ministry</option>
+                  <option>Other / not yet registered</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Contact -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Your contact information</legend>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="contact-name" class={labelClass}>Your Name</label>
+                <input type="text" id="contact-name" name="name" required class={inputClass} />
+              </div>
+              <div>
+                <label for="role" class={labelClass}>Role / Title</label>
+                <input type="text" id="role" name="role" required placeholder="e.g., Executive Director" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="email" class={labelClass}>Email</label>
+                <input type="email" id="email" name="email" required class={inputClass} />
+              </div>
+              <div>
+                <label for="phone" class={labelClass}>Phone <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+                <input type="tel" id="phone" name="phone" class={inputClass} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Program fit -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Your people &amp; program</legend>
+
+            <div>
+              <span class={labelClass}>Who do you serve? <span class="normal-case font-normal tracking-normal">(choose all that apply)</span></span>
+              <div class="grid sm:grid-cols-2 gap-3 mt-1">
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+                  <input type="checkbox" name="population" value="Trafficking survivors" class={radioClass} />
+                  <span class="text-body text-sm">Trafficking survivors</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+                  <input type="checkbox" name="population" value="Foster care youth" class={radioClass} />
+                  <span class="text-body text-sm">Foster care youth</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+                  <input type="checkbox" name="population" value="Trauma-affected community" class={radioClass} />
+                  <span class="text-body text-sm">Trauma-affected community</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+                  <input type="checkbox" name="population" value="Other" class={radioClass} />
+                  <span class="text-body text-sm">Other</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="people-served" class={labelClass}>How many people do you serve in a typical year?</label>
+              <select id="people-served" name="people_served" required class={inputClass}>
+                <option value="" disabled selected>Select one</option>
+                <option>Under 50</option>
+                <option>50–200</option>
+                <option>200–1,000</option>
+                <option>1,000+</option>
+              </select>
+            </div>
+
+            <div>
+              <span class={labelClass}>Do you have a physical location where sessions could run regularly?</span>
+              <div class="flex flex-col sm:flex-row gap-3 mt-1">
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="physical_site" value="Yes — residential" required class={radioClass} />
+                  <span class="text-body text-sm">Yes — residential</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="physical_site" value="Yes — non-residential" class={radioClass} />
+                  <span class="text-body text-sm">Yes — school, clinic, or center</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="physical_site" value="Not yet" class={radioClass} />
+                  <span class="text-body text-sm">Not yet</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="site-description" class={labelClass}>Briefly describe the site <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+              <input type="text" id="site-description" name="site_description" placeholder="e.g., children's home with 3 houses; 25-acre residential campus; school" class={inputClass} />
+            </div>
+
+            <div>
+              <span class={labelClass}>Do you have at least one staff member who could be trained to run sessions?</span>
+              <div class="flex flex-col sm:flex-row gap-3 mt-1">
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="trainable_staff" value="Yes" required class={radioClass} />
+                  <span class="text-body text-sm">Yes</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="trainable_staff" value="Not yet" class={radioClass} />
+                  <span class="text-body text-sm">Not yet</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <span class={labelClass}>Are you willing to track outcomes and share the data with us?</span>
+              <div class="flex flex-col sm:flex-row gap-3 mt-1">
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="outcome_tracking" value="Yes" required class={radioClass} />
+                  <span class="text-body text-sm">Yes</span>
+                </label>
+                <label class="flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1">
+                  <input type="radio" name="outcome_tracking" value="Yes, but we'd need help getting set up" class={radioClass} />
+                  <span class="text-body text-sm">Yes, with help getting set up</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class={labelClass}>Tell us about your work — and why this technology fits it</label>
+              <textarea id="message" name="message" rows="6" required
+                placeholder="Who you serve, what trauma looks like in your community, what you've tried, and what a deployment would change."
+                class={inputClass}></textarea>
+            </div>
+
+            <div>
+              <label for="referral" class={labelClass}>How did you hear about us? <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+              <input type="text" id="referral" name="referral" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <div>
+            <p class="text-body text-sm leading-relaxed mb-6">
+              We read every application personally. If it looks like a fit, we'll set up a call to talk through your work and what a deployment would look like.
+            </p>
+            <button type="submit" class="btn-gold text-lg">Submit application</button>
+            <p class="text-body text-sm mt-4">
+              Prefer to talk first? Email
+              <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
