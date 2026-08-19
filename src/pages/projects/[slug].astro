@@ -26,9 +26,14 @@ const subject = encodeURIComponent(`Funding inquiry: ${project.title}`);
 const body = encodeURIComponent(`Hi Dallas,\n\nI'm interested in funding the project: ${project.title} (${project.location}).\n\nPlease let me know how to proceed.\n\nThank you.`);
 const mailtoLink = `mailto:dallas@restorethelast.org?subject=${subject}&body=${body}`;
 
-// One pooled collection behind every donate link, so one honest label. A
-// per-project verb ("Back this film") would imply the gift is earmarked.
-const ctaLabel = isClosed ? 'Project fully funded' : 'Give to the fund';
+// A project with its own give link (giveUrl) takes gifts designated to it; a
+// project without one sends donors to the shared general-fund collection. The
+// label and the fine print switch together so the button never promises a
+// designation the money doesn't have — or hides one it does.
+const hasOwnGiveLink = Boolean(project.giveUrl);
+const ctaLabel = isClosed
+  ? 'Project fully funded'
+  : hasOwnGiveLink ? 'Give to this project' : 'Give to the fund';
 
 const costLabel = isDocumentary ? 'Production Budget' : 'Project Cost';
 const costCaption = isDocumentary
@@ -80,7 +85,7 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
             </>
           )}
           {!isClosed && (
-            <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mt-2" />
+            <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold w-full text-center block text-base mt-2" />
           )}
         </div>
       </div>
@@ -168,9 +173,11 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
 
             {!isClosed ? (
               <>
-                <DonateButton label={ctaLabel} class="btn-gold w-full text-center block text-base mb-3" />
+                <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold w-full text-center block text-base mb-3" />
                 <p class="text-body/80 text-xs text-center">
-                  Gifts go to the general fund, which pays for this project and every other one in progress.
+                  {hasOwnGiveLink
+                    ? 'Your gift is designated to this project.'
+                    : 'Gifts go to the general fund, which pays for this project and every other one in progress.'}
                   <a href={mailtoLink} class="underline hover:text-body/80 transition-colors">Questions?</a>
                 </p>
               </>
@@ -264,7 +271,7 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
             ? 'Help us get this story on screen.'
             : isOngoing ? 'Ready to partner on this initiative?' : 'Ready to move this work forward?'}
         </h2>
-        <DonateButton label={ctaLabel} class="btn-gold text-lg" />
+        <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold text-lg" />
       </div>
     </section>
   )}

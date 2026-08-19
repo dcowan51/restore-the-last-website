@@ -45,6 +45,11 @@ const projects = defineCollection({
     // shows "Ongoing" and the detail page drops the cost figure.
     goal: z.number().positive().optional(),
 
+    // Optional per-project giving link (its own Crowded collection). When set,
+    // the detail page's Give buttons send donors there as a designated gift
+    // instead of the shared general-fund link in src/config.ts.
+    giveUrl: z.string().url().optional(),
+
     // Deployment-shaped fields
     population: z.string().optional(),
     whyThisPopulation: z.string().optional(),
