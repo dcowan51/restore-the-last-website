@@ -4,11 +4,14 @@ import { DONATE_URL } from '../config';
 interface Props {
   label?: string;
   class?: string;
+  href?: string;
 }
 
-const { label = 'Donate now', class: className = 'btn-gold text-lg' } = Astro.props;
+// Default is the shared general-fund collection; a project with its own
+// giving link passes it in so the gift lands designated to that project.
+const { label = 'Donate now', class: className = 'btn-gold text-lg', href = DONATE_URL } = Astro.props;
 ---
 
-<a href={DONATE_URL} target="_blank" rel="noopener noreferrer" class={className}>
+<a href={href} target="_blank" rel="noopener noreferrer" class={className}>
   {label}
 </a>

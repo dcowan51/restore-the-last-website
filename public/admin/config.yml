@@ -102,6 +102,8 @@ collections:
 
       - { name: goal, label: Funding goal ($), widget: number, required: false, value_type: int, min: 1, hint: 'Leave EMPTY for ongoing work with no fixed goal — the card then shows "Ongoing".' }
 
+      - { name: giveUrl, label: Give link (this project only), widget: string, required: false, hint: "Full URL of this project's own giving page (its Crowded collection link). When set, the Give buttons on this project's page send donors here as a gift designated to THIS project. Leave empty to send donors to the shared general-fund link." }
+
       # ---- Deployment-shaped fields ----
       - { name: population, label: 'Who it serves (in plain words)', widget: string, required: false, hint: 'Deployments only. Shows under the title on the card.' }
       - { name: whyThisPopulation, label: Why this population, widget: text, required: false, hint: 'Deployments only. Blank line between paragraphs.' }
