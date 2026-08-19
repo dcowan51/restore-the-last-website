@@ -81,9 +81,9 @@ const populationAttr = (project.populations || []).join(' ');
       ) : (
         <span class="text-body/80 text-sm">Ongoing</span>
       )}
-      {/* Navigation, not an ask. Every donate link on the site resolves to one
-          pooled collection, so a per-card giving verb would promise a designation
-          checkout cannot honour. The ask lives on the detail page. */}
+      {/* Navigation, not an ask. The giving CTA lives on the detail page, where
+          the label states honestly whether a gift is designated to this project
+          (giveUrl set) or pooled into the general fund. */}
       <span class="text-primary font-bold font-sans text-sm whitespace-nowrap">
         {project.status === 'funded' ? 'See the outcome →' : isDocumentary ? 'About the film →' : 'See the work →'}
       </span>

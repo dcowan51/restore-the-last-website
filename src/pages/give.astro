@@ -8,7 +8,7 @@ import { getProjects } from '../data/projects.js';
 const projects = await getProjects();
 ---
 
-<BaseLayout title="Give" description="Every dollar reaches the field. Give to the fund that puts neurofeedback in the hands of the people who need it most.">
+<BaseLayout title="Give" description="Every dollar reaches the field. Give to a specific project, or to the fund that puts neurofeedback in the hands of the people who need it most.">
 
   <!-- Hero -->
   <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
@@ -19,7 +19,7 @@ const projects = await getProjects();
         Every dollar reaches the field.
       </h1>
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        Your gift goes into one fund — and straight back out to the facilities doing the work. We deploy it where the need is most urgent, name every project it touches, and report what changed.
+        Give to a specific project, or into the fund behind all of them — either way, your gift goes straight back out to the facilities doing the work. We name every project it touches and report what changed.
       </p>
       <div class="mt-8">
         <DonateButton label="Donate now" class="btn-gold text-lg" />
@@ -33,7 +33,7 @@ const projects = await getProjects();
       <p class="label text-primary mb-4 md:mb-6">Projects</p>
       <h2 class="mb-4">Where the fund goes.</h2>
       <p class="text-body text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed">
-        Every project below is funded out of the same pool. This is the work your giving is paying for right now.
+        This is the work your giving is paying for right now. Open any project to give to it directly — or give to the fund and we'll send your gift wherever it's needed most.
       </p>
       <ProjectBrowser
         projects={projects}
@@ -42,10 +42,10 @@ const projects = await getProjects();
         label="Projects the fund pays for"
       />
 
-      {/* The pooled-fund ask, sitting directly under the projects it pays for.
-          Every donate link on the site resolves to the same collection, so this
-          states plainly what a gift actually does instead of implying the cards
-          above are separately fundable. */}
+      {/* The general-fund ask, sitting directly under the projects it pays for.
+          Projects with their own give link take designated gifts on their detail
+          pages; this box is for the donor who'd rather not pick — one gift,
+          moved to whatever is ready first. */}
       <div class="mt-10 bg-white rounded-2xl border border-primary/20 shadow-sm p-6 md:p-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div class="max-w-xl">
@@ -53,7 +53,7 @@ const projects = await getProjects();
               Can't pick one? You don't have to.
             </h3>
             <p class="text-body leading-relaxed">
-              Every gift goes into one fund, and we move it to whatever is ready first — the projects above, and the ones we haven't announced yet. Nothing sits stranded waiting for a goal to be met, and no project gets overfunded while another waits.
+              Give to the fund and we move your gift to whatever is ready first — the projects above, and the ones we haven't announced yet. Nothing sits stranded waiting for a goal to be met.
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
@@ -70,9 +70,9 @@ const projects = await getProjects();
     <div class="container-narrow">
       <div class="max-w-3xl">
         <p class="label text-primary mb-6">How Giving Works</p>
-        <h2 class="mb-8">One fund. Named destinations. Real reports.</h2>
+        <h2 class="mb-8">Two ways to give. Named destinations. Real reports.</h2>
         <p class="text-body text-lg leading-relaxed mb-8">
-          We pool giving into a single fund so we can move fast when a facility is ready. That's the difference between a machine sitting in a closet and a machine running sessions next month. What doesn't change is the accounting — every project the fund touches is named publicly, with outcomes attached.
+          Give to a project and your gift is designated to that work. Give to the fund and we move fast the moment a facility is ready — that's the difference between a machine sitting in a closet and a machine running sessions next month. What never changes is the accounting: every project is named publicly, with outcomes attached.
         </p>
         <div class="space-y-4">
           <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
@@ -80,8 +80,8 @@ const projects = await getProjects();
               <span class="text-primary font-bold text-sm">1</span>
             </div>
             <div>
-              <h3 class="text-h4 font-serif font-bold mb-1">You give to the fund</h3>
-              <p class="text-body text-sm">One gift, one place. Nothing sits stranded halfway to a goal, and no project gets overfunded while another waits.</p>
+              <h3 class="text-h4 font-serif font-bold mb-1">You give — to a project, or to the fund</h3>
+              <p class="text-body text-sm">Pick a project and your gift is designated to that work. Give to the fund and we put it wherever it's needed most. Both are published — real facilities, real populations, real costs.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-6 border border-primary/10 flex items-start gap-4">
