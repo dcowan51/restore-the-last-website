@@ -35,6 +35,12 @@ const ctaLabel = isClosed
   ? 'Project fully funded'
   : hasOwnGiveLink ? 'Give to this project' : 'Give to the fund';
 
+// The overflow promise only applies where a designated gift can outrun a
+// fixed goal — ongoing work has no finish line, so the sentence would dangle.
+const designatedFinePrint = isOngoing
+  ? 'Your gift is designated to this project.'
+  : "Your gift is designated to this project. If it reaches its goal, any extra giving moves to the next facility that's ready — nothing sits stranded.";
+
 const costLabel = isDocumentary ? 'Production Budget' : 'Project Cost';
 const costCaption = isDocumentary
   ? 'what it costs to make and release this film'
@@ -85,7 +91,12 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
             </>
           )}
           {!isClosed && (
-            <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold w-full text-center block text-base mt-2" />
+            <>
+              <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold w-full text-center block text-base mt-2" />
+              {hasOwnGiveLink && (
+                <p class="text-body/80 text-xs text-center mt-3">{designatedFinePrint}</p>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -176,7 +187,7 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
                 <DonateButton label={ctaLabel} href={project.giveUrl} class="btn-gold w-full text-center block text-base mb-3" />
                 <p class="text-body/80 text-xs text-center">
                   {hasOwnGiveLink
-                    ? 'Your gift is designated to this project.'
+                    ? designatedFinePrint
                     : 'Gifts go to the general fund, which pays for this project and every other one in progress.'}
                   <a href={mailtoLink} class="underline hover:text-body/80 transition-colors">Questions?</a>
                 </p>
