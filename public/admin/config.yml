@@ -7,7 +7,7 @@ backend:
   repo: dcowan51/restore-the-last-website
   branch: main
   # Netlify brokers the GitHub login, so there's no auth server to run.
-  # Requires the one-time OAuth setup in Netlify (see README-ADMIN.md).
+  # Requires the one-time OAuth setup in Netlify (see ADMIN-SETUP.md).
   base_url: https://api.netlify.com
   auth_endpoint: auth
 
