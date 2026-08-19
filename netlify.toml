@@ -4,3 +4,12 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# The Netlify subdomain serves a full duplicate of the site. Redirecting it to
+# the primary domain (together with the canonical tags in BaseLayout) keeps
+# search engines from indexing two competing copies.
+[[redirects]]
+  from = "https://restore-the-last.netlify.app/*"
+  to = "https://restorethelast.org/:splat"
+  status = 301
+  force = true

@@ -10,8 +10,13 @@ interface Props {
 
 const { title, description = 'Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 97% improved.' } = Astro.props;
 
-const siteUrl = 'https://restore-the-last.netlify.app';
-const ogImage = `${siteUrl}/RTLlogo.png`;
+// Canonical origin comes from `site` in astro.config.mjs. Every page needs its
+// own canonical URL: the Netlify subdomain serves an identical copy of this
+// site, and without a canonical tag search engines treat the two as competing
+// duplicates.
+const siteUrl = Astro.site ?? new URL('https://restorethelast.org');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL('/RTLlogo.png', siteUrl);
 const fullTitle = `${title} | Restore the Last`;
 ---
 
@@ -22,13 +27,14 @@ const fullTitle = `${title} | Restore the Last`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/png" href="/RTLlogo.png" />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{fullTitle}</title>
 
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Restore the Last" />
 
