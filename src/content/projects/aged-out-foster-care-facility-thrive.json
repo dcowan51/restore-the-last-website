@@ -1,0 +1,27 @@
+{
+  "title": "Aged Out Foster Care Facility - Thrive",
+  "type": "deployment",
+  "status": "open",
+  "featured": true,
+  "order": 1,
+  "location": "Phoenix, Arizona",
+  "populations": [
+    "foster-youth",
+    "caregivers"
+  ],
+  "purpose": "To bring nervous system restoration to aged-out foster youth rebuilding their lives at Thrive.",
+  "partner": {
+    "name": "Thrive Arizona",
+    "url": "https://www.thriveaz.org"
+  },
+  "coverImage": "/uploads/Screenshot 2026-08-20 at 11.37.15 AM.png",
+  "summary": "Thrive is a 25-acre campus in Phoenix, Arizona for young adults who aged out of foster care — and this project puts 4 more CalmBox neurofeedback units in their hands. Three years of neurofeedback on campus has already restored sleep, unlocked therapy, and helped 10 residents earn driver's licenses. The new units are portable, so sessions follow residents and staff wherever they are.",
+  "whatWeFund": "4 additional CalmBox neurofeedback units for Thrive's campus, available to both residents and staff. The units are portable, so they move between houses and program spaces instead of sitting in one room.",
+  "goal": 1200,
+  "giveUrl": "",
+  "population": "Aged Our Foster Youth",
+  "whyThisPopulation": "Roughly half of young people who age out of foster care are homeless within two years. They leave the system at 18 with no family to call, no address, and a nervous system that learned early that the world is not safe.\n\nThat last part is what a bed and a case manager can't fix. A young adult who can't sleep can't hold a job. One who can't regulate anger can't keep a roommate or pass a driving test. Thrive's residents were finally safe — and still couldn't rest. Dysregulation isn't one problem on the list. It sits underneath every other one.\n\nThrive has run Direct Neurofeedback on campus for three years, integrated into daily life for residents and staff alike. Residents are sleeping through the night. Talk therapy is productive for the first time. Ten driver's licenses. Five high school graduations. The program works. It needs more units to reach everyone who wants it.",
+  "subtitle": "",
+  "whyThisMatters": "",
+  "media": null
+}
