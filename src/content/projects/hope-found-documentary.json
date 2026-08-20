@@ -1,11 +1,11 @@
 {
   "title": "Hope Found",
+  "draft": false,
   "type": "documentary",
   "status": "in-production",
   "featured": true,
   "order": 10,
   "location": "El Salvador & United States",
-  "subtitle": "The story of what happens when brain technology reaches the least, the lost, and the last.",
   "populations": [
     "residential-care",
     "foster-youth",
@@ -16,10 +16,14 @@
     "name": "Scale of Eternity Productions",
     "url": ""
   },
-  "goal": 10000,
   "coverImage": "/uploads/hope-found-cover.jpg",
   "summary": "A feature documentary following nervous system restoration into the places it's already changing lives — a children's home in El Salvador where more than 18,000 sessions have been delivered, and a campus in Arizona serving young adults aging out of foster care. Produced with Scale of Eternity Productions, the film exists to put the proof on screen: this technology works, it's already in the field, and the only thing standing between it and the people who need it is funding.",
   "whatWeFund": "The full production of Hope Found — travel and filming across both sites, post-production, scoring, Spanish translation and subtitling, and distribution. The $10,000 goal covers the entire production budget. Once funded, the film becomes a permanent, freely available asset for every donor conversation, partner pitch, and grant application we make from here forward.",
+  "goal": 10000,
+  "giveUrl": "https://collect.crowded.me/collection/f5075d60-023d-4dad-b095-cf98ae0a0065",
+  "population": "",
+  "whyThisPopulation": "",
+  "subtitle": "The story of what happens when brain technology reaches the least, the lost, and the last.",
   "whyThisMatters": "Most people have never heard of direct neurofeedback. The ones who have usually assume it's experimental, expensive, or years away from mattering. None of that is true — and the fastest way to prove it is to show it.\n\nWe have the numbers: 97% of participants at our El Salvador site showed measurable improvement, half of them after a single session. But data has never moved anyone the way a face does. Hope Found puts the teacher whose seizures stopped after one session, the boy who slept through the night for the first time in his life, and the young adults rebuilding after foster care on screen, in their own words.\n\nThat is what changes a donor's mind, opens a partner's door, and gets this technology to the next thousand people.",
   "media": {
     "productionPartner": "Scale of Eternity Productions",
