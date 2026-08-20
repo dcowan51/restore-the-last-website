@@ -203,6 +203,8 @@ collections:
 
       - { name: goal, label: Funding goal ($), widget: number, required: false, value_type: int, min: 1, hint: 'Leave EMPTY for ongoing work with no fixed goal — the card then shows "Ongoing".' }
 
+      - { name: raised, label: Raised so far ($), widget: number, required: false, value_type: int, min: 0, hint: 'Dollars raised toward the goal — update by hand whenever you like. Shows a progress bar and percentage on the card and project page. Leave empty to hide the bar. Only shows when a goal is set.' }
+
       - { name: giveUrl, label: Give link (this project only), widget: string, required: false, hint: "Full URL of this project's own giving page (its Crowded collection link). When set, the Give buttons on this project's page send donors here as a gift designated to THIS project. Leave empty to send donors to the shared general-fund link." }
 
       # ---- Deployment-shaped fields ----

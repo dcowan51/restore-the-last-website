@@ -1,5 +1,6 @@
 ---
 import ProjectCard from './ProjectCard.astro';
+import ProjectTeaserCard from './ProjectTeaserCard.astro';
 import { activeFacets } from '../data/projectMeta.js';
 
 const {
@@ -8,9 +9,21 @@ const {
   filters = false,          // false | 'type' | 'all'
   label = 'Projects',       // accessible name for the region
   compact = false,
+  // Offer the "Next Deployment" recruitment card in the spotlight layout.
+  teaser = false,
 } = Astro.props;
 
-const isCarousel = layout === 'carousel';
+// A short list gets the spotlight: a static grid sized to exactly fill the
+// row, full-size cards, no carousel chrome. Two launch projects read as two
+// flagships instead of a carousel missing its third item. The teaser card
+// (when offered) fills the last slot with the partner-recruitment story; once
+// the list outgrows three cells, the normal carousel/grid takes over and the
+// teaser retires.
+const cells = projects.length + (teaser ? 1 : 0);
+const isSpotlight = cells > 0 && cells <= 3;
+const spotlightCols = cells >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2';
+
+const isCarousel = layout === 'carousel' && !isSpotlight;
 const facets = activeFacets(projects);
 
 // Only worth rendering a filter row if there's more than one thing to choose
@@ -76,7 +89,14 @@ const hasFilters = showTypeFilter || showPopulationFilter || showStatusFilter;
     </div>
   )}
 
-  {isCarousel ? (
+  {isSpotlight ? (
+    <div data-rail class={`grid gap-5 md:gap-6 items-stretch ${spotlightCols}`}>
+      {projects.map(project => (
+        <ProjectCard project={project} compact={false} />
+      ))}
+      {teaser && <ProjectTeaserCard />}
+    </div>
+  ) : isCarousel ? (
     <div class="relative">
       <div
         data-rail

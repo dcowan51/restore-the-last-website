@@ -58,6 +58,11 @@ const projects = defineCollection({
     // shows "Ongoing" and the detail page drops the cost figure.
     goal: blankAsUndefined(z.number().positive().optional()),
 
+    // Dollars raised toward the goal, updated by hand from /admin. The site
+    // derives the percentage (so a changed goal never leaves a stale percent)
+    // and shows a progress bar wherever the goal appears. Absent = no bar.
+    raised: blankAsUndefined(z.number().min(0).optional()),
+
     // Optional per-project giving link (its own Crowded collection). When set,
     // the detail page's Give buttons send donors there as a designated gift
     // instead of the shared general-fund link in src/config.ts.
