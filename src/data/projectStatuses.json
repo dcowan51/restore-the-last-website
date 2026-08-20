@@ -1,0 +1,20 @@
+{
+  "statuses": [
+    {
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "label": "Open",
+      "value": "open"
+    },
+    {
+      "label": "In Production",
+      "value": "in-production"
+    },
+    {
+      "label": "Fully Funded",
+      "value": "funded"
+    }
+  ]
+}

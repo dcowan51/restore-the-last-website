@@ -8,15 +8,29 @@ import { defineCollection, z } from 'astro:content';
  * fallback the way the old plain-JSON file did.
  */
 
-export const PROJECT_TYPES = ['deployment', 'documentary', 'training', 'research'] as const;
-export const PROJECT_STATUSES = ['open', 'active', 'in-production', 'funded'] as const;
+// Sveltia writes what the editor holds: a blank URL field as "", a collapsed
+// empty object as null, an untouched multi-select as null. Normalize those to
+// "absent" before validating, so leaving an optional field empty in /admin can
+// never fail the build. (This exact case broke deploys on 2026-08-20: a new
+// project saved with giveUrl "" and media null was rejected by the schema.)
+const blankAsUndefined = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((v) => (v === '' || v === null ? undefined : v), schema);
 
 const projects = defineCollection({
   type: 'data',
   schema: z.object({
     title: z.string(),
-    type: z.enum(PROJECT_TYPES),
-    status: z.enum(PROJECT_STATUSES),
+    // Not enums: types and statuses are CMS-managed (src/data/projectTypes.json
+    // and projectStatuses.json, edited under Site Settings in /admin). The
+    // relation pickers there prevent typos at entry time, and a value deleted
+    // from settings must soften to a fallback label (see projectMeta.js)
+    // rather than stop the site building.
+    type: z.string(),
+    status: z.string(),
+
+    // Draft = saved but invisible: getProjects() drops it, so it appears on no
+    // page and gets no URL. The commit still lands and deploys like any save.
+    draft: z.boolean().default(false),
 
     // Controls the homepage carousel and the order everywhere else. Folder
     // collections have no inherent order, so it has to be explicit.
@@ -28,11 +42,13 @@ const projects = defineCollection({
     // edited under Site Settings in /admin). The relation picker there prevents
     // typos at entry time, and a category deleted from settings must soften to
     // a fallback label (see projectMeta.js) rather than stop the site building.
-    populations: z.array(z.string()).default([]),
+    populations: blankAsUndefined(z.array(z.string()).default([])),
     purpose: z.string().optional(),
-    partner: z
-      .object({ name: z.string().default(''), url: z.string().default('') })
-      .default({ name: '', url: '' }),
+    partner: blankAsUndefined(
+      z
+        .object({ name: z.string().default(''), url: z.string().default('') })
+        .default({ name: '', url: '' })
+    ),
 
     coverImage: z.string(),
     summary: z.string(),
@@ -40,12 +56,12 @@ const projects = defineCollection({
 
     // Omit `goal` entirely for ongoing work with no finish line — the card
     // shows "Ongoing" and the detail page drops the cost figure.
-    goal: z.number().positive().optional(),
+    goal: blankAsUndefined(z.number().positive().optional()),
 
     // Optional per-project giving link (its own Crowded collection). When set,
     // the detail page's Give buttons send donors there as a designated gift
     // instead of the shared general-fund link in src/config.ts.
-    giveUrl: z.string().url().optional(),
+    giveUrl: blankAsUndefined(z.string().url().optional()),
 
     // Deployment-shaped fields
     population: z.string().optional(),
@@ -54,14 +70,16 @@ const projects = defineCollection({
     // Film-shaped fields
     subtitle: z.string().optional(),
     whyThisMatters: z.string().optional(),
-    media: z
-      .object({
-        productionPartner: z.string().default(''),
-        targetRelease: z.string().default(''),
-        runtime: z.string().default(''),
-        trailerUrl: z.string().default(''),
-      })
-      .optional(),
+    media: blankAsUndefined(
+      z
+        .object({
+          productionPartner: z.string().default(''),
+          targetRelease: z.string().default(''),
+          runtime: z.string().default(''),
+          trailerUrl: z.string().default(''),
+        })
+        .optional()
+    ),
   }),
 });
 

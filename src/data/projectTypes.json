@@ -1,0 +1,24 @@
+{
+  "types": [
+    {
+      "label": "Deployment",
+      "plural": "Deployments",
+      "value": "deployment"
+    },
+    {
+      "label": "Documentary",
+      "plural": "Documentary",
+      "value": "documentary"
+    },
+    {
+      "label": "Training",
+      "plural": "Training",
+      "value": "training"
+    },
+    {
+      "label": "Research",
+      "plural": "Research",
+      "value": "research"
+    }
+  ]
+}
