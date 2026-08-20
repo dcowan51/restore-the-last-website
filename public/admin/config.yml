@@ -117,8 +117,17 @@ collections:
     delete: true
     # The filename becomes the URL: /projects/<filename>
     slug: '{{fields.title | slugify}}'
-    summary: '{{title}} — {{location}}'
+    # Drafts must be visible AS drafts in this list — the row is the only place
+    # an editor can tell saved-but-hidden from live without opening the entry.
+    summary: "{{draft | ternary('🚧 DRAFT — ','')}}{{title}} — {{location}}"
     sortable_fields: [order, title, status]
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+      - label: Published
+        field: draft
+        pattern: false
     view_groups:
       - label: Type
         field: type
