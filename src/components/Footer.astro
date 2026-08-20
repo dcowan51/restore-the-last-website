@@ -3,65 +3,66 @@ import { DONATE_URL } from '../config';
 import NewsletterSignup from './NewsletterSignup.astro';
 
 const year = new Date().getFullYear();
+
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/how-it-works', label: 'How It Works' },
+  { href: '/impact', label: 'Impact' },
+  { href: '/projects', label: 'Current Projects' },
+  { href: '/partners', label: 'Partners' },
+  { href: '/give', label: 'Give' },
+];
 ---
 
-<footer class="bg-deep text-white">
-  <div class="container-narrow py-12 md:py-16">
-    <!-- Newsletter -->
-    <div class="pb-12 mb-12 border-b border-white/10">
-      <div class="max-w-xl">
-        <NewsletterSignup formId="footer-newsletter" variant="dark" />
-      </div>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 md:gap-12">
-      <!-- Brand -->
+<!-- The top hairline matters: most pages end on a bg-deep CTA, and without it
+     the CTA and footer melt into one tall purple slab. -->
+<footer class="bg-deep text-white border-t border-white/10">
+  <div class="container-narrow py-10 md:py-12">
+    <div class="grid md:grid-cols-3 gap-10 md:gap-12">
+      <!-- Brand + contact -->
       <div>
-        <p class="font-serif text-2xl font-bold text-gold mb-4">Restore the Last</p>
-        <p class="text-white/70 text-sm leading-relaxed">
+        <p class="font-serif text-2xl font-bold text-gold mb-3">Restore the Last</p>
+        <p class="text-white/70 text-sm leading-relaxed mb-4">
           Funding nervous system restoration for survivors of trafficking, foster care, and violence.
         </p>
+        <a href="mailto:dallas@restorethelast.org" class="text-white/70 hover:text-white text-sm underline transition-colors inline-block py-1">
+          dallas@restorethelast.org
+        </a>
       </div>
 
-      <!-- Links -->
+      <!-- Links: two tight columns instead of one tall stack -->
       <div>
-        <p class="label text-gold mb-4">Navigate</p>
-        <div class="flex flex-col gap-2">
-          <a href="/about" class="text-white/70 hover:text-white text-sm transition-colors py-3">About</a>
-          <a href="/how-it-works" class="text-white/70 hover:text-white text-sm transition-colors py-3">How It Works</a>
-          <a href="/impact" class="text-white/70 hover:text-white text-sm transition-colors py-3">Impact</a>
-          <a href="/projects" class="text-white/70 hover:text-white text-sm transition-colors py-3">Current Projects</a>
-          <a href="/partners" class="text-white/70 hover:text-white text-sm transition-colors py-3">Partners</a>
-          <a href="/give" class="text-white/70 hover:text-white text-sm transition-colors py-3">Give</a>
+        <p class="label text-gold mb-3">Navigate</p>
+        <div class="grid grid-cols-2 gap-x-6">
+          {links.map(link => (
+            <a href={link.href} class="text-white/70 hover:text-white text-sm transition-colors py-1.5">{link.label}</a>
+          ))}
           <a
             href={DONATE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-gold hover:brightness-110 text-sm font-bold transition-all py-3"
+            class="text-gold hover:brightness-110 text-sm font-bold transition-all py-1.5"
           >
             Donate now →
           </a>
         </div>
       </div>
 
-      <!-- Contact -->
+      <!-- Newsletter, as a column instead of its own full-width band -->
       <div>
-        <p class="label text-gold mb-4">Contact</p>
-        <a href="mailto:dallas@restorethelast.org" class="text-white/70 hover:text-white text-sm transition-colors py-3 inline-block">
-          dallas@restorethelast.org
-        </a>
+        <NewsletterSignup formId="footer-newsletter" variant="dark" />
       </div>
     </div>
 
     <!-- Scripture + Copyright -->
-    <div class="mt-16 pt-8 border-t border-white/10 text-center">
-      <p class="font-serif italic text-gold text-lg mb-4">
+    <div class="mt-10 pt-6 border-t border-white/10 text-center">
+      <p class="font-serif italic text-gold mb-2">
         "He restores my soul." — Psalm 23:3
       </p>
       <p class="text-white/70 text-xs">
         &copy; {year} Restore the Last. All rights reserved.
         <span class="mx-2 text-white/40" aria-hidden="true">·</span>
-        <a href="/privacy" class="hover:text-white transition-colors underline inline-block py-3.5">Privacy</a>
+        <a href="/privacy" class="hover:text-white transition-colors underline inline-block py-1">Privacy</a>
       </p>
     </div>
   </div>
