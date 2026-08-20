@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "label": "Trafficking Survivors",
+      "value": "trafficking-survivors"
+    },
+    {
+      "label": "Foster Youth",
+      "value": "foster-youth"
+    },
+    {
+      "label": "Children in Residential Care",
+      "value": "residential-care"
+    },
+    {
+      "label": "Caregivers & Staff",
+      "value": "caregivers"
+    },
+    {
+      "label": "Veterans",
+      "value": "veterans"
+    }
+  ]
+}

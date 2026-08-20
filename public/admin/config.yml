@@ -23,6 +23,36 @@ media_folder: public/uploads
 public_folder: /uploads
 
 collections:
+  # Site-wide lists that used to live in code. Editing here commits to the repo
+  # and redeploys, same as saving a project.
+  - name: settings
+    label: Site Settings
+    files:
+      - name: populations
+        label: Serving Categories
+        file: src/data/populations.json
+        description: >-
+          The "Who it serves" categories available on projects. Add one here,
+          save, and it becomes available in every project's "Who it serves"
+          picker and the Serving filter on /projects after the site rebuilds
+          (a couple of minutes).
+        fields:
+          - name: categories
+            label: Categories
+            label_singular: Category
+            widget: list
+            summary: '{{fields.label}}'
+            fields:
+              - { name: label, label: Label, widget: string, hint: 'What visitors see — e.g. "Foster Youth".' }
+              - name: value
+                label: ID
+                widget: string
+                pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, and dashes only — e.g. "foster-youth"']
+                hint: >-
+                  Internal ID, set once and never changed — projects are tagged
+                  by this ID, so renaming or deleting one that's in use orphans
+                  those tags. To reword what visitors see, change the Label.
+
   - name: projects
     label: Projects
     label_singular: Project
@@ -72,17 +102,16 @@ collections:
 
       - name: populations
         label: Who it serves
-        widget: select
+        widget: relation
+        collection: settings
+        file: populations
         multiple: true
         required: false
         default: []
-        options:
-          - { label: Trafficking Survivors, value: trafficking-survivors }
-          - { label: Foster Youth, value: foster-youth }
-          - { label: Children in Residential Care, value: residential-care }
-          - { label: Caregivers & Staff, value: caregivers }
-          - { label: Veterans, value: veterans }
-        hint: 'Drives the "Serving" filter on /projects.'
+        value_field: '{{categories.*.value}}'
+        display_fields: ['{{categories.*.label}}']
+        search_fields: ['{{categories.*.label}}']
+        hint: 'Drives the "Serving" filter on /projects. Need a category that isn''t listed? Add it under Site Settings → Serving Categories first.'
 
       - { name: purpose, label: Purpose, widget: text, required: false, hint: 'One sentence on why this exists. Shows as "The Purpose".' }
 

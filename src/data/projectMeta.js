@@ -49,13 +49,22 @@ export const STATUSES = {
   },
 };
 
-export const POPULATIONS = {
-  'trafficking-survivors': { label: 'Trafficking Survivors' },
-  'foster-youth': { label: 'Foster Youth' },
-  'residential-care': { label: 'Children in Residential Care' },
-  caregivers: { label: 'Caregivers & Staff' },
-  veterans: { label: 'Veterans' },
-};
+// "Who it serves" categories are content, not code: they live in
+// populations.json and are edited from /admin (Site Settings → Serving
+// Categories). Adding one there makes it appear in every project's picker and
+// the /projects Serving filter on the next deploy — no code change needed.
+import populationsFile from './populations.json';
+
+export const POPULATIONS = Object.fromEntries(
+  (populationsFile.categories || []).map(({ value, label }) => [value, { label }])
+);
+
+// A category deleted from settings while a project still references it should
+// soften to a readable label, not break the page — the CMS picker already
+// prevents typos at entry time, so a miss here is always a deliberate edit.
+export const populationLabel = (value) =>
+  POPULATIONS[value]?.label ??
+  value.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
 // Filters only offer values something actually uses, so the UI stays honest as
 // the project list grows instead of showing empty categories on day one.

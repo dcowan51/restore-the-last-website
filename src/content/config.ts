@@ -10,13 +10,6 @@ import { defineCollection, z } from 'astro:content';
 
 export const PROJECT_TYPES = ['deployment', 'documentary', 'training', 'research'] as const;
 export const PROJECT_STATUSES = ['open', 'active', 'in-production', 'funded'] as const;
-export const PROJECT_POPULATIONS = [
-  'trafficking-survivors',
-  'foster-youth',
-  'residential-care',
-  'caregivers',
-  'veterans',
-] as const;
 
 const projects = defineCollection({
   type: 'data',
@@ -31,7 +24,11 @@ const projects = defineCollection({
     order: z.number().default(100),
 
     location: z.string(),
-    populations: z.array(z.enum(PROJECT_POPULATIONS)).default([]),
+    // Not an enum: the category list is CMS-managed (src/data/populations.json,
+    // edited under Site Settings in /admin). The relation picker there prevents
+    // typos at entry time, and a category deleted from settings must soften to
+    // a fallback label (see projectMeta.js) rather than stop the site building.
+    populations: z.array(z.string()).default([]),
     purpose: z.string().optional(),
     partner: z
       .object({ name: z.string().default(''), url: z.string().default('') })

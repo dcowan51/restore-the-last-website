@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProjects } from '../../data/projects.js';
 import DonateButton from '../../components/DonateButton.astro';
-import { typeMeta, statusMeta, POPULATIONS } from '../../data/projectMeta.js';
+import { typeMeta, statusMeta, populationLabel } from '../../data/projectMeta.js';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -51,9 +51,7 @@ const metaLine = isDocumentary
       .filter(Boolean).join(' · ')
   : project.population;
 
-const populationLabels = (project.populations || [])
-  .map(p => POPULATIONS[p]?.label)
-  .filter(Boolean);
+const populationLabels = (project.populations || []).map(populationLabel);
 
 // A film's rationale is about reach, not about a single population, so the
 // section swaps label and source field.
