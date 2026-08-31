@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PdfDownloadGate from '../../components/PdfDownloadGate.astro';
+import { CASE_STUDY_FORM_ID } from '../../config';
 import data from '../../data/el-salvador.json';
 
 // Every figure on this page comes from src/data/el-salvador.json, which is
@@ -543,7 +545,16 @@ const pageDesc =
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="/partners" class="btn-primary">Partner with us</a>
-        <a href="/RTL-El-Salvador-Case-Study.pdf" class="btn-gold" download>Download the case study (PDF)</a>
+      </div>
+
+      <div class="mt-10" id="download">
+        <PdfDownloadGate
+          formName="case-study-download"
+          kitFormId={CASE_STUDY_FORM_ID}
+          pdfHref="/RTL-El-Salvador-Case-Study.pdf"
+          thanksHref="/impact/el-salvador/thanks/"
+          formId="cs-download"
+        />
       </div>
       <p class="text-body/80 text-xs mt-6">
         Every figure on this page is generated directly from the practitioner&rsquo;s session

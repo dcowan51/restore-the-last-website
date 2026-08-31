@@ -26,3 +26,10 @@ export const PRIVACY_UPDATED = 'August 12, 2026';
 // still captured (Netlify dashboard → Forms → "newsletter") — they just won't get a
 // welcome email until Kit is connected.
 export const NEWSLETTER_FORM_ID = '9802535';
+
+// Kit form ID for the El Salvador case-study download gate. Create a second Kit
+// form (same account) whose incentive email delivers the PDF link, then paste its
+// ID here. While this is empty, the gate falls back to Netlify Forms (dashboard →
+// Forms → "case-study-download"): the visitor still gets an instant browser
+// download, and every email is captured — Kit just isn't emailing them a copy yet.
+export const CASE_STUDY_FORM_ID = '';

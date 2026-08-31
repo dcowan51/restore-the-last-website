@@ -1,0 +1,49 @@
+---
+/**
+ * Landing page for the case-study download gate's no-JS path: Netlify captures
+ * the form post and redirects here, and this page starts the download. Noindexed
+ * so nobody reaches the PDF from search without passing the gate.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const PDF = '/RTL-El-Salvador-Case-Study.pdf';
+---
+
+<BaseLayout
+  title="Your download is starting"
+  description="Thanks — the El Salvador case study is on its way."
+  noindex
+>
+  <section class="bg-light section-padding min-h-[60vh] flex items-center">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-4">Thank You</p>
+        <h1 class="mb-5">Your download is starting.</h1>
+        <p class="text-body text-lg leading-relaxed mb-8">
+          If it doesn&rsquo;t begin on its own,
+          <a href={PDF} class="underline text-primary font-semibold" download
+            >download the case study directly</a
+          >. You&rsquo;re also on Field Notes — one email a month from the field,
+          unsubscribe anytime.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/impact/el-salvador/" class="btn-primary">Back to the case study</a>
+          <a href="/partners" class="btn-gold">Partner with us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Kick off the download once the page settles. The visible link above is the
+    // fallback for browsers that block programmatic downloads.
+    window.addEventListener('load', () => {
+      const link = document.createElement('a');
+      link.href = '/RTL-El-Salvador-Case-Study.pdf';
+      link.download = '';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  </script>
+</BaseLayout>

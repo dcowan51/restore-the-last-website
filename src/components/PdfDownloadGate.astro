@@ -1,0 +1,179 @@
+---
+/**
+ * Email-gated PDF download, in the same dual-path pattern as NewsletterSignup:
+ * posts to a Kit form when `kitFormId` is set (Kit emails the PDF and owns the
+ * list), and falls back to Netlify Forms while it's empty (emails land in the
+ * Netlify dashboard under `formName`). On both paths the browser download starts
+ * immediately after a successful submit, so nobody waits on an inbox.
+ */
+interface Props {
+  /** Netlify form name — also the column set in the Netlify Forms dashboard. */
+  formName: string;
+  /** Kit form ID; empty string keeps the Netlify fallback. */
+  kitFormId?: string;
+  /** Path to the PDF being gated, e.g. /RTL-El-Salvador-Case-Study.pdf */
+  pdfHref: string;
+  /** Where the no-JS Netlify submit lands (a thanks page that starts the download). */
+  thanksHref: string;
+  /** Must be unique per page. */
+  formId: string;
+  heading?: string;
+  body?: string;
+}
+
+const {
+  formName,
+  kitFormId = '',
+  pdfHref,
+  thanksHref,
+  formId,
+  heading = 'Take the case study with you.',
+  body = 'The complete study as a printable PDF — every chart on this page, plus the methodology behind the numbers.',
+} = Astro.props;
+
+const useKit = Boolean(kitFormId);
+const action = useKit
+  ? `https://app.kit.com/forms/${kitFormId}/subscriptions`
+  : thanksHref;
+---
+
+<div
+  class="bg-white border border-primary/15 rounded-2xl p-6 md:p-8"
+  data-pdfgate-root
+  data-pdf={pdfHref}
+>
+  <p class="label text-primary mb-2">The Full Study</p>
+  <h3 class="mb-3">{heading}</h3>
+  <p class="text-body leading-relaxed mb-5">{body}</p>
+
+  <form
+    name={formName}
+    method="POST"
+    action={action}
+    data-netlify={useKit ? undefined : 'true'}
+    netlify-honeypot={useKit ? undefined : 'bot-field'}
+    data-pdfgate-form
+    data-kit={useKit ? 'true' : undefined}
+    class="flex flex-col sm:flex-row gap-3"
+  >
+    {!useKit && <input type="hidden" name="form-name" value={formName} />}
+    <input type="hidden" name="resource" value={pdfHref} />
+
+    <!-- Honeypot — hidden from people, catches bots on both paths. -->
+    <p class="hidden" aria-hidden="true">
+      <label>
+        Leave this field empty
+        <input name="bot-field" tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <div class="flex-1">
+      <label for={`${formId}-email`} class="sr-only">Email address</label>
+      <input
+        type="email"
+        id={`${formId}-email`}
+        name="email_address"
+        required
+        placeholder="you@example.com"
+        autocomplete="email"
+        class="w-full px-4 py-3 rounded-xl bg-light border border-primary/20 text-dark placeholder:text-body/80 focus:outline-none focus:border-primary transition-colors"
+      />
+    </div>
+
+    <button type="submit" class="btn-gold whitespace-nowrap" data-pdfgate-submit>
+      Get the PDF
+    </button>
+  </form>
+
+  <p class="text-body/80 text-xs mt-3" data-pdfgate-note>
+    Gets you the PDF now, plus Field Notes — one email a month from the field. No spam,
+    unsubscribe anytime. We never sell or share your email — <a
+      href="/privacy"
+      class="underline hover:text-body">privacy</a>.
+  </p>
+
+  <p
+    class="hidden text-sm mt-4 font-sans font-bold text-primary"
+    role="status"
+    aria-live="polite"
+    data-pdfgate-success
+  >
+    Your download has started. If it didn&rsquo;t,
+    <a href={pdfHref} class="underline" download>download it directly</a>.
+  </p>
+
+  <p class="hidden text-sm mt-4 text-body" role="alert" data-pdfgate-error>
+    Something went wrong. Please try again, or email
+    <a href="mailto:dallas@restorethelast.org" class="underline">dallas@restorethelast.org</a>.
+  </p>
+</div>
+
+<script>
+  // Progressive enhancement: without JS the form posts natively — Netlify captures
+  // the email and redirects to the thanks page, which starts the download there.
+  // With JS we submit in the background and start the download in place.
+  document.querySelectorAll<HTMLFormElement>('[data-pdfgate-form]').forEach((form) => {
+    const root = form.closest<HTMLElement>('[data-pdfgate-root]');
+    if (!root) return;
+
+    const success = root.querySelector('[data-pdfgate-success]');
+    const error = root.querySelector('[data-pdfgate-error]');
+    const note = root.querySelector('[data-pdfgate-note]');
+    const button = form.querySelector<HTMLButtonElement>('[data-pdfgate-submit]');
+    const originalLabel = button?.textContent ?? '';
+    const pdf = root.dataset.pdf ?? '';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error?.classList.add('hidden');
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'One moment…';
+      }
+
+      try {
+        let response: Response;
+        if (form.dataset.kit === 'true') {
+          response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { accept: 'application/json' },
+          });
+        } else {
+          // Netlify Forms AJAX submissions must be URL-encoded and include form-name.
+          const params = new URLSearchParams();
+          new FormData(form).forEach((value, key) => {
+            if (typeof value === 'string') params.append(key, value);
+          });
+          response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString(),
+          });
+        }
+
+        if (!response.ok) throw new Error(`Form endpoint responded ${response.status}`);
+
+        form.classList.add('hidden');
+        note?.classList.add('hidden');
+        success?.classList.remove('hidden');
+
+        if (pdf) {
+          const link = document.createElement('a');
+          link.href = pdf;
+          link.download = '';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+      } catch {
+        error?.classList.remove('hidden');
+        if (button) {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      }
+    });
+  });
+</script>

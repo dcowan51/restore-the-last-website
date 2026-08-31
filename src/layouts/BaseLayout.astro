@@ -6,9 +6,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Keep utility pages (form thank-yous) out of search results. */
+  noindex?: boolean;
 }
 
-const { title, description = 'Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.' } = Astro.props;
+const { title, description = 'Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.', noindex = false } = Astro.props;
 
 // Canonical origin comes from `site` in astro.config.mjs. Every page needs its
 // own canonical URL: the Netlify subdomain serves an identical copy of this
@@ -26,6 +28,7 @@ const fullTitle = `${title} | Restore the Last`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/png" href="/RTLlogo.png" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{fullTitle}</title>
