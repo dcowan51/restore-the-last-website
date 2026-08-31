@@ -1,4 +1,5 @@
 ---
+import es from '../data/el-salvador.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import ProjectBrowser from '../components/ProjectBrowser.astro';
@@ -13,7 +14,7 @@ const featured = projects.filter(p => p.featured);
 const featuredProjects = featured.length ? featured : projects;
 ---
 
-<BaseLayout title="Home" description="Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 97% improved.">
+<BaseLayout title="Home" description="Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.">
 
   <!-- Hero -->
   <section class="bg-white min-h-[56vh] flex items-center">
@@ -72,22 +73,67 @@ const featuredProjects = featured.length ? featured : projects;
   </section>
 
   <!-- Proof Bar -->
+  <!-- Live proof band. The three headline figures beside the actual curve they
+       came from, so the homepage shows the work rather than asserting it. The
+       chart is a static build-time SVG - no library, no runtime fetch - and it
+       links through to the full case study rather than trying to be it. -->
   <section class="bg-light border-y border-primary/10 py-10 md:py-14 px-6">
-    <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-0 text-center divide-y md:divide-y-0 md:divide-x divide-primary/20">
-      <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">97%</p>
-        <p class="text-dark font-semibold text-sm mb-1">showed improvement over 7 sessions</p>
-        <p class="text-body/80 text-xs">La Casa de mi Padre, El Salvador</p>
+    <div class="max-w-5xl mx-auto grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-8 md:gap-12 items-center">
+
+      <div class="grid grid-cols-3 md:grid-cols-1 gap-6 md:gap-7 text-center md:text-left">
+        <div>
+          <p class="font-serif text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2">93%</p>
+          <p class="text-dark font-semibold text-sm">showed improvement</p>
+          <p class="text-body/80 text-xs mt-0.5">26 of 28 participants</p>
+        </div>
+        <div>
+          <p class="font-serif text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2">49%</p>
+          <p class="text-dark font-semibold text-sm">symptom reduction</p>
+          <p class="text-body/80 text-xs mt-0.5">after a single session</p>
+        </div>
+        <div>
+          <p class="font-serif text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2">18,000+</p>
+          <p class="text-dark font-semibold text-sm">sessions delivered</p>
+          <p class="text-body/80 text-xs mt-0.5">across the El Salvador deployment</p>
+        </div>
       </div>
-      <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">50%</p>
-        <p class="text-dark font-semibold text-sm mb-1">symptom reduction after first session</p>
-        <p class="text-body/80 text-xs">La Casa de mi Padre, El Salvador</p>
-      </div>
-      <div class="py-6 md:py-0 md:px-10">
-        <p class="font-serif text-4xl md:text-5xl font-bold text-primary mb-2 md:mb-3">18,000+</p>
-        <p class="text-dark font-semibold text-sm mb-1">sessions delivered in El Salvador alone</p>
-        <p class="text-body/80 text-xs">Over 2 years of deployment</p>
+
+      <div class="bg-white rounded-2xl border border-primary/10 p-5 md:p-6">
+        <p class="label text-primary mb-1">La Casa de mi Padre &middot; El Salvador</p>
+        <p class="text-dark font-semibold text-sm mb-4">Symptom score across seven sessions</p>
+        <svg viewBox="0 0 420 168" class="w-full h-auto" role="img"
+             aria-label="Mean composite symptom score falling from 16.7 at session one to 1.8 at session seven.">
+          {[0, 6, 12, 18].map((t) => (
+            <line x1="30" x2="404" y1={16 + (1 - t / 18) * 106} y2={16 + (1 - t / 18) * 106}
+                  stroke="#712BBE" stroke-opacity="0.12" stroke-width="1" />
+          ))}
+          <path
+            d={[1,2,3,4,5,6,7].map((n, i) => {
+              const v = es.curve_balanced[n].mean;
+              return `${i ? 'L' : 'M'}${30 + ((n - 1) / 6) * 374},${16 + (1 - v / 18) * 106}`;
+            }).join(' ')}
+            fill="none" stroke="#712BBE" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+          {[1,2,3,4,5,6,7].map((n) => {
+            const v = es.curve_balanced[n].mean;
+            return (
+              <g>
+                <circle cx={30 + ((n - 1) / 6) * 374} cy={16 + (1 - v / 18) * 106} r="4"
+                        fill="#712BBE" stroke="#FFFFFF" stroke-width="2" />
+                <text x={30 + ((n - 1) / 6) * 374} y="150" text-anchor="middle" font-size="10"
+                      fill="#3D3D4F" font-weight="700">S{n}</text>
+              </g>
+            );
+          })}
+          <text x="30" y="10" font-size="12" font-weight="700" fill="#3A1470"
+                style="font-variant-numeric:tabular-nums">16.7</text>
+          <text x="404" y={16 + (1 - es.curve_balanced[7].mean / 18) * 106 - 8} text-anchor="end"
+                font-size="12" font-weight="700" fill="#3A1470"
+                style="font-variant-numeric:tabular-nums">1.8</text>
+          <text x="30" y="165" font-size="9" fill="#3D3D4F" opacity="0.6">Mean of 5 symptoms, 0&ndash;50 &middot; same 19 people at every session</text>
+        </svg>
+        <a href="/impact/el-salvador" class="inline-block mt-4 text-primary font-sans font-bold text-sm hover:text-medium">
+          See the full case study &rarr;
+        </a>
       </div>
     </div>
   </section>
@@ -217,9 +263,9 @@ const featuredProjects = featured.length ? featured : projects;
         <div class="flex flex-col">
           <p class="label text-gold-deep mb-2">La Casa de mi Padre</p>
           <p class="text-sm text-body/80 mb-4">El Salvador — children's home</p>
-          <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">97% showed improvement</p>
+          <p class="font-serif text-2xl md:text-3xl font-bold text-primary mb-4">93% showed improvement</p>
           <p class="text-body mb-6">
-            28 participants across two years. 50% symptom reduction after a single session. 70% by session seven. 18,000+ sessions delivered. Children, house parents, and on-site staff — all carrying trauma, all showing measurable recovery.
+            29 participants over a 23-day protocol in autumn 2022. Symptoms fell 49% after a single session and 74% by each participant's final session. Children, house parents, and on-site staff — all carrying trauma, all showing measurable recovery. That study sits inside a deployment that has since delivered more than 18,000 sessions.
           </p>
           <div class="mt-auto bg-offwhite rounded-2xl overflow-hidden border border-primary/10 shadow-sm">
             <div class="aspect-video">
