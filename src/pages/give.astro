@@ -4,6 +4,7 @@ import DonateButton from '../components/DonateButton.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import ProjectBrowser from '../components/ProjectBrowser.astro';
 import { getProjects } from '../data/projects.js';
+import { EIN, TAX_LINE } from '../config';
 
 const projects = await getProjects();
 ---
@@ -150,6 +151,7 @@ const projects = await getProjects();
         <p class="text-white/60 text-sm mt-6 max-w-md mx-auto leading-relaxed">
           At checkout you can choose to cover the processing fee. It's optional — it just means your full gift reaches the field instead of a slice going to the card networks.
         </p>
+        <p class="text-white/70 text-sm mt-4">{TAX_LINE}{EIN && ` EIN ${EIN}.`}</p>
         <p class="text-white/70 text-sm mt-4">
           Planning a larger gift, or giving another way?
           <a href="mailto:dallas@restorethelast.org" class="underline hover:text-white/70 transition-colors">Email us</a>

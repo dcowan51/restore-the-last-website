@@ -1,55 +1,772 @@
 ---
+import es from '../../data/el-salvador.json';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectBrowser from '../../components/ProjectBrowser.astro';
+import DonateButton from '../../components/DonateButton.astro';
+import { DONATE_URL, EIN, TAX_LINE } from '../../config';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import ProjectOfferCard from '../../components/ProjectOfferCard.astro';
 import { getProjects } from '../../data/projects.js';
 
-const projects = await getProjects();
+// This is the page Dallas sends people to, so it has to stand alone: someone
+// who has never heard of Restore the Last should get what's wrong, what helps,
+// the proof, and a priced way in, top to bottom, without opening another page.
+// Open work leads; anything fully funded drops to the end of the list.
+// CalmBox deployments only for now (Dallas, 2026-10-05): Hope Found keeps its
+// own page, which the film campaign links to, and still shows on / and /give.
+const projects = (await getProjects()).filter((p) => p.type !== 'documentary').sort(
+  (a, b) => Number(a.status === 'funded') - Number(b.status === 'funded')
+);
+
+// Headline figures come from the case-study data itself, so this page can't
+// drift from /impact/el-salvador if the study is ever re-scored.
+const improved = es.headline.improved;
+const scored = es.headline.scored_denominator;
+const afterOne = Math.round(es.headline.mean_reduction_S1_to_S2_pct);
+const byLast = Math.round(es.headline.mean_reduction_baseline_to_final_pct);
+
+const stats = [
+  { value: '18,000+', label: 'sessions delivered in El Salvador' },
+  { value: `${improved} of ${scored}`, label: 'people improved in our El Salvador study' },
+  { value: `${afterOne}%`, label: 'drop in symptoms after a single session' },
+  { value: '100%', label: 'of your gift goes to the work, never to overhead' },
+];
+
+// Where a stuck alarm shows up. Day and night are the VA's own list (see the
+// Not Broken carousel's sources); the last two are what Thrive saw on campus.
+const symptoms = [
+  { where: 'At night', what: 'Can’t fall asleep. Up at every sound.' },
+  { where: 'At school', what: 'On guard, can’t focus, one bad moment from a fight.' },
+  { where: 'On their own', what: 'Hard to hold a job, keep a roommate, or pass a driving test.' },
+  { where: 'In therapy', what: 'Too keyed up for talking to help.' },
+];
+
+// The group whose practice the three moments below describe. Dallas is asking
+// them (week of 2026-10-05) whether we can name them; until then the label stays
+// generic. Fill these in and the label, and an optional staff quote, appear.
+const calmBoxPartner = { name: '', quote: '', quoteBy: '' };
+
+// The science block's illustration: a fast, jagged rhythm settling into a
+// slower, smoother one. Drawn, not recorded, and the caption says so; the
+// direction of the shift is what Schroeder & Barr measured during CES.
+const alertWave = [28, -22, 34, -18, 30, -26, 20, -32, 26, -20, 32, -24, 22, -30, 28, -18, 24, -28, 30, -22, 26, -26, 20, -30, 28, -20]
+  .map((a, i) => `${i ? 'L' : 'M'}${20 + i * 10},${60 - a}`)
+  .join(' ');
+const calmWave = Array.from({ length: 53 }, (_, i) => {
+  const x = 360 + i * 5;
+  const y = 60 - 22 * Math.sin(((i * 5) / 65) * 2 * Math.PI);
+  return `${i ? 'L' : 'M'}${x},${y.toFixed(1)}`;
+}).join(' ');
+
+const scienceSteps = [
+  { title: 'A gentle signal', body: 'Small clips on the earlobes send a low-level current for about 20 minutes. No drugs, nothing invasive.' },
+  { title: 'The brain shifts gears', body: 'Recordings taken during sessions show brain rhythms shifting slower, and brain scans show parts of the brain quieting down.' },
+  { title: 'The body follows', body: 'The working theory: it eases the body’s fight-or-flight side so the rest-and-recover side can take over.' },
+];
+
+const scienceSources = [
+  { label: 'Schroeder & Barr, Clinical Neurophysiology, 2001', doi: '10.1016/s1388-2457(01)00657-5' },
+  { label: 'Feusner et al., Brain and Behavior, 2012', doi: '10.1002/brb3.45' },
+  { label: 'Brunyé et al., Frontiers in Human Neuroscience, 2021', doi: '10.3389/fnhum.2021.625321' },
+  { label: 'Ching et al., Frontiers in Psychiatry, 2022', doi: '10.3389/fpsyt.2022.899040' },
+];
+
+// One CalmBox across a whole day. Sleep leads the page, but the daytime uses
+// are what staff reach for most: before a hard moment (proactive) and in the
+// middle of one (reactive). From Dallas, describing a partner group's practice
+// (2026-10-05); family visits are from the Phoenix project.
+const calmBoxMoments = [
+  {
+    kind: 'Proactive',
+    when: 'Before a hard moment',
+    what: 'Before a therapy session or a family visit, they sit with it first and walk in calm instead of braced.',
+    icon: 'shield',
+  },
+  {
+    kind: 'Reactive',
+    when: 'In the middle of one',
+    what: 'When a student is about to get into a fight, or something sets the alarm off, it brings them back down quickly.',
+    icon: 'pulse',
+  },
+  {
+    kind: 'Rest',
+    when: 'At bedtime',
+    what: 'It helps a body that’s been on guard all day settle enough to sleep.',
+    icon: 'moon',
+  },
+];
+
+// "Where you come in": what one CalmBox adds up to, because a home shares it
+// for years. Dallas's working range (2026-10-05) is 10–20 uses a week over
+// three years. These are estimates and the page labels them that way; each
+// project report carries the real session count.
+const impact = { minPerWeek: 10, maxPerWeek: 20, perWeek: 15, years: 3, unitCost: 300, smallGift: 25 };
+const sessionsFor = (perWeek, boxes = 1) => perWeek * 52 * impact.years * boxes;
+const impactNow = {
+  sessions: sessionsFor(impact.perWeek),
+  cents: Math.round((impact.unitCost / sessionsFor(impact.perWeek)) * 100),
+  smallGiftSessions: Math.round((sessionsFor(impact.perWeek) / impact.unitCost) * impact.smallGift),
+};
+const fmt = (n) => n.toLocaleString('en-US');
+
+const steps = [
+  { title: 'You fund a project', body: 'Pick one, or give to the fund. A gift to a project stays with that project.' },
+  { title: 'We buy it and get it there', body: 'Equipment goes straight to the partner home. If a project is over-funded, the extra moves to the next home that’s ready.' },
+  { title: 'Their staff learn to use it', body: 'Training is part of every project, so the people already caring for these kids can keep it running.' },
+  { title: 'You see what changed', body: 'Updates as the work moves forward, including how many sessions it’s delivered, and an outcome report when it’s done.' },
+];
+
+const videos = {
+  elSalvador: { id: 'uTvgBmxbzeQ', title: 'El Salvador — Restore the Last' },
+  thrive: { id: 'utLjfuTNIU8', title: 'Thrive Arizona — Restore the Last' },
+};
+
+const thrive = projects.find((p) => p.slug === 'aged-out-foster-care-facility-thrive');
 ---
 
-<BaseLayout title="Current Projects" description="The work we're funding right now — deployments in the field, films that carry the story. Give to one directly, or to the fund behind them all.">
+<BaseLayout
+  title="Current Projects"
+  socialTitle="They're safe now. So why can't they sleep?"
+  description="After trauma, the body's alarm can stay on long after the danger ends. $300 puts a CalmBox in a home caring for foster youth. See every project, priced to the dollar."
+  image="/og/projects.png"
+>
 
-  <!-- Hero -->
-  <section class="bg-white section-padding border-b border-primary/10">
-    <div class="container-narrow">
-      <p class="label text-primary mb-4">Current Projects</p>
-      <div class="gold-line mb-8"></div>
-      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
-        The work we're funding right now.
-      </h1>
-      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        Open any project to give to it directly, or give to the fund behind them all.
-      </p>
-      <p class="text-body text-lg max-w-2xl mt-4 leading-relaxed">
-        Some projects are ongoing — there's always more need than funding. Others are fully costed and close the moment they're covered. Either way, you see exactly what your giving is moving.
-      </p>
-    </div>
-  </section>
+  <!-- Hero: the problem as a question, the answer, and the way in -->
+  <section data-hero class="bg-white border-b border-primary/10">
+    <div class="container-narrow py-12 md:py-16">
+      <div class="grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 md:gap-14 items-center">
+        <div>
+          <p class="label text-primary mb-4">Current Projects</p>
+          <div class="gold-line mb-6"></div>
+          <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
+            They’re safe now.<br />
+            <span class="text-primary">So why can’t they sleep?</span>
+          </h1>
+          <p class="text-body text-lg mt-6 leading-relaxed">
+            After trauma, the body’s alarm can stay on long after the danger is gone. For the foster youth and children we serve, a safe bed doesn’t switch it off.
+          </p>
+          <p class="text-body text-lg mt-4 leading-relaxed">
+            Restore the Last puts calming technology inside the homes already caring for them, then shows you exactly what your gift did.
+          </p>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8">
+            <a href="#projects" class="btn-gold text-lg">Fund a CalmBox</a>
+            <a href="#proof" class="text-primary font-bold font-sans py-3 hover:text-medium transition-colors">See the proof ↓</a>
+          </div>
+        </div>
 
-  <!-- Browser -->
-  <section class="bg-offwhite section-padding">
-    <div class="container-narrow">
-      <h2 class="mb-8">Everything we're funding.</h2>
-      <ProjectBrowser
-        projects={projects}
-        layout="grid"
-        filters="all"
-        label="All projects"
-      />
-    </div>
-  </section>
+        <!-- The whole problem in one picture: the danger ended, the alarm didn't.
+             Same drawing as the Not Broken carousel cover, so a post and the page
+             it links to tell one story. -->
+        <figure class="bg-offwhite rounded-2xl border border-primary/10 p-6 md:p-8" aria-labelledby="alarm-caption">
+          <p class="label text-primary mb-6" id="alarm-caption">What trauma leaves behind</p>
+          <div class="space-y-7">
+            <div>
+              <p class="text-dark font-bold text-sm mb-2">The danger</p>
+              <div class="h-3 rounded-full bg-light relative overflow-hidden" aria-hidden="true">
+                <div class="absolute inset-y-0 left-0 w-[22%] rounded-full bg-dark"></div>
+              </div>
+              <p class="text-body text-sm mt-2"><strong class="text-dark">Over.</strong> They’re in a safe home now.</p>
+            </div>
+            <div>
+              <p class="text-dark font-bold text-sm mb-2">The body’s alarm</p>
+              <div class="h-3 rounded-full bg-light relative" aria-hidden="true">
+                <div class="absolute inset-y-0 left-0 w-full rounded-full bg-primary"></div>
+                <span class="absolute -right-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-primary/30 animate-ping motion-reduce:animate-none"></span>
+                <span class="absolute -right-0.5 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary border-2 border-white"></span>
+              </div>
+              <p class="text-body text-sm mt-2"><strong class="text-primary">Still on.</strong> Hard to focus by day, hard to sleep at night.</p>
+            </div>
+          </div>
+          <div class="flex justify-between mt-7 pt-3 border-t border-primary/10 text-xs font-semibold text-body/80" aria-hidden="true">
+            <span>When it happened</span>
+            <span>Today</span>
+          </div>
+        </figure>
+      </div>
 
-  <!-- Partner CTA -->
-  <section class="bg-white section-padding border-t border-primary/10">
-    <div class="container-narrow">
-      <div class="max-w-3xl text-center mx-auto">
-        <p class="label text-primary mb-4">Are You an Organization?</p>
-        <h2 class="mb-6">Apply to become a funded partner.</h2>
-        <p class="text-body text-lg leading-relaxed mb-8">
-          If you run an established facility serving trauma-affected populations, we want to hear from you. We fund the technology, the training, and the support — you bring the people and the commitment.
-        </p>
-        <a href="/apply" class="btn-primary text-lg">Apply for funding</a>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 mt-12 md:mt-14 pt-10 border-t border-primary/10">
+        {stats.map((s) => (
+          <div>
+            <p class="font-serif text-3xl md:text-4xl font-bold text-primary leading-none">{s.value}</p>
+            <p class="text-body text-sm mt-2 leading-snug">{s.label}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
+  <!-- What's wrong -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">What’s Wrong</p>
+      <h2 class="mb-6 max-w-3xl">It isn’t defiance. It’s a body still standing guard.</h2>
+      <p class="text-body text-base md:text-lg leading-relaxed">
+        The body has an alarm that scans for danger without asking. After abuse, neglect, or being taken from home, it can stay switched on. It once kept them alive. It just hasn’t gotten the message that the danger is over.
+      </p>
+      <p class="text-body text-base md:text-lg leading-relaxed mt-4">
+        And a stuck alarm doesn’t stay in one place. It follows them everywhere:
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-8 md:mt-10">
+        {symptoms.map((s) => (
+          <div class="bg-white rounded-2xl border border-primary/10 p-6">
+            <p class="label text-gold-deep mb-3">{s.where}</p>
+            <p class="font-serif text-lg font-bold text-dark leading-snug">{s.what}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 md:mt-12 flex items-start gap-5">
+        <div class="gold-line-left flex-shrink-0 hidden md:block"></div>
+        <p class="font-serif text-xl md:text-2xl text-dark leading-snug max-w-2xl">
+          A safe bed, a caseworker, a therapist: they all matter. None of them can switch the alarm off.
+          <span class="text-primary font-bold">That’s the gap we fund.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What helps -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">What Helps</p>
+      <h2 class="mb-6 max-w-3xl">Calm can’t be ordered. It has to be restored.</h2>
+      <p class="text-body text-base md:text-lg leading-relaxed">
+        You can’t talk a nervous system out of survival mode. So we fund technology that calms it directly: no medication, no talking, no reliving what happened. Then we put it where kids and young adults already live, in the hands of the staff who already care for them.
+      </p>
+
+      <!-- How the technology helps, as a sequence -->
+      <ol class="grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] gap-3 md:gap-4 items-stretch mt-10">
+        <li class="bg-white rounded-2xl border border-primary/10 p-6">
+          <p class="label text-body/80 mb-2">Before</p>
+          <p class="font-serif text-lg font-bold text-dark mb-1">The alarm is stuck on</p>
+          <p class="text-body text-sm">No sleep, no focus, no settling down.</p>
+        </li>
+        <li class="hidden md:flex items-center text-primary text-2xl font-bold" aria-hidden="true">→</li>
+        <li class="bg-primary rounded-2xl p-6 text-white">
+          <p class="label text-white/80 mb-2">What we fund</p>
+          <p class="font-serif text-lg font-bold text-white mb-1">Calm the body directly</p>
+          <p class="text-white/90 text-sm">A CalmBox or neurofeedback, right where they live.</p>
+        </li>
+        <li class="hidden md:flex items-center text-primary text-2xl font-bold" aria-hidden="true">→</li>
+        <li class="bg-white rounded-2xl border border-primary/10 p-6">
+          <p class="label text-gold-deep mb-2">After</p>
+          <p class="font-serif text-lg font-bold text-dark mb-1">Everything else can work</p>
+          <p class="text-body text-sm">Sleep, school, therapy, a job.</p>
+        </li>
+      </ol>
+
+      <!-- The CalmBox, day and night -->
+      <div class="bg-white rounded-2xl border border-primary/10 p-7 md:p-9 mt-5 md:mt-6">
+        <div class="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)] gap-8 lg:gap-12">
+          <div>
+            <p class="label text-gold-deep mb-3">For every day</p>
+            <h3 class="mb-3">CalmBox</h3>
+            <p class="text-body leading-relaxed">
+              A small, portable device, FDA-cleared for anxiety and insomnia. When a kid’s alarm goes off, or a staff member’s does, they sit with it, and it calms them down in minutes.
+            </p>
+            <p class="mt-5 font-serif text-3xl font-bold text-primary leading-none">
+              $300 <span class="font-sans text-sm font-bold text-body">each</span>
+            </p>
+          </div>
+          <div>
+          <p class="label text-body/80 mb-3">
+            {calmBoxPartner.name ? `How ${calmBoxPartner.name} uses it` : 'How one partner group uses it'}
+          </p>
+          <ol class="grid sm:grid-cols-3 gap-4">
+            {calmBoxMoments.map((m) => (
+              <li class="bg-light rounded-xl p-5">
+                <svg class="w-7 h-7 text-primary mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  {m.icon === 'shield' && (<><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z" /><path d="M9 12l2 2 4-4" /></>)}
+                  {m.icon === 'pulse' && <path d="M3 12h4l2-6 4 12 2-6h6" />}
+                  {m.icon === 'moon' && <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />}
+                </svg>
+                <p class="label text-primary mb-1">{m.kind}</p>
+                <p class="font-serif font-bold text-dark leading-snug mb-2">{m.when}</p>
+                <p class="text-body text-sm leading-relaxed">{m.what}</p>
+              </li>
+            ))}
+          </ol>
+          {calmBoxPartner.quote && (
+            <blockquote class="border-l-4 border-gold mt-5 pl-5">
+              <p class="font-serif italic text-lg text-dark leading-snug">“{calmBoxPartner.quote}”</p>
+              <footer class="text-body/80 text-sm mt-2">{calmBoxPartner.quoteBy}</footer>
+            </blockquote>
+          )}
+          </div>
+        </div>
+        {/* A div, not a p: the 56ch reading cap on p outranks max-w-none, and
+            this divider should run the full width of the card. */}
+        <div class="mt-7 pt-5 border-t border-primary/10 text-dark font-semibold">
+          Staff use it too. A calm adult calms the room.
+        </div>
+      </div>
+
+      <!-- The science, for the "wait, what does it do to the brain?" reader.
+           Every claim here traces to one of the four sources listed under it. -->
+      <div class="bg-deep rounded-2xl p-7 md:p-10 mt-5 md:mt-6">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div>
+            <p class="label text-light mb-3">The Science, in Plain Words</p>
+            <h3 class="text-white mb-4">It’s called neuromodulation.</h3>
+            <p class="text-white/80 leading-relaxed">
+              A CalmBox uses cranial electrotherapy stimulation, or CES: a gentle current through small clips on the earlobes, often too faint to feel. It doesn’t force the brain into anything. It nudges the brain’s own rhythm toward calm.
+            </p>
+          </div>
+          <figure>
+            <svg viewBox="0 0 640 120" class="w-full h-auto" role="img" aria-labelledby="wave-title">
+              <title id="wave-title">Illustration: a fast, jagged brain rhythm settling into a slower, steadier one.</title>
+              <path d={alertWave} fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M294 60 H334 M324 51 L336 60 L324 69" fill="none" stroke="#E07A5F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d={calmWave} fill="none" stroke="#EDE0FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="grid grid-cols-2 gap-4 mt-3 text-sm font-bold">
+              <span class="text-white/80">On alert: fast and jagged</span>
+              <span class="text-light pl-[3%]">Settling: slower and steadier</span>
+            </div>
+            <figcaption class="text-white/70 text-xs mt-3 leading-relaxed">
+              Illustration, not a recording. During CES sessions, EEG recordings have shown the brain’s rhythm shifting slower.
+            </figcaption>
+          </figure>
+        </div>
+
+        <ol class="grid md:grid-cols-3 gap-4 mt-8">
+          {scienceSteps.map((step, i) => (
+            <li class="rounded-xl bg-white/5 border border-white/10 p-5">
+              <p class="font-serif text-2xl font-bold text-light leading-none mb-3" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+              <p class="font-serif font-bold text-white mb-1">{step.title}</p>
+              <p class="text-white/80 text-sm leading-relaxed">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+          <div class="rounded-xl bg-white/5 border border-white/10 p-5">
+            <p class="label text-light mb-2">Safe</p>
+            <p class="text-white font-semibold leading-snug">11 controlled trials, 794 people, no serious side effects.</p>
+            <p class="text-white/70 text-sm mt-1">The most common complaint was ear discomfort.</p>
+          </div>
+          <div class="rounded-xl bg-white/5 border border-white/10 p-5">
+            <p class="label text-light mb-2">Tested</p>
+            <p class="text-white font-semibold leading-snug">Across those trials, anxiety dropped more with CES than in the comparison groups.</p>
+            <p class="text-white/70 text-sm mt-1">From a 2022 review of the research.</p>
+          </div>
+        </div>
+
+        <p class="text-white/80 text-sm mt-6">
+          The research is still growing. That’s one reason we measure every project and publish what we find.
+        </p>
+        <p class="text-white/70 text-xs mt-3 leading-relaxed">
+          Sources:
+          {scienceSources.map((src, i) => (
+            <>
+              {i > 0 && ' · '}
+              <a href={`https://doi.org/${src.doi}`} target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-colors">{src.label}</a>
+            </>
+          ))}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-primary/10 p-7 md:p-8 mt-5 md:mt-6">
+        <div class="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)] gap-3 lg:gap-12 items-start">
+          <div>
+            <p class="label text-gold-deep mb-3">For deeper work</p>
+            <h3>Direct Neurofeedback</h3>
+          </div>
+          <p class="text-body leading-relaxed">
+            Painless sessions with small sensors on the scalp, run on-site by trained staff. Nobody has to talk about what happened. In El Salvador, one system serves about 40 people a day.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof -->
+  <section id="proof" class="bg-white section-padding scroll-mt-16">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Where It’s Working</p>
+      <h2 class="mb-10 md:mb-12 max-w-3xl">This isn’t a theory. It’s already happening.</h2>
+
+      <div class="grid md:grid-cols-2 gap-10 md:gap-12">
+        <div class="flex flex-col">
+          <p class="label text-gold-deep mb-2">El Salvador · Children’s home</p>
+          <h3 class="mb-3">La Casa de mi Padre</h3>
+          <p class="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">{improved} of {scored} improved</p>
+          <p class="text-body leading-relaxed">
+            Children, house parents, and staff all get sessions. In our study, symptoms fell {afterOne}% after a single session and {byLast}% by each person’s last. Sleep moved first and moved furthest. The El Salvador deployment has now delivered more than 18,000 sessions.
+          </p>
+          <blockquote class="border-l-4 border-gold my-6 pl-5">
+            <p class="font-serif italic text-lg text-dark leading-snug">“Because it makes me feel more calm. It makes me feel safe.”</p>
+            <footer class="text-body/80 text-sm mt-2">A teenager in the El Salvador program</footer>
+          </blockquote>
+          <div class="mt-auto">
+            <div class="lite-yt rounded-2xl overflow-hidden bg-dark aspect-video relative" data-yt={videos.elSalvador.id} data-title={videos.elSalvador.title}>
+              <button type="button" class="absolute inset-0 w-full h-full group" aria-label={`Play video: ${videos.elSalvador.title}`}>
+                <img src={`https://i.ytimg.com/vi/${videos.elSalvador.id}/maxresdefault.jpg`} alt="" class="w-full h-full object-cover" loading="lazy" />
+                <span class="absolute inset-0 flex items-center justify-center">
+                  <span class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform motion-reduce:transform-none">
+                    <svg class="w-6 h-6 text-primary ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <a href="/impact/el-salvador" class="inline-block text-primary font-bold font-sans text-sm py-3 mt-1 hover:text-medium transition-colors">Read the full case study →</a>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <p class="label text-gold-deep mb-2">Phoenix, Arizona · Aged-out foster youth</p>
+          <h3 class="mb-3">Thrive</h3>
+          <p class="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">10 driver’s licenses</p>
+          <p class="text-body leading-relaxed">
+            Thrive’s campus is home to young adults who aged out of foster care. Neurofeedback has run there for about three years. Residents who couldn’t sleep, even somewhere safe, now sleep through the night, and talk therapy became productive for the first time. Alongside Thrive’s housing and support, 10 residents earned their driver’s licenses and 5 graduated high school.
+          </p>
+          <blockquote class="border-l-4 border-gold my-6 pl-5">
+            <p class="font-serif italic text-lg text-dark leading-snug">“It’s not uncommon when we’re doing neurofeedback that suddenly they just start talking.”</p>
+            <footer class="text-body/80 text-sm mt-2">Steve Vogel, President &amp; CEO, Thrive</footer>
+          </blockquote>
+          <div class="mt-auto">
+            <div class="lite-yt rounded-2xl overflow-hidden bg-dark aspect-video relative" data-yt={videos.thrive.id} data-title={videos.thrive.title}>
+              <button type="button" class="absolute inset-0 w-full h-full group" aria-label={`Play video: ${videos.thrive.title}`}>
+                <img src={`https://i.ytimg.com/vi/${videos.thrive.id}/maxresdefault.jpg`} alt="" class="w-full h-full object-cover" loading="lazy" />
+                <span class="absolute inset-0 flex items-center justify-center">
+                  <span class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform motion-reduce:transform-none">
+                    <svg class="w-6 h-6 text-primary ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+            {thrive && (
+              <a href={`/projects/${thrive.slug}`} class="inline-block text-primary font-bold font-sans text-sm py-3 mt-1 hover:text-medium transition-colors">See Thrive’s open project →</a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where you come in: the bridge from "how it works" to the ask, and what
+       one gift adds up to. Works without JS (the defaults are rendered here);
+       the script below only re-runs the same math when someone slides. -->
+  <section id="get-involved" class="bg-white section-padding border-t border-primary/10 scroll-mt-16">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Where You Come In</p>
+      <h2 class="mb-6 max-w-3xl">Now you know how it works. Here’s how to get involved.</h2>
+      <p class="text-body text-base md:text-lg leading-relaxed">
+        A CalmBox isn’t used once and put away. The kids and staff in a home share it, day after day, for years. So one gift keeps calming people long after you give it.
+      </p>
+
+      <div
+        data-impact
+        data-years={impact.years}
+        data-unit-cost={impact.unitCost}
+        data-small-gift={impact.smallGift}
+        class="mt-10 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-5 lg:gap-6 items-stretch"
+      >
+        <div class="bg-light rounded-2xl p-6 md:p-8">
+          <p class="label text-primary mb-5">Do the Math</p>
+          <div role="group" aria-label="How many CalmBoxes" class="flex flex-wrap gap-2 mb-8">
+            <button type="button" data-boxes="1" aria-pressed="true" class="impact-pill">1 CalmBox · $300</button>
+            <button type="button" data-boxes="4" aria-pressed="false" class="impact-pill">4 CalmBoxes · $1,200</button>
+          </div>
+          <label for="impact-uses" class="block text-dark font-bold">How often the home uses it</label>
+          <p class="text-body text-sm mt-1">
+            <output data-out="uses" for="impact-uses">{impact.perWeek} times a week</output>, for {impact.years} years
+          </p>
+          <input
+            id="impact-uses"
+            type="range"
+            min={impact.minPerWeek}
+            max={impact.maxPerWeek}
+            step="1"
+            value={impact.perWeek}
+            class="w-full h-11 mt-2 accent-primary cursor-pointer"
+          />
+          <div class="flex justify-between text-xs font-semibold text-body/80" aria-hidden="true">
+            <span>{impact.minPerWeek} a week</span>
+            <span>{impact.maxPerWeek} a week</span>
+          </div>
+        </div>
+
+        <div class="bg-deep rounded-2xl p-6 md:p-8 flex flex-col" aria-live="polite">
+          <p class="label text-light mb-4">Over three years, that’s</p>
+          <p class="font-serif text-5xl md:text-6xl font-bold text-white leading-none" data-out="sessions">{fmt(impactNow.sessions)}</p>
+          <p class="text-white/80 mt-3">sessions of calm, shared by the kids and staff in one home</p>
+          <div class="grid grid-cols-2 gap-5 mt-8 pt-6 border-t border-white/10">
+            <div>
+              <p class="font-serif text-3xl font-bold text-light leading-none"><span data-out="cents">{impactNow.cents}</span>¢</p>
+              <p class="text-white/80 text-sm mt-2">per session</p>
+            </div>
+            <div>
+              <p class="font-serif text-3xl font-bold text-light leading-none" data-out="small-gift">{impactNow.smallGiftSessions}</p>
+              <p class="text-white/80 text-sm mt-2">sessions covered by a ${impact.smallGift} gift</p>
+            </div>
+          </div>
+          <p class="text-white/70 text-xs mt-auto pt-6 leading-relaxed">
+            An estimate, not a promise: <span data-out="formula">{impact.perWeek} sessions a week × 52 weeks × {impact.years} years</span>. Real use varies by home, and every project report includes the actual count.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <a href="#projects" class="btn-gold text-lg">Pick a project ↓</a>
+        <p class="text-body">
+          Or <a href={DONATE_URL} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">give to the fund</a>, and we’ll send it wherever a home is ready first.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The projects: the ask, priced in units -->
+  <section id="projects" class="bg-offwhite section-padding scroll-mt-16">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Current Projects</p>
+      <h2 class="mb-4 max-w-3xl">Every project has a price, a place, and a finish line.</h2>
+      <p class="text-body text-base md:text-lg leading-relaxed">
+        Pick one. When it’s funded, it closes, and you get the report.
+      </p>
+
+      <div class="mt-8 mb-8 md:mb-10 inline-flex flex-wrap items-center gap-x-4 gap-y-2 bg-white rounded-2xl border border-primary/20 px-5 py-4">
+        <span class="font-serif text-2xl font-bold text-primary leading-none">$300</span>
+        <span class="text-dark font-semibold">puts one CalmBox in a home: an estimated {fmt(sessionsFor(impact.minPerWeek))} to {fmt(sessionsFor(impact.maxPerWeek))} sessions over three years.</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch">
+        {projects.map((project) => (
+          <ProjectOfferCard project={project} />
+        ))}
+
+        {/* The monthly rung. Crowded's recurring option has no end date, so the
+            12 months is the ask, not something checkout enforces. Gifts pool in
+            the fund and every $300 buys the next CalmBox, so a donor who stops
+            early still moves a box closer. */}
+        <article class="bg-deep rounded-2xl p-6 md:p-7 flex flex-col h-full shadow-sm">
+          <p class="label text-light mb-2">Give Monthly</p>
+          <h3 class="text-white text-xl leading-snug mb-1">A CalmBox a year</h3>
+          <p class="text-white/70 text-xs font-semibold uppercase tracking-wide mb-3">$25 a month for 12 months</p>
+          <p class="text-white/80 text-sm leading-relaxed mb-5">
+            Twelve gifts of $25 add up to $300: one CalmBox, in a home that’s ready for it. Commit to a year and you put a new one in someone’s hands.
+          </p>
+          <div class="mt-auto bg-white/10 rounded-xl p-4 mb-5">
+            <p class="font-serif text-white leading-none">
+              <span class="text-3xl font-bold">$25</span>
+              <span class="font-sans text-sm font-bold text-white/80 ml-1">a month × 12</span>
+            </p>
+            <p class="text-white/80 text-sm mt-2">= <strong class="text-white">1 CalmBox</strong> for a home</p>
+          </div>
+          <DonateButton label="Give $25 a month" class="btn-gold text-base text-center block w-full" />
+          <p class="text-white/70 text-xs mt-2 min-h-[2rem]">On the next screen, choose Recurring, then Monthly. Gifts go to the fund, and every $300 buys the next CalmBox.</p>
+          <a href="#get-involved" class="self-start text-light font-bold font-sans text-sm py-3 hover:text-white transition-colors">Do the math →</a>
+        </article>
+      </div>
+
+      {/* For the donor who'd rather not choose: one gift, moved to whatever is
+          ready first. Sits under the projects it pays for. */}
+      <div class="mt-8 md:mt-10 bg-white rounded-2xl border border-primary/20 shadow-sm p-6 md:p-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div>
+            <h3 class="text-xl md:text-2xl mb-2">Can’t pick one? You don’t have to.</h3>
+            <p class="text-body leading-relaxed">
+              Give to the fund and we move your gift to whichever home is ready first, so nothing sits waiting.
+            </p>
+          </div>
+          <DonateButton label="Give to the fund" class="btn-gold text-center whitespace-nowrap lg:flex-shrink-0" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing the loop: what happens after the click -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">What Happens Next</p>
+      <h2 class="mb-10 md:mb-12 max-w-3xl">Here’s exactly what your gift does.</h2>
+
+      <ol class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {steps.map((s, i) => (
+          <li class="bg-white rounded-2xl border border-primary/10 p-6 relative">
+            <p class="font-serif text-4xl font-bold text-primary/30 leading-none mb-4" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="text-h4 mb-2">{s.title}</h3>
+            <p class="text-body text-sm leading-relaxed">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-6 text-dark font-semibold flex items-center gap-2">
+        <span class="text-primary text-xl" aria-hidden="true">↺</span>
+        Then you decide where your next gift goes.
+      </p>
+
+      <div class="mt-10 md:mt-12 bg-white rounded-2xl border border-primary/10 border-l-4 border-l-gold-deep p-6 md:p-8">
+        <div class="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-6 lg:gap-10 items-center">
+          <div>
+            <h3 class="text-xl md:text-2xl mb-3">Every dollar reaches the field.</h3>
+            <p class="text-body leading-relaxed">
+              Our founders and board cover Restore the Last’s operating costs out of their own pockets. Donations pay only for the work: equipment, training, and support at partner homes.
+            </p>
+          </div>
+          <ul class="space-y-3">
+            {['Named projects with published costs', 'Gifts to a project stay with that project', 'A report on every project we fund', `501(c)(3) nonprofit${EIN ? ` (EIN ${EIN})` : ''}, so your gift is tax-deductible`].map((t) => (
+              <li class="flex items-start gap-3 text-dark font-semibold">
+                <span class="w-6 h-6 rounded-full bg-light text-primary flex items-center justify-center flex-shrink-0 text-sm" aria-hidden="true">✓</span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The close -->
+  <section data-close class="bg-deep text-white section-padding text-center">
+    <div class="container-narrow">
+      <h2 class="text-white text-3xl md:text-4xl mb-6">The gap isn’t proof. It’s resources.</h2>
+      <p class="text-white/80 text-lg leading-relaxed mb-10">
+        The technology works. The homes are already asking for it. The only thing missing is the money to get it there, and that’s the part you can close.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#projects" class="btn-gold text-lg">Fund a CalmBox</a>
+        <button type="button" data-share class="inline-block border border-white/40 text-white font-sans font-bold text-lg px-8 py-3 rounded-md hover:bg-white/10 transition-colors">
+          Share this page
+        </button>
+      </div>
+      <p class="text-white/70 text-sm mt-6" data-share-status aria-live="polite"></p>
+      <p class="text-white/80 text-sm mt-2">
+        Rather not pick? <DonateButton label="Give to the fund, once or monthly →" class="underline hover:text-white transition-colors" />
+      </p>
+      <p class="text-white/70 text-xs mt-4">{TAX_LINE}{EIN && ` EIN ${EIN}.`}</p>
+
+      <div class="mt-12 md:mt-14 pt-10 border-t border-white/10 grid md:grid-cols-2 gap-10 text-left max-w-4xl mx-auto">
+        <div>
+          <p class="label text-gold mb-2">For Organizations</p>
+          <p class="text-white/80 text-sm leading-relaxed mb-4">
+            Run a home or program for people carrying trauma? We fund the technology, the training, and the support.
+          </p>
+          <a href="/apply" class="inline-block text-white font-bold font-sans text-sm py-3 underline hover:text-white/80 transition-colors">Apply for funding →</a>
+        </div>
+        <NewsletterSignup
+          formId="projects-newsletter"
+          variant="dark"
+          heading="Not ready to give? Follow the work."
+          body="Field Notes: the story of every project, straight from the homes. One email a month."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Phones only. The first project card is about 12 screens down, so the ask
+       rides along between the hero and the projects, and gets out of the way
+       whenever the hero, the projects, the closing ask, or the footer is in view. -->
+  <div
+    data-sticky-cta
+    class="md:hidden fixed inset-x-0 bottom-0 z-40 translate-y-full transition-transform duration-300 motion-reduce:transition-none bg-white/95 backdrop-blur border-t border-primary/10 px-4 pt-3"
+    style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom));"
+    aria-hidden="true"
+  >
+    <a href="#projects" class="btn-gold block w-full text-center" tabindex="-1">Fund a CalmBox · $300</a>
+  </div>
+
 </BaseLayout>
+
+<script>
+  // Share: the phone's own share sheet where there is one, a copied link
+  // everywhere else. Strips any #anchor so people always land at the top.
+  document.querySelectorAll<HTMLButtonElement>('[data-share]').forEach((btn) => {
+    const status = document.querySelector('[data-share-status]');
+    btn.addEventListener('click', async () => {
+      const url = location.href.split('#')[0];
+      const data = {
+        title: 'Restore the Last',
+        text: "They're safe now. So why can't they sleep? Here's what $300 does about it.",
+        url,
+      };
+      if (navigator.share) {
+        try { await navigator.share(data); } catch { /* closed the sheet */ }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        if (status) status.textContent = 'Link copied. Paste it into a text or email.';
+      } catch {
+        window.prompt('Copy this link:', url);
+      }
+    });
+  });
+
+  // Sticky phone CTA: shown only while none of the places that already carry
+  // the ask (hero, projects, close, footer) are on screen.
+  const stickyBar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  if (stickyBar && 'IntersectionObserver' in window) {
+    const stickyLink = stickyBar.querySelector('a');
+    const inView = new Map<Element, boolean>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => inView.set(e.target, e.isIntersecting));
+      const show = ![...inView.values()].some(Boolean);
+      stickyBar.classList.toggle('translate-y-full', !show);
+      stickyBar.setAttribute('aria-hidden', String(!show));
+      if (stickyLink) stickyLink.tabIndex = show ? 0 : -1;
+    });
+    // 'body > footer': the quote attributions on this page are <footer>s too.
+    ['[data-hero]', '#projects', '[data-close]', 'body > footer']
+      .map((sel) => document.querySelector(sel))
+      .forEach((el) => el && io.observe(el));
+  }
+
+  // Do the Math: the same arithmetic as the frontmatter, re-run on input.
+  // Constants arrive as data attributes so the page and the script can't drift.
+  document.querySelectorAll<HTMLElement>('[data-impact]').forEach((root) => {
+    const range = root.querySelector<HTMLInputElement>('input[type="range"]');
+    const out = (key: string) => root.querySelector<HTMLElement>(`[data-out="${key}"]`);
+    const years = Number(root.dataset.years);
+    const unitCost = Number(root.dataset.unitCost);
+    const smallGift = Number(root.dataset.smallGift);
+    let boxes = 1;
+
+    function render() {
+      const perWeek = Number(range?.value);
+      const sessions = perWeek * 52 * years * boxes;
+      const perDollar = sessions / (unitCost * boxes);
+      const set = (key: string, text: string) => { const el = out(key); if (el) el.textContent = text; };
+      set('uses', `${perWeek} times a week`);
+      set('sessions', sessions.toLocaleString('en-US'));
+      set('cents', String(Math.round(100 / perDollar)));
+      set('small-gift', String(Math.round(perDollar * smallGift)));
+      set('formula', `${perWeek} sessions a week × 52 weeks × ${years} years${boxes > 1 ? ` × ${boxes} CalmBoxes` : ''}`);
+    }
+
+    range?.addEventListener('input', render);
+    root.querySelectorAll<HTMLButtonElement>('[data-boxes]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        boxes = Number(btn.dataset.boxes);
+        root.querySelectorAll('[data-boxes]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        render();
+      });
+    });
+  });
+
+  // Click-to-load video. A YouTube iframe costs ~1MB of script before anyone
+  // presses play; the thumbnail costs one image, and the player only loads
+  // for people who actually want it.
+  document.querySelectorAll<HTMLElement>('.lite-yt').forEach((el) => {
+    el.querySelector('button')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${el.dataset.yt}?autoplay=1&rel=0`;
+      iframe.title = el.dataset.title || 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 w-full h-full';
+      el.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .impact-pill {
+    @apply font-sans text-sm font-bold px-4 py-3 rounded-full border border-primary/30 text-primary bg-white transition-colors duration-200;
+  }
+  .impact-pill:hover {
+    @apply border-primary;
+  }
+  .impact-pill[aria-pressed='true'] {
+    @apply bg-primary text-white border-primary;
+  }
+</style>

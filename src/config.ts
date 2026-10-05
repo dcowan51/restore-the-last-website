@@ -4,6 +4,12 @@ export const DONATE_URL = 'https://collect.crowded.me/collection/441fe615-80d6-4
 
 export const CONTACT_EMAIL = 'dallas@restorethelast.org';
 
+// IRS-recognized 501(c)(3) (confirmed by Dallas, 2026-10-05). The tax line shows
+// on /projects and the privacy page; the EIN joins it wherever it appears once
+// it's filled in here. Leave EIN empty and the line simply omits it.
+export const TAX_LINE = 'Restore the Last is a 501(c)(3) nonprofit. Gifts are tax-deductible to the extent allowed by law.';
+export const EIN = '42-3445245';
+
 // Physical mailing address. Required in the footer of every marketing email under
 // CAN-SPAM, and shown on the privacy page so people have a postal route for data
 // requests. Fill this in from the 501(c)(3) filing — while it's empty, the privacy

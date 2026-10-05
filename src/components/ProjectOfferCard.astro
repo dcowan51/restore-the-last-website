@@ -1,0 +1,127 @@
+---
+import DonateButton from './DonateButton.astro';
+import { typeMeta, statusMeta, unitMath, pluralize } from '../data/projectMeta.js';
+
+// The /projects card. ProjectCard (homepage and Give carousels) is a single
+// link that sends people to the detail page; this one is the ask itself — it
+// prices the project in units a donor can picture and carries its own Give
+// button, so someone who arrived from a shared link can act without a detour.
+const { project } = Astro.props;
+
+const type = typeMeta(project);
+const status = statusMeta(project);
+const isDocumentary = project.type === 'documentary';
+const isClosed = project.status === 'funded';
+const unit = unitMath(project);
+const detailHref = `/projects/${project.slug}`;
+
+// Same honesty rule as the detail page: the button only names this project
+// when the project has its own collection to receive the gift. Without one,
+// the money lands in the general fund, and the label says so.
+const hasOwnGiveLink = Boolean(project.giveUrl);
+const giveLabel = !hasOwnGiveLink
+  ? 'Give to the fund'
+  : unit
+    ? `Fund a ${unit.name}`
+    : isDocumentary ? 'Fund the film' : 'Give to this project';
+const giveNote = hasOwnGiveLink
+  ? 'Your gift goes to this project.'
+  : 'Gifts go to the fund that pays for this project and the others in progress.';
+
+const metaLine = isDocumentary
+  ? project.media?.targetRelease ? `Releasing ${project.media.targetRelease}` : 'In production'
+  : project.population;
+
+// Progress, hand-updated in /admin. Hidden until a figure exists — a bar sitting
+// at zero argues against giving rather than for it.
+const pct =
+  project.goal && project.raised != null && !isClosed
+    ? Math.min(100, Math.round((project.raised / project.goal) * 100))
+    : null;
+const progressLine = unit && unit.funded != null
+  ? `${unit.funded} of ${unit.needed} ${pluralize(unit.name, unit.needed)} funded`
+  : pct != null ? `$${project.raised.toLocaleString()} raised · ${pct}%` : null;
+---
+
+<article class="bg-white rounded-2xl overflow-hidden border border-primary/10 flex flex-col h-full shadow-sm">
+  <a href={detailHref} class="relative block overflow-hidden group" tabindex="-1" aria-hidden="true">
+    <img
+      src={project.coverImage}
+      alt=""
+      class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300 motion-reduce:transform-none"
+      loading="lazy"
+    />
+    <span class={`absolute top-4 left-4 text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border bg-white/95 ${type.badge}`}>
+      {type.label}
+    </span>
+    <span class={`absolute top-4 right-4 text-xs font-bold font-sans uppercase tracking-wide px-3 py-1 rounded-full border bg-white/95 ${status.badge}`}>
+      {status.label}
+    </span>
+  </a>
+
+  <div class="flex flex-col flex-grow p-6 md:p-7">
+    <p class="label text-gold-deep mb-2">{project.location}</p>
+    <h3 class="font-serif font-bold text-dark text-xl leading-snug mb-1">
+      <a href={detailHref} class="hover:text-primary transition-colors">{project.title}</a>
+    </h3>
+    {metaLine && (
+      <p class="text-body/80 text-xs font-semibold uppercase tracking-wide mb-3">{metaLine}</p>
+    )}
+    <p class="text-body text-sm leading-relaxed mb-5 line-clamp-3">
+      {isDocumentary && project.subtitle ? project.subtitle : project.summary}
+    </p>
+
+    <!-- The price, in the donor's units -->
+    <div class="mt-auto bg-light rounded-xl p-4 mb-5">
+      {isClosed ? (
+        <p class="text-green-800 font-bold text-sm">✓ Fully funded. Thank you.</p>
+      ) : unit ? (
+        <>
+          <p class="font-serif text-dark leading-none">
+            <span class="text-3xl font-bold">${unit.cost.toLocaleString()}</span>
+            <span class="font-sans text-sm font-bold text-body ml-1">funds 1 {unit.name}</span>
+          </p>
+          <p class="text-body text-sm mt-2">
+            {unit.needed} needed · <strong class="text-dark">${project.goal.toLocaleString()}</strong> finishes the project
+          </p>
+        </>
+      ) : project.goal ? (
+        <>
+          <p class="font-serif text-3xl font-bold text-dark leading-none">${project.goal.toLocaleString()}</p>
+          <p class="text-body text-sm mt-2">
+            {isDocumentary ? 'funds the whole film, from first shoot to release' : 'finishes the project'}
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="font-serif text-2xl font-bold text-dark leading-none">Ongoing</p>
+          <p class="text-body text-sm mt-2">Every gift keeps sessions running.</p>
+        </>
+      )}
+      {progressLine && (
+        <div class="mt-3">
+          <div class="h-1.5 rounded-full bg-white overflow-hidden">
+            <div class="h-full rounded-full bg-gold-deep" style={`width: ${pct ?? 0}%`}></div>
+          </div>
+          <p class="text-body/80 text-xs mt-1.5 font-semibold">{progressLine}</p>
+        </div>
+      )}
+    </div>
+
+    {isClosed ? (
+      <a href={detailHref} class="text-primary font-bold font-sans text-sm py-3 hover:text-medium transition-colors">
+        See the outcome →
+      </a>
+    ) : (
+      <>
+        <DonateButton label={giveLabel} href={project.giveUrl} class="btn-gold text-base text-center block w-full" />
+        {/* Two lines reserved whichever note shows, so the buttons and price
+            boxes line up across a row of cards. */}
+        <p class="text-body/80 text-xs mt-2 min-h-[2rem]">{giveNote}</p>
+        <a href={detailHref} class="self-start text-primary font-bold font-sans text-sm py-3 hover:text-medium transition-colors">
+          {isDocumentary ? 'About the film →' : 'See the details →'}
+        </a>
+      </>
+    )}
+  </div>
+</article>

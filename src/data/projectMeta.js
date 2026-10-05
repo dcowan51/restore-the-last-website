@@ -84,6 +84,23 @@ export function activeFacets(projects) {
   };
 }
 
+// Unit names come from the CMS as a singular noun ("CalmBox"); this covers the
+// English endings one is likely to have.
+export const pluralize = (word, n) =>
+  n === 1 ? word : /(s|x|z|ch|sh)$/i.test(word) ? `${word}es` : `${word}s`;
+
+// A project with a unit of giving prices itself the way a donor thinks: one
+// CalmBox for $300, four needed, two funded. The funded count is derived from
+// the hand-updated `raised` figure, so it can never run ahead of the money.
+// Null when there's no unit, no goal, or no way to count them.
+export function unitMath(p) {
+  if (!p.unitName || !p.unitCost || !p.goal) return null;
+  const needed = Math.max(1, Math.round(p.goal / p.unitCost));
+  const funded =
+    p.raised != null ? Math.min(needed, Math.floor(p.raised / p.unitCost)) : null;
+  return { name: p.unitName, cost: p.unitCost, needed, funded };
+}
+
 export const typeMeta = (p) =>
   TYPES[p.type] || { label: prettify(p.type), plural: prettify(p.type), badge: NEUTRAL_BADGE };
 export const statusMeta = (p) =>
