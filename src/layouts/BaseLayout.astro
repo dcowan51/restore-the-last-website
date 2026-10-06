@@ -8,9 +8,13 @@ interface Props {
   description?: string;
   /** Keep utility pages (form thank-yous) out of search results. */
   noindex?: boolean;
+  /** Link-preview image (path under public/). Defaults to the logo. */
+  image?: string;
+  /** Link-preview headline, for pages people share by text or email. Defaults to the page title. */
+  socialTitle?: string;
 }
 
-const { title, description = 'Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.', noindex = false } = Astro.props;
+const { title, description = 'Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.', noindex = false, image = '/RTLlogo.png', socialTitle } = Astro.props;
 
 // Canonical origin comes from `site` in astro.config.mjs. Every page needs its
 // own canonical URL: the Netlify subdomain serves an identical copy of this
@@ -18,8 +22,9 @@ const { title, description = 'Restore the Last funds nervous system regulation t
 // duplicates.
 const siteUrl = Astro.site ?? new URL('https://restorethelast.org');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
-const ogImage = new URL('/RTLlogo.png', siteUrl);
+const ogImage = new URL(image, siteUrl);
 const fullTitle = `${title} | Restore the Last`;
+const shareTitle = socialTitle ?? fullTitle;
 ---
 
 <!DOCTYPE html>
@@ -34,7 +39,7 @@ const fullTitle = `${title} | Restore the Last`;
     <title>{fullTitle}</title>
 
     <!-- Open Graph -->
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={shareTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:url" content={canonicalUrl} />
@@ -43,7 +48,7 @@ const fullTitle = `${title} | Restore the Last`;
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:title" content={shareTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
   </head>

@@ -63,6 +63,13 @@ const projects = defineCollection({
     // and shows a progress bar wherever the goal appears. Absent = no bar.
     raised: blankAsUndefined(z.number().min(0).optional()),
 
+    // Optional unit of giving: the one thing a single gift buys (a CalmBox at
+    // $300). With both set, cards price the project the way a donor thinks —
+    // "$300 funds 1 CalmBox, 4 needed" — instead of as one lump sum. Leave
+    // both empty for work with no per-unit price, like a film.
+    unitName: blankAsUndefined(z.string().optional()),
+    unitCost: blankAsUndefined(z.number().positive().optional()),
+
     // Optional per-project giving link (its own Crowded collection). When set,
     // the detail page's Give buttons send donors there as a designated gift
     // instead of the shared general-fund link in src/config.ts.

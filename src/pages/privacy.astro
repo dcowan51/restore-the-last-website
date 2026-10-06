@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { CONTACT_EMAIL, MAILING_ADDRESS, PRIVACY_UPDATED } from '../config';
+import { CONTACT_EMAIL, EIN, MAILING_ADDRESS, PRIVACY_UPDATED } from '../config';
 
 // Every third party listed here is one the site actually loads or sends data to.
 // If you add analytics, a donor CRM, or another embed, add a row — an inaccurate
@@ -222,7 +222,7 @@ const services = [
           <p class="text-white/50 text-sm mt-8 leading-relaxed whitespace-pre-line">{MAILING_ADDRESS}</p>
         )}
         <p class="text-white/70 text-sm mt-8 leading-relaxed">
-          Restore the Last is a faith-based nonprofit organization. Our 501(c)(3) determination is pending; we'll note it here once it's granted.
+          Restore the Last is a faith-based nonprofit organization, recognized by the IRS as tax-exempt under section 501(c)(3).{EIN && ` EIN ${EIN}.`}
         </p>
       </div>
     </div>

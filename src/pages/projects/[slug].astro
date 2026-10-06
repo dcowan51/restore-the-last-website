@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProjects } from '../../data/projects.js';
 import DonateButton from '../../components/DonateButton.astro';
 import { typeMeta, statusMeta, populationLabel } from '../../data/projectMeta.js';
+import { EIN } from '../../config';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -289,6 +290,12 @@ const fundingHeading = isDocumentary ? 'What Your Funding Covers' : 'What Your F
                   <div class="w-2 h-2 rounded-full bg-primary"></div>
                 </div>
                 <p>Outcome report delivered when the project completes</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-light flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div class="w-2 h-2 rounded-full bg-primary"></div>
+                </div>
+                <p>Tax-deductible: Restore the Last is a 501(c)(3){EIN && ` (EIN ${EIN})`}</p>
               </div>
             </div>
           </div>

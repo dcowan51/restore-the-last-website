@@ -42,7 +42,9 @@ Every field is validated at build time against `src/content/config.ts`. A bad va
     "url": "https://www.example.org"
   },
   "population": "Who is being served, in plain words",
-  "goal": 10000,
+  "goal": 1200,
+  "unitName": "CalmBox",
+  "unitCost": 300,
   "coverImage": "/uploads/your-photo.jpg",
   "summary": "2–3 sentences. What facility, what location, why now. Shows on the card and at the top of the detail page.",
   "whatWeFund": "What the money specifically covers — calm boxes, training, support.",
@@ -97,6 +99,8 @@ Every field is validated at build time against `src/content/config.ts`. A bad va
 | `partner` | The partner org | `{ "name": "...", "url": "..." }`. Leave either as `""` to hide it |
 | `population` | Plain-words description of who's served | Optional. Shown on deployment cards |
 | `goal` | Funding goal in dollars | Number only — no `$` or commas. **Omit entirely** for ongoing work with no fixed goal |
+| `unitName` | Unit of giving, singular — e.g. `"CalmBox"` | Optional. With `unitCost` set, the /projects card prices the project per unit ("$300 funds 1 CalmBox · 4 needed") and counts funded units from `raised` |
+| `unitCost` | What one unit costs | Number only. Only used when `unitName` is set. Leave both empty for work with no per-unit price, like a film |
 | `coverImage` | Card and detail-page photo | Upload via `/admin`, or drop into `public/uploads/` and reference as `/uploads/filename.jpg` |
 | `summary` | Project overview | 2–3 sentences |
 | `whatWeFund` | What the money covers | One sentence or a short list |
