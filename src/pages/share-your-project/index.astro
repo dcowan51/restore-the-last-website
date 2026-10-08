@@ -158,11 +158,16 @@ const populations = [
               <div class="grid sm:grid-cols-2 gap-3 mt-1">
                 {populations.map((p) => (
                   <label class={choiceClass}>
-                    <input type="checkbox" name="populations" value={p} class={radioClass} />
+                    <input type="checkbox" name="populations" value={p} data-population-other={p === 'Other' ? '' : undefined} class={radioClass} />
                     <span class="text-body text-sm">{p}</span>
                   </label>
                 ))}
               </div>
+            </div>
+
+            <div data-show="population-other">
+              <label for="populations-other" class={labelClass}>Who else?</label>
+              <input type="text" id="populations-other" name="populations_other" data-required placeholder="e.g., Refugee families, Youth in juvenile detention" class={inputClass} />
             </div>
 
             <div>
@@ -243,9 +248,9 @@ const populations = [
               <p class="text-body text-xs mt-2">Not sure which fits? Pick your best guess and tell us more below. We'll talk it through.</p>
             </div>
 
-            <div data-show="other">
+            <div data-show="tech-other">
               <label for="technology-other" class={labelClass}>What other technology?</label>
-              <input type="text" id="technology-other" name="technology_other" data-required class={inputClass} />
+              <input type="text" id="technology-other" name="technology_other" data-required placeholder="Tell us what it is and what it does" class={inputClass} />
             </div>
 
             <div>
@@ -410,10 +415,11 @@ const populations = [
   if (form) {
     const blocks = form.querySelectorAll<HTMLElement>('[data-show]');
     const update = () => {
-      const other = form.querySelector<HTMLInputElement>('[data-tech-other]')?.checked ?? false;
+      const isChecked = (sel: string) => form.querySelector<HTMLInputElement>(sel)?.checked ?? false;
       const use = form.querySelector<HTMLInputElement>('[data-use]:checked')?.value ?? '';
       const visible: Record<string, boolean> = {
-        other,
+        'population-other': isChecked('[data-population-other]'),
+        'tech-other': isChecked('[data-tech-other]'),
         existing: use.startsWith('Yes') || use === 'Some of each',
         new: use.startsWith('No') || use === 'Some of each',
       };
