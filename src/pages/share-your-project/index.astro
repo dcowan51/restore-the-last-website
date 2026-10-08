@@ -1,0 +1,431 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+// Unlisted page: sent by link to a partner whose project is going on the site.
+// Not in the nav, kept out of search (noindex) and out of the sitemap
+// (astro.config.mjs). Each question feeds a field of the project form in
+// /admin — the comment above each one names the field it feeds.
+
+const inputClass =
+  'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
+const labelClass = 'label text-dark block mb-2';
+const hintClass = 'text-body text-sm mb-3 leading-relaxed';
+const optional = '<span class="normal-case font-normal tracking-normal">(optional)</span>';
+const choiceClass =
+  'flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors';
+const radioClass = 'w-4 h-4 accent-primary';
+
+// Same categories as the "Serving" filter on /projects (src/data/populations.json).
+const populations = [
+  'Trafficking survivors',
+  'Foster youth',
+  'Children in residential care',
+  'Caregivers & staff',
+  'Veterans',
+  'Other',
+];
+---
+
+<BaseLayout
+  title="Share Your Project"
+  description="Tell Restore the Last about your work so we can build your project page and start raising funds for it."
+  noindex
+>
+
+  <!-- Hero -->
+  <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">Share Your Project</p>
+      <div class="gold-line mb-8"></div>
+      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+        Help us tell your story the right way.
+      </h1>
+      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
+        We're building a page on restorethelast.org for your project. Donors will read it before they give. Your answers here are what we'll build it from. It takes about fifteen minutes. Write the way you'd talk. We'll handle the polish.
+      </p>
+      <p class="text-body max-w-2xl mt-4 leading-relaxed">
+        <strong class="text-dark">Nothing goes live until you approve it.</strong> We'll send you the draft page first.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+
+        <form
+          name="project-story"
+          method="POST"
+          action="/share-your-project/thank-you"
+          enctype="multipart/form-data"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="space-y-12"
+        >
+          <input type="hidden" name="form-name" value="project-story" />
+
+          <!-- Honeypot — hidden from people, catches bots. -->
+          <p class="hidden" aria-hidden="true">
+            <label>
+              Leave this field empty
+              <input name="bot-field" tabindex="-1" autocomplete="off" />
+            </label>
+          </p>
+
+          <!-- 1. Organization + contact -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">1. Who you are</legend>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <!-- partner.name -->
+                <label for="organization" class={labelClass}>Organization name</label>
+                <input type="text" id="organization" name="organization" required class={inputClass} />
+              </div>
+              <div>
+                <!-- partner.url -->
+                <label for="website" class={labelClass}>Website <Fragment set:html={optional} /></label>
+                <input type="text" id="website" name="website" placeholder="https://yourorganization.org" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="contact-name" class={labelClass}>Your name</label>
+                <input type="text" id="contact-name" name="name" required class={inputClass} />
+              </div>
+              <div>
+                <label for="role" class={labelClass}>Role / title</label>
+                <input type="text" id="role" name="role" required placeholder="e.g., Executive Director" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="email" class={labelClass}>Email</label>
+                <input type="email" id="email" name="email" required class={inputClass} />
+              </div>
+              <div>
+                <label for="phone" class={labelClass}>Phone <Fragment set:html={optional} /></label>
+                <input type="tel" id="phone" name="phone" class={inputClass} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 2. What we can say publicly -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">2. What we can say publicly</legend>
+            <p class={hintClass}>
+              Some of our partners can't be named, to protect the people they serve. That's fine. The page works either way.
+            </p>
+
+            <div>
+              <!-- partner.name shown or left blank -->
+              <span class={labelClass}>Can we name your organization on the page?</span>
+              <div class="flex flex-col gap-3 mt-1">
+                <label class={choiceClass}>
+                  <input type="radio" name="name_publicly" value="Yes — name us and link our website" required class={radioClass} />
+                  <span class="text-body text-sm">Yes — name us and link our website</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="radio" name="name_publicly" value="Yes — name us, but no link" class={radioClass} />
+                  <span class="text-body text-sm">Yes — name us, but no link</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="radio" name="name_publicly" value="No — describe us without our name" class={radioClass} />
+                  <span class="text-body text-sm">No — describe us without our name (e.g., "a group home in Phoenix")</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <!-- location -->
+              <label for="location" class={labelClass}>Where should the page say you are?</label>
+              <p class={hintClass}>City and state for the US, or just the country if you're outside it. Only as specific as feels safe.</p>
+              <input type="text" id="location" name="location" required placeholder="e.g., Phoenix, Arizona  ·  El Salvador" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <!-- 3. The people -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">3. The people you serve</legend>
+
+            <div>
+              <!-- populations -->
+              <span class={labelClass}>Who would receive sessions? <span class="normal-case font-normal tracking-normal">(choose all that apply)</span></span>
+              <p class={hintClass}>If your staff would use it too, tick "Caregivers &amp; staff." At most of our sites, they do.</p>
+              <div class="grid sm:grid-cols-2 gap-3 mt-1">
+                {populations.map((p) => (
+                  <label class={choiceClass}>
+                    <input type="checkbox" name="populations" value={p} class={radioClass} />
+                    <span class="text-body text-sm">{p}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <!-- population (plain words) -->
+              <label for="population-plain" class={labelClass}>In a few words, who are they?</label>
+              <input type="text" id="population-plain" name="population_plain" required placeholder="e.g., Aged-out foster youth, 18–25  ·  Girls 12–17 leaving trafficking" class={inputClass} />
+            </div>
+
+            <div>
+              <!-- whyThisPopulation, paragraph 1 -->
+              <label for="their-reality" class={labelClass}>What are they carrying when they come to you?</label>
+              <p class={hintClass}>What's their life been like, and what does it look like day to day? Please leave out names or details that could identify anyone.</p>
+              <textarea id="their-reality" name="their_reality" rows="5" required class={inputClass}></textarea>
+            </div>
+
+            <div>
+              <!-- whyThisPopulation, paragraph 2 -->
+              <label for="whats-hard" class={labelClass}>What's still hard, even with everything you already do?</label>
+              <p class={hintClass}>Sleep, anger, shutdown, staff burnout, people leaving the program, whatever you see most.</p>
+              <textarea id="whats-hard" name="whats_hard" rows="4" required class={inputClass}></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 4. Your organization's work -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">4. Your work</legend>
+
+            <div>
+              <!-- summary -->
+              <label for="about-you" class={labelClass}>In two or three sentences, what does your organization do?</label>
+              <p class={hintClass}>Imagine explaining it to a friend who's never heard of you.</p>
+              <textarea id="about-you" name="about_you" rows="4" required class={inputClass}></textarea>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="people-per-year" class={labelClass}>How many people do you serve in a year?</label>
+                <input type="text" id="people-per-year" name="people_per_year" required placeholder="A rough number is fine" class={inputClass} />
+              </div>
+              <div>
+                <label for="years-operating" class={labelClass}>How long have you been doing this? <Fragment set:html={optional} /></label>
+                <input type="text" id="years-operating" name="years_operating" placeholder="e.g., Since 2015" class={inputClass} />
+              </div>
+            </div>
+
+            <div>
+              <!-- whyThisPopulation, paragraph 3: proof -->
+              <label for="results" class={labelClass}>What's working? <Fragment set:html={optional} /></label>
+              <p class={hintClass}>
+                Any results, numbers, or a short story you're proud of. Stories without names are best. Tell us if anything here is <em>not</em> for public use.
+              </p>
+              <textarea id="results" name="results" rows="5" class={inputClass}></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 5. The technology. Follow-up questions branch on the answers
+               here; the script at the bottom shows only the ones that apply. -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">5. The technology</legend>
+
+            <div>
+              <!-- unitName -->
+              <span class={labelClass}>What are you asking for? <span class="normal-case font-normal tracking-normal">(choose all that apply)</span></span>
+              <div class="flex flex-col gap-3 mt-1">
+                <label class={choiceClass}>
+                  <input type="checkbox" name="technology" value="Direct neurofeedback" data-tech class={radioClass} />
+                  <span class="text-body text-sm">Direct neurofeedback (a practitioner system run by trained staff)</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="checkbox" name="technology" value="CalmBox" data-tech class={radioClass} />
+                  <span class="text-body text-sm">CalmBox (a small personal device people use on their own)</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="checkbox" name="technology" value="Other" data-tech data-tech-other class={radioClass} />
+                  <span class="text-body text-sm">Other</span>
+                </label>
+              </div>
+              <p class="text-body text-xs mt-2">Not sure which fits? Pick your best guess and tell us more below. We'll talk it through.</p>
+            </div>
+
+            <div data-show="other">
+              <label for="technology-other" class={labelClass}>What other technology?</label>
+              <input type="text" id="technology-other" name="technology_other" data-required class={inputClass} />
+            </div>
+
+            <div>
+              <span class={labelClass}>Do you already use it?</span>
+              <div class="flex flex-col gap-3 mt-1">
+                <label class={choiceClass}>
+                  <input type="radio" name="current_use" value="Yes — this would add more" required data-use class={radioClass} />
+                  <span class="text-body text-sm">Yes — we'd like more of what we already use</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="radio" name="current_use" value="No — this would be new for us" data-use class={radioClass} />
+                  <span class="text-body text-sm">No — this would be brand new for us</span>
+                </label>
+                <label class={choiceClass}>
+                  <input type="radio" name="current_use" value="Some of each" data-use class={radioClass} />
+                  <span class="text-body text-sm">Some of each — more of one, and something new</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Already using it: the proof. Feeds whyThisPopulation (paragraph 3)
+                 and the "what's already working" case for more units. -->
+            <div data-show="existing" class="space-y-6 border-l-2 border-primary/20 pl-5">
+              <p class="label text-primary">What you use now</p>
+              <div>
+                <label for="current-setup" class={labelClass}>What do you have now, and how long have you used it?</label>
+                <input type="text" id="current-setup" name="current_setup" data-required placeholder="e.g., 2 CalmBoxes since spring 2025" class={inputClass} />
+              </div>
+              <div>
+                <label for="current-reach" class={labelClass}>About how many people use it, and how often?</label>
+                <input type="text" id="current-reach" name="current_reach" data-required placeholder="e.g., 15 kids, most of them 3 times a week" class={inputClass} />
+              </div>
+              <div>
+                <label for="how-its-helped" class={labelClass}>How has it helped?</label>
+                <p class={hintClass}>What have you noticed in the people using it? Sleep, anger, focus, how they handle hard days, how staff are doing. A short story without names is perfect. If you track any results, even rough notes, tell us what they show.</p>
+                <textarea id="how-its-helped" name="how_its_helped" rows="5" data-required class={inputClass}></textarea>
+              </div>
+              <div>
+                <label for="why-more" class={labelClass}>Why do you need more?</label>
+                <p class={hintClass}>Is anyone waiting for a turn? e.g., "One device shared across three houses means a two-week wait."</p>
+                <textarea id="why-more" name="why_more" rows="3" data-required class={inputClass}></textarea>
+              </div>
+            </div>
+
+            <!-- Brand new: how they picture it working. -->
+            <div data-show="new" class="space-y-6 border-l-2 border-primary/20 pl-5">
+              <p class="label text-primary">Something new</p>
+              <div>
+                <label for="planned-use" class={labelClass}>How do you see it being used?</label>
+                <p class={hintClass}>Who would use it, where, and when? e.g., "In each of our 3 houses, before bed and after family visits."</p>
+                <textarea id="planned-use" name="planned_use" rows="4" data-required class={inputClass}></textarea>
+              </div>
+              <div>
+                <label for="who-runs-it" class={labelClass}>Who on your team would look after it?</label>
+                <input type="text" id="who-runs-it" name="who_runs_it" data-required placeholder="e.g., our house parents; our program director" class={inputClass} />
+              </div>
+              <div>
+                <label for="success" class={labelClass}>Six months in, what would tell you it's working?</label>
+                <input type="text" id="success" name="success_six_months" data-required placeholder="e.g., kids sleeping through the night; fewer blowups after visits" class={inputClass} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 6. The project -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">6. The project</legend>
+
+            <div>
+              <!-- purpose -->
+              <label for="what-would-change" class={labelClass}>If this is funded, what changes for your people?</label>
+              <p class={hintClass}>This becomes the heart of your page. One honest sentence is enough.</p>
+              <textarea id="what-would-change" name="what_would_change" rows="3" required class={inputClass}></textarea>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <!-- whatWeFund / goal -->
+                <label for="people-using" class={labelClass}>About how many people would use it?</label>
+                <input type="text" id="people-using" name="people_using" required placeholder="e.g., 12 residents + 4 staff" class={inputClass} />
+              </div>
+              <div>
+                <label for="units-needed" class={labelClass}>How many devices are you asking for? <Fragment set:html={optional} /></label>
+                <input type="text" id="units-needed" name="units_needed" placeholder="Not sure? Leave it blank" class={inputClass} />
+              </div>
+            </div>
+
+            <div>
+              <label for="needed-by" class={labelClass}>When do you need it by? <Fragment set:html={optional} /></label>
+              <input type="text" id="needed-by" name="needed_by" placeholder="e.g., before school starts in August" class={inputClass} />
+            </div>
+
+            <div>
+              <label for="anything-else-needed" class={labelClass}>Anything else you'd need to make it work? <Fragment set:html={optional} /></label>
+              <input type="text" id="anything-else-needed" name="anything_else_needed" placeholder="e.g., training for night staff, a quiet room" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <!-- 7. Photos -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">7. Photos <span class="text-base font-sans font-normal text-body">(optional)</span></legend>
+            <p class={hintClass}>
+              A real photo makes the page. Your building, your grounds, your staff, hands and backs, a room where sessions would happen. Landscape (wide) works best.
+              <strong class="text-dark">Please don't send photos where a child's face can be seen.</strong>
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <!-- coverImage -->
+                <label for="photo-1" class={labelClass}>Photo 1</label>
+                <input type="file" id="photo-1" name="photo_1" accept="image/*" class="text-body text-sm" />
+              </div>
+              <div>
+                <label for="photo-2" class={labelClass}>Photo 2</label>
+                <input type="file" id="photo-2" name="photo_2" accept="image/*" class="text-body text-sm" />
+              </div>
+            </div>
+            <p class="text-body text-xs">Up to 8 MB total. For more or bigger photos, share a link below.</p>
+
+            <div>
+              <label for="photo-link" class={labelClass}>Link to more photos <Fragment set:html={optional} /></label>
+              <input type="text" id="photo-link" name="photo_link" placeholder="Google Drive, Dropbox, or iCloud link" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <!-- 8. Anything else + consent -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">8. Last thing</legend>
+
+            <div>
+              <label for="anything-else" class={labelClass}>Anything else donors should know? <Fragment set:html={optional} /></label>
+              <textarea id="anything-else" name="anything_else" rows="3" class={inputClass}></textarea>
+            </div>
+
+            <label class="flex items-start gap-3 bg-white rounded-xl border border-primary/20 px-4 py-4 cursor-pointer">
+              <input type="checkbox" name="permission" value="Yes" required class={`${radioClass} mt-1 shrink-0`} />
+              <span class="text-body text-sm leading-relaxed">
+                Restore the Last may use what we've shared here to create a project page and raise funds for this project. We'll see and approve the page before it's published. We have permission for any photos we've sent.
+              </span>
+            </label>
+          </fieldset>
+
+          <div>
+            <button type="submit" class="btn-gold text-lg">Send it to us</button>
+            <p class="text-body text-sm mt-4">
+              Questions, or easier to talk it through? Email
+              <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+            </p>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Show only the follow-ups that match the answers in section 5. Hidden
+  // blocks drop their required flags so they can't block submission. Without
+  // JavaScript every block stays visible and optional.
+  const form = document.querySelector<HTMLFormElement>('form[name="project-story"]');
+  if (form) {
+    const blocks = form.querySelectorAll<HTMLElement>('[data-show]');
+    const update = () => {
+      const other = form.querySelector<HTMLInputElement>('[data-tech-other]')?.checked ?? false;
+      const use = form.querySelector<HTMLInputElement>('[data-use]:checked')?.value ?? '';
+      const visible: Record<string, boolean> = {
+        other,
+        existing: use.startsWith('Yes') || use === 'Some of each',
+        new: use.startsWith('No') || use === 'Some of each',
+      };
+      blocks.forEach((block) => {
+        const on = visible[block.dataset.show ?? ''] ?? false;
+        block.hidden = !on;
+        block.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-required]').forEach((f) => {
+          f.required = on;
+        });
+      });
+    };
+    form.addEventListener('change', update);
+    update();
+  }
+</script>
