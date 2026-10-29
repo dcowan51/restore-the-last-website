@@ -1,25 +1,39 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PickleballArt from '../../components/PickleballArt.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
 import { CONTACT_EMAIL } from '../../config';
 import { getProjects } from '../../data/projects.js';
+import { event, googleCalendarUrl } from '../../data/pickleballEvent.js';
 
-// The projects this event raises money for: the two Phoenix-area deployments, since
-// the event is in Anthem. Change the slugs here to point the event at other projects.
-const fundedSlugs = ['aged-out-foster-care-facility-thrive', 'phoenix-group-home-calm-boxes'];
-const fundedProjects = (await getProjects()).filter((p) => fundedSlugs.includes(p.slug));
-const fundedTotal = fundedProjects.reduce((sum, p) => sum + (p.goal ?? 0), 0);
-
-// Event details live here so they're easy to change in one place.
-// TODO before launch: confirm the court booking/address with Anthem Community Council.
-const event = {
-  date: 'Saturday, December 5, 2026',
-  time: '1:00 PM',
-  venue: 'Anthem Pickleball Courts',
-  address: 'Anthem Community Center, 41130 N Freedom Way, Anthem, AZ 85086',
-  mapUrl: 'https://maps.google.com/?q=41130+N+Freedom+Way,+Anthem,+AZ+85086',
-};
+// The projects this event raises money for: the Phoenix-area ones, since the event is
+// in Anthem. The page leads with the people each one serves, not the equipment, so each
+// gets its own headline and short story here; the goal and link come from the project.
+// Add or remove a slug to change what the event funds.
+const fundedStories = [
+  {
+    slug: 'aged-out-foster-care-facility-thrive',
+    who: 'Young adults who aged out of foster care',
+    story:
+      "One day foster care ends. Many leave with no family to call and no place to land. At Thrive's campus in Phoenix, they finally have a safe place to live. Now we're helping them learn to rest, so they can hold a job, pass a driving test, and start again.",
+  },
+  {
+    slug: 'phoenix-group-home-calm-boxes',
+    who: 'Kids living in a foster care group home',
+    story:
+      "These kids have been separated from their families, and many have been through far worse. Family visits can stir everything back up. We're helping the kids and the adults who care for them find their way back to calm.",
+  },
+  {
+    slug: 'rite-path-calm-boxes',
+    who: 'Youth in residential care',
+    story:
+      "Up to 45 young people live apart from their families in a program Rite Path Behavioral Health supports, on both the girls' and boys' sides. Many arrive after abuse, neglect, or loss, still learning to trust adults again. We're helping them, and the staff beside them, settle enough to heal.",
+  },
+];
+const projects = await getProjects();
+const fundedProjects = fundedStories
+  .map((s) => ({ ...s, project: projects.find((p) => p.slug === s.slug) }))
+  .filter((s) => s.project);
+const fundedTotal = fundedProjects.reduce((sum, s) => sum + (s.project.goal ?? 0), 0);
 
 const skillLevels = [
   {
@@ -68,6 +82,8 @@ const optionClass =
 <BaseLayout
   title="Ugly Sweater Slam — Christmas Pickleball"
   description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time}, at the ${event.venue}. $20 a player, $40 a team. Every entry fee goes to the field.`}
+  image="/og/ugly-sweater-slam.png"
+  socialTitle="Ugly Sweater Slam — Christmas pickleball for Restore the Last"
 >
 
   <!-- Hero -->
@@ -81,7 +97,7 @@ const optionClass =
       </h1>
       <p class="text-dark text-2xl font-serif mt-4">Play pickleball. Help restore the last.</p>
       <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
-        A Christmas afternoon on the courts — ugly sweaters encouraged — for people who have never been safe enough to rest. Every entry fee goes to the field: equipment, training, and support at the facilities serving trauma survivors and foster youth.
+        A Christmas afternoon on the courts — ugly sweaters encouraged — for people who have never been safe enough to rest. Every entry fee goes to kids and young adults across Phoenix who've been through foster care and residential care, so they can finally rest, heal, and start again.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
@@ -101,6 +117,12 @@ const optionClass =
           <p class="label text-primary mb-2">When</p>
           <p class="font-bold text-dark">{event.date}</p>
           <p class="text-body text-sm">Play starts at {event.time}</p>
+          <p class="text-sm mt-3">
+            <span class="text-body">Add to calendar:</span>
+            <a href={googleCalendarUrl} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">Google</a>
+            <span class="text-body/50" aria-hidden="true"> · </span>
+            <a href="/pickleball/calendar.ics" download="ugly-sweater-slam.ics" class="text-primary font-bold underline hover:text-medium transition-colors">Apple / Outlook</a>
+          </p>
         </div>
         <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
           <p class="label text-primary mb-2">Where</p>
@@ -120,6 +142,39 @@ const optionClass =
           <p class="text-body text-sm">Grouped by skill level, for fun or to compete</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Who the event serves -->
+  <section id="projects" class="bg-deep text-white section-padding scroll-mt-20">
+    <div class="container-narrow">
+      <div class="max-w-3xl mb-12">
+        <p class="label text-gold mb-6">Who You're Playing For</p>
+        <h2 class="text-white mb-6">Every serve is for a young person right here in Phoenix.</h2>
+        <p class="text-white/80 text-lg leading-relaxed">
+          Foster care, group homes, residential care: these are kids and young adults who learned early that the world wasn't safe. This event raises <strong class="text-white">${fundedTotal.toLocaleString('en-US')}</strong> for three places in the Phoenix area that are helping them heal.
+        </p>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-6">
+        {fundedProjects.map(({ who, story, project }) => (
+          <a
+            href={`/projects/${project.slug}`}
+            class="bg-white text-dark rounded-2xl p-8 flex flex-col group hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-shadow"
+          >
+            <p class="label text-primary mb-3">{project.location}</p>
+            <h3 class="font-serif font-bold text-2xl md:text-3xl leading-tight mb-4">{who}</h3>
+            <p class="text-body leading-relaxed mb-6">{story}</p>
+            <div class="mt-auto pt-5 border-t border-primary/10">
+              <p class="text-body text-sm">{project.partner?.name ? `With ${project.partner.name}` : 'Home kept private to protect the kids'}</p>
+              {project.goal && <p class="text-dark font-bold mt-1">${project.goal.toLocaleString('en-US')} goal</p>}
+              <p class="text-primary font-bold text-sm mt-4 group-hover:text-medium transition-colors">Read their story →</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="text-white/80 mt-10">
+        Can't make it on December 5? Open any story above to give to it directly.
+      </p>
     </div>
   </section>
 
@@ -182,22 +237,6 @@ const optionClass =
             <p class="text-body text-sm">Matching outfits and a team name to go with them.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- What the event funds -->
-  <section id="projects" class="bg-light section-padding scroll-mt-20">
-    <div class="container-narrow">
-      <div class="max-w-3xl mb-10">
-        <p class="label text-primary mb-6">Where Your Entry Goes</p>
-        <h2 class="mb-4">Every serve helps kids and young adults right here in Phoenix.</h2>
-        <p class="text-body leading-relaxed">
-          This event raises money for two Phoenix-area projects: CalmBoxes for young adults who aged out of foster care, and for kids in a group home. Together they need <strong class="text-dark">${fundedTotal.toLocaleString('en-US')}</strong>. Can't make it on December 5? Open a project to give to it directly.
-        </p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 max-w-4xl">
-        {fundedProjects.map((project) => <ProjectCard project={project} />)}
       </div>
     </div>
   </section>

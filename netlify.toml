@@ -13,3 +13,15 @@
   to = "https://restorethelast.org/:splat"
   status = 301
   force = true
+
+# Short links for the Ugly Sweater Slam (flyers, social posts, saying it out loud).
+# 302, not 301, so browsers don't cache them and they can point elsewhere later.
+[[redirects]]
+  from = "/slam"
+  to = "/pickleball/"
+  status = 302
+
+[[redirects]]
+  from = "/uglysweaterslam"
+  to = "/pickleball/"
+  status = 302

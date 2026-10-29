@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import ProjectBrowser from '../components/ProjectBrowser.astro';
 import { getProjects } from '../data/projects.js';
+import { event } from '../data/pickleballEvent.js';
 
 // The homepage carousel is curated, not exhaustive — flip `featured` on a
 // project (in /admin, or its file in src/content/projects/) to change what
@@ -12,9 +13,32 @@ import { getProjects } from '../data/projects.js';
 const projects = await getProjects();
 const featured = projects.filter(p => p.featured);
 const featuredProjects = featured.length ? featured : projects;
+
+// Event banner: dropped from builds after the event ends, and hidden in the browser
+// then too, since the site only rebuilds when something changes.
+const showEventBanner = Date.now() < new Date(event.end).getTime();
 ---
 
 <BaseLayout title="Home" description="Restore the Last funds nervous system regulation technology into facilities serving trafficking survivors, foster youth, and children in post-war nations. 18,000+ sessions. 93% improved.">
+
+  {showEventBanner && (
+    <a
+      href="/pickleball"
+      id="event-banner"
+      data-ends={event.end}
+      class="block bg-primary text-white hover:bg-medium transition-colors"
+    >
+      <div class="container-narrow py-3 text-sm text-center">
+        <strong>{event.name}</strong>
+        <span class="text-white/80"> · Christmas pickleball · Sat, Dec 5 · Anthem</span>
+        <span class="font-bold whitespace-nowrap"> · Register →</span>
+      </div>
+    </a>
+  )}
+  <script>
+    const banner = document.getElementById('event-banner');
+    if (banner && Date.now() > new Date(banner.dataset.ends ?? '').getTime()) banner.remove();
+  </script>
 
   <!-- Hero -->
   <section class="bg-white min-h-[56vh] flex items-center">
