@@ -39,3 +39,10 @@ export const NEWSLETTER_FORM_ID = '9802535';
 // Forms → "case-study-download"): the visitor still gets an instant browser
 // download, and every email is captured — Kit just isn't emailing them a copy yet.
 export const CASE_STUDY_FORM_ID = '';
+
+// Pickleball fundraiser (Dec 5, 2026). Players register on /pickleball, then the
+// thank-you page sends them to Crowded to pay. Create the Crowded collection(s) and
+// paste the links here — one link for both is fine if the collection offers both
+// prices. While a link is empty, the thank-you page tells players we'll email it.
+export const PICKLEBALL_TEAM_PAY_URL = 'https://collect.crowded.me/collection/da8df732-c403-4f30-9ee7-e28ee2cf68b4';
+export const PICKLEBALL_SOLO_PAY_URL = 'https://collect.crowded.me/collection/da8df732-c403-4f30-9ee7-e28ee2cf68b4';

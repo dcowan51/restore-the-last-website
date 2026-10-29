@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL, PICKLEBALL_SOLO_PAY_URL, PICKLEBALL_TEAM_PAY_URL } from '../../config';
+
+const payOptions = [
+  { entry: 'team', label: 'Pay $40 for my team', url: PICKLEBALL_TEAM_PAY_URL },
+  { entry: 'solo', label: 'Pay $20 for myself', url: PICKLEBALL_SOLO_PAY_URL },
+].filter((option) => option.url);
+---
+
+<BaseLayout
+  title="Almost Done — Pay Your Entry"
+  description="Your Ugly Sweater Slam registration is in. Pay your entry fee to lock in your spot."
+>
+
+  <section class="bg-white section-padding border-b border-primary/10">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-4">Ugly Sweater Slam — Registration Received</p>
+        <div class="gold-line mb-8"></div>
+        <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
+          You're on the list. One step left.
+        </h1>
+
+        {payOptions.length > 0 ? (
+          <>
+            <p class="text-body text-lg mt-6 leading-relaxed">
+              Pay your entry fee to lock in your spot — <strong class="text-dark">$40 for a team of two, $20 for a solo player.</strong> Every dollar goes to the field.
+            </p>
+            <div id="pay-buttons" class="flex flex-col sm:flex-row gap-3 mt-8">
+              {payOptions.map((option) => (
+                <a
+                  href={option.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-entry={option.entry}
+                  class="btn-gold text-lg text-center"
+                >
+                  {option.label}
+                </a>
+              ))}
+            </div>
+            <p class="text-body text-sm mt-4 leading-relaxed">
+              The payment page opens in a new tab. Type <strong class="text-dark">$40</strong> for a team or <strong class="text-dark">$20</strong> for a solo player in the amount box.
+            </p>
+          </>
+        ) : (
+          <p class="text-body text-lg mt-6 leading-relaxed">
+            We'll email you a link to pay your entry fee — <strong class="text-dark">$40 for a team of two, $20 for a solo player</strong> — within a day. Your spot is locked in once it's paid.
+          </p>
+        )}
+
+        <p class="text-body mt-6 leading-relaxed">
+          Signed up solo? We'll pair you with someone at your level and send you their name before the event. Questions in the meantime? Email
+          <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-10">
+          <a href="/projects" class="btn-primary text-center">See what your entry funds</a>
+          <a href="/" class="btn-primary text-center">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Show only the payment button that matches what the player registered for.
+  // Without a stored choice, both stay visible.
+  let entry: string | null = null;
+  try {
+    entry = sessionStorage.getItem('pickleball-entry');
+  } catch {}
+  const buttons = document.querySelectorAll<HTMLElement>('#pay-buttons [data-entry]');
+  const match = Array.from(buttons).some((button) => button.dataset.entry === entry);
+  if (match) {
+    buttons.forEach((button) => {
+      // .btn-gold sets display, which would override the `hidden` attribute.
+      if (button.dataset.entry !== entry) button.style.display = 'none';
+    });
+  }
+</script>

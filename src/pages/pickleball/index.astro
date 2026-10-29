@@ -1,0 +1,373 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+// Event details live here so they're easy to change in one place.
+// TODO before launch: confirm the court booking/address with Anthem Community Council.
+const event = {
+  date: 'Saturday, December 5, 2026',
+  time: '1:00 PM',
+  venue: 'Anthem Pickleball Courts',
+  address: 'Anthem Community Center, 41130 N Freedom Way, Anthem, AZ 85086',
+  mapUrl: 'https://maps.google.com/?q=41130+N+Freedom+Way,+Anthem,+AZ+85086',
+};
+
+const skillLevels = [
+  {
+    value: 'Beginner (2.0–2.5)',
+    name: 'Beginner',
+    rating: '2.0–2.5',
+    description: "You know the rules, can keep score, and can keep a short rally going. Still finding your shots — and that's fine.",
+  },
+  {
+    value: 'Intermediate (3.0–3.5)',
+    name: 'Intermediate',
+    rating: '3.0–3.5',
+    description: 'You control your forehand and use a backhand, get to the kitchen line, and are starting to play with strategy.',
+  },
+  {
+    value: 'Advanced (4.0+)',
+    name: 'Advanced',
+    rating: '4.0+',
+    description: 'Consistent and controlled. You hold long volley exchanges at the net, place the ball on purpose, and play to win.',
+  },
+];
+
+const inputClass =
+  'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
+const labelClass = 'label text-dark block mb-2';
+const radioClass = 'w-4 h-4 accent-primary';
+const optionClass =
+  'flex items-center gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors flex-1';
+---
+
+<BaseLayout
+  title="Ugly Sweater Slam — Christmas Pickleball"
+  description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time}, at the ${event.venue}. $20 a player, $40 a team. Every entry fee goes to the field.`}
+>
+
+  <!-- Hero -->
+  <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
+    <div class="container-narrow">
+      <p class="label text-primary mb-4">A Restore the Last Christmas Pickleball Classic</p>
+      <div class="gold-line mb-8"></div>
+      <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
+        Ugly Sweater Slam.
+      </h1>
+      <p class="text-dark text-2xl font-serif mt-4">Play pickleball. Help restore the last.</p>
+      <p class="text-body text-lg max-w-2xl mt-6 leading-relaxed">
+        A Christmas afternoon on the courts — ugly sweaters encouraged — for people who have never been safe enough to rest. Every entry fee goes to the field: equipment, training, and support at the facilities serving trauma survivors and foster youth.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
+        <a href="/give" class="btn-primary text-lg text-center">Can't play? Give instead</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The details -->
+  <section class="bg-white pt-12 pb-16">
+    <div class="container-narrow">
+      <p class="label text-primary mb-6">The Details</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="label text-primary mb-2">When</p>
+          <p class="font-bold text-dark">{event.date}</p>
+          <p class="text-body text-sm">Play starts at {event.time}</p>
+        </div>
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="label text-primary mb-2">Where</p>
+          <p class="font-bold text-dark">{event.venue}</p>
+          <p class="text-body text-sm">
+            <a href={event.mapUrl} target="_blank" rel="noopener noreferrer" class="underline hover:text-primary transition-colors">{event.address}</a>
+          </p>
+        </div>
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="label text-primary mb-2">Entry</p>
+          <p class="font-bold text-dark">$40 a team of two</p>
+          <p class="text-body text-sm">$20 a player — come solo and we'll pair you up</p>
+        </div>
+        <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+          <p class="label text-primary mb-2">Format</p>
+          <p class="font-bold text-dark">Doubles</p>
+          <p class="text-body text-sm">Teams play others at their own skill level</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill levels -->
+  <section class="bg-light section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">Find Your Level</p>
+        <h2 class="mb-4">Every level is welcome.</h2>
+        <p class="text-body leading-relaxed mb-8">
+          We group teams by skill so every game is a good one. Pick the level that sounds most like you — if you have a DUPR rating, you can add it on the form, but you don't need one.
+        </p>
+        <div class="grid md:grid-cols-3 gap-4">
+          {skillLevels.map((level) => (
+            <div class="bg-white rounded-2xl p-6 border border-primary/10">
+              <p class="font-serif text-2xl font-bold text-dark">{level.name}</p>
+              <p class="label text-primary mb-3">{level.rating}</p>
+              <p class="text-body text-sm">{level.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best-dressed contest -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">Best Dressed — Christmas Edition</p>
+        <h2 class="mb-4">Come dressed for Christmas.</h2>
+        <p class="text-body leading-relaxed mb-8">
+          It's three weeks before Christmas, so we're making it festive. Ugly sweaters, Santa suits, elf ears, reindeer antlers, matching team outfits — the bolder the better. We'll crown the best-dressed team on the courts.
+        </p>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Ugliest sweater</p>
+            <p class="text-body text-sm">The tackier, the better. Lights and bells count.</p>
+          </div>
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Full costume</p>
+            <p class="text-body text-sm">Santa, Mrs. Claus, elves, the Grinch — if you can play in it, wear it.</p>
+          </div>
+          <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <p class="font-bold text-dark mb-2">Best team look</p>
+            <p class="text-body text-sm">Matching outfits and a team name to go with them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration form -->
+  <section id="register" class="bg-offwhite section-padding scroll-mt-20">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-6">Register</p>
+        <h2 class="mb-4">Save your spot.</h2>
+        <p class="text-body mb-10 leading-relaxed">
+          Register here, then pay on the next page to lock in your spot. Fields marked optional can be skipped.
+        </p>
+
+        <form
+          name="pickleball-registration"
+          method="POST"
+          action="/pickleball/thank-you"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="space-y-10"
+        >
+          <input type="hidden" name="form-name" value="pickleball-registration" />
+
+          <!-- Honeypot — hidden from people, catches bots. -->
+          <p class="hidden" aria-hidden="true">
+            <label>
+              Leave this field empty
+              <input name="bot-field" tabindex="-1" autocomplete="off" />
+            </label>
+          </p>
+
+          <!-- Entry type -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">How are you signing up?</legend>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <label class={optionClass}>
+                <input type="radio" name="entry_type" value="Team of two — $40" required checked class={radioClass} />
+                <span class="text-body text-sm"><strong class="text-dark">Team of two — $40</strong><br />I'm bringing a partner</span>
+              </label>
+              <label class={optionClass}>
+                <input type="radio" name="entry_type" value="Solo — $20" class={radioClass} />
+                <span class="text-body text-sm"><strong class="text-dark">Solo — $20</strong><br />Pair me with someone at my level</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Player one -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">About you</legend>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class={labelClass}>Full Name</label>
+                <input type="text" id="name" name="name" required autocomplete="name" class={inputClass} />
+              </div>
+              <div>
+                <label for="email" class={labelClass}>Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="phone" class={labelClass}>Mobile Phone</label>
+                <input type="tel" id="phone" name="phone" required autocomplete="tel" class={inputClass} />
+              </div>
+              <div>
+                <label for="age-group" class={labelClass}>Age</label>
+                <select id="age-group" name="age_group" required class={inputClass}>
+                  <option value="" disabled selected>Select one</option>
+                  <option>18 or older</option>
+                  <option>Under 18 (a parent or guardian is registering me)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="skill-level" class={labelClass}>Skill Level</label>
+                <select id="skill-level" name="skill_level" required class={inputClass}>
+                  <option value="" disabled selected>Select one</option>
+                  {skillLevels.map((level) => <option value={level.value}>{level.value}</option>)}
+                </select>
+              </div>
+              <div>
+                <label for="dupr" class={labelClass}>DUPR Rating <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+                <input type="text" id="dupr" name="dupr" inputmode="decimal" placeholder="e.g., 3.42" class={inputClass} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Partner — shown for team entries only -->
+          <fieldset id="partner-fields" class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Your partner</legend>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="partner-name" class={labelClass}>Partner's Full Name</label>
+                <input type="text" id="partner-name" name="partner_name" required data-team-required class={inputClass} />
+              </div>
+              <div>
+                <label for="partner-email" class={labelClass}>Partner's Email</label>
+                <input type="email" id="partner-email" name="partner_email" required data-team-required class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="partner-skill-level" class={labelClass}>Partner's Skill Level</label>
+                <select id="partner-skill-level" name="partner_skill_level" required data-team-required class={inputClass}>
+                  <option value="" disabled selected>Select one</option>
+                  {skillLevels.map((level) => <option value={level.value}>{level.value}</option>)}
+                </select>
+              </div>
+              <div>
+                <label for="partner-dupr" class={labelClass}>Partner's DUPR <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+                <input type="text" id="partner-dupr" name="partner_dupr" inputmode="decimal" class={inputClass} />
+              </div>
+            </div>
+
+            <div>
+              <label for="team-name" class={labelClass}>Team Name</label>
+              <input type="text" id="team-name" name="team_name" required data-team-required placeholder="Christmas puns encouraged — e.g., Jingle Ballers" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <!-- Best-dressed contest -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Best-dressed contest</legend>
+            <div>
+              <span class={labelClass}>Are you dressing up for Christmas? <span class="normal-case font-normal tracking-normal">(optional)</span></span>
+              <div class="flex flex-col sm:flex-row gap-3 mt-1">
+                <label class={optionClass}>
+                  <input type="radio" name="dressing_up" value="Yes — count me in" class={radioClass} />
+                  <span class="text-body text-sm">Yes — count me in</span>
+                </label>
+                <label class={optionClass}>
+                  <input type="radio" name="dressing_up" value="Maybe" class={radioClass} />
+                  <span class="text-body text-sm">Maybe</span>
+                </label>
+                <label class={optionClass}>
+                  <input type="radio" name="dressing_up" value="Just here to play" class={radioClass} />
+                  <span class="text-body text-sm">Just here to play</span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Anything else -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">Anything else</legend>
+            <div>
+              <label for="notes" class={labelClass}>Anything we should know? <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+              <textarea id="notes" name="notes" rows="3"
+                placeholder="A friend you'd like to be paired with, an accessibility need, a question…"
+                class={inputClass}></textarea>
+            </div>
+            <div>
+              <label for="referral" class={labelClass}>How did you hear about this? <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+              <input type="text" id="referral" name="referral" class={inputClass} />
+            </div>
+          </fieldset>
+
+          <!-- Agreements -->
+          <!-- TODO before launch: have the waiver language reviewed (attorney or insurer). -->
+          <fieldset class="space-y-4">
+            <legend class="font-serif font-bold text-dark text-2xl mb-4">The fine print</legend>
+
+            <details class="bg-white rounded-xl border border-primary/20 px-4 py-3">
+              <summary class="cursor-pointer text-dark font-bold text-sm">Read the waiver and release</summary>
+              <div class="text-body text-sm leading-relaxed space-y-3 mt-3">
+                <p>Pickleball is a physical activity that carries a risk of injury, including falls, collisions, and being struck by a ball or paddle. I am taking part voluntarily, I am physically able to play, and I accept those risks.</p>
+                <p>On behalf of myself and my heirs, I release Restore the Last, its officers, volunteers, sponsors, and the venue and its owners from any claim for injury, illness, or loss of property arising from my participation, except where caused by their gross negligence or willful misconduct.</p>
+                <p>I agree to follow the rules of play, the instructions of event staff, and the rules of the venue. If I am registering a minor, I am their parent or legal guardian and I agree to these terms on their behalf.</p>
+                <p>Entry fees support Restore the Last's mission and are non-refundable. If the event is canceled, Restore the Last will put the fee toward its work.</p>
+              </div>
+            </details>
+
+            <label class="flex items-start gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+              <input type="checkbox" name="waiver" value="Agreed for every player on this registration" required class={`${radioClass} mt-1 shrink-0`} />
+              <span class="text-body text-sm">I've read and agree to the waiver and release, for myself and anyone I'm registering. I understand entry fees are non-refundable.</span>
+            </label>
+
+            <label class="flex items-start gap-3 bg-white rounded-xl border border-primary/20 px-4 py-3 cursor-pointer hover:border-primary/40 transition-colors">
+              <input type="checkbox" name="photo_release" value="Yes" class={`${radioClass} mt-1 shrink-0`} />
+              <span class="text-body text-sm">Restore the Last may use photos and video of me from the event to share its work. <span class="text-body/70">(optional)</span></span>
+            </label>
+          </fieldset>
+
+          <div>
+            <button type="submit" class="btn-gold text-lg">Register &amp; continue to payment</button>
+            <p class="text-body text-sm mt-4">
+              Questions? Email
+              <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Partner fields only apply to team entries: hide them and drop `required`
+  // for solo players so the browser doesn't block their submission.
+  const form = document.querySelector<HTMLFormElement>('form[name="pickleball-registration"]');
+  const partner = document.getElementById('partner-fields');
+  if (form && partner) {
+    const sync = () => {
+      const solo = form.querySelector<HTMLInputElement>('input[name="entry_type"]:checked')?.value.startsWith('Solo');
+      partner.hidden = !!solo;
+      partner.querySelectorAll<HTMLInputElement>('[data-team-required]').forEach((el) => {
+        el.required = !solo;
+      });
+    };
+    form.querySelectorAll('input[name="entry_type"]').forEach((el) => el.addEventListener('change', sync));
+    sync();
+
+    // Remember the entry type so the thank-you page can show the right payment
+    // button first. Optional — the page shows both if storage isn't available.
+    form.addEventListener('submit', () => {
+      const solo = form.querySelector<HTMLInputElement>('input[name="entry_type"]:checked')?.value.startsWith('Solo');
+      try {
+        sessionStorage.setItem('pickleball-entry', solo ? 'solo' : 'team');
+      } catch {}
+    });
+  }
+</script>
