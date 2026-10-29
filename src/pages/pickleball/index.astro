@@ -1,6 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PickleballArt from '../../components/PickleballArt.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import { CONTACT_EMAIL } from '../../config';
+import { getProjects } from '../../data/projects.js';
+
+// The projects this event raises money for: the two Phoenix-area deployments, since
+// the event is in Anthem. Change the slugs here to point the event at other projects.
+const fundedSlugs = ['aged-out-foster-care-facility-thrive', 'phoenix-group-home-calm-boxes'];
+const fundedProjects = (await getProjects()).filter((p) => fundedSlugs.includes(p.slug));
+const fundedTotal = fundedProjects.reduce((sum, p) => sum + (p.goal ?? 0), 0);
 
 // Event details live here so they're easy to change in one place.
 // TODO before launch: confirm the court booking/address with Anthem Community Council.
@@ -33,6 +42,21 @@ const skillLevels = [
   },
 ];
 
+const playStyles = [
+  {
+    value: 'Just for fun',
+    name: 'Just for fun',
+    art: 'cookie' as const,
+    description: "Here for the cookies, the sweaters, and a good time? You'll play relaxed games against other teams who came for the same thing.",
+  },
+  {
+    value: 'Competitive',
+    name: 'Competitive',
+    art: 'trophy' as const,
+    description: "Want to win? You'll play scored games against teams who came to compete, too.",
+  },
+];
+
 const inputClass =
   'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
 const labelClass = 'label text-dark block mb-2';
@@ -48,7 +72,8 @@ const optionClass =
 
   <!-- Hero -->
   <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
-    <div class="container-narrow">
+    <div class="container-narrow grid xl:grid-cols-[1fr_minmax(0,480px)] gap-10 items-center">
+     <div>
       <p class="label text-primary mb-4">A Restore the Last Christmas Pickleball Classic</p>
       <div class="gold-line mb-8"></div>
       <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight max-w-3xl">
@@ -60,8 +85,10 @@ const optionClass =
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
-        <a href="/give" class="btn-primary text-lg text-center">Can't play? Give instead</a>
+        <a href="#projects" class="btn-primary text-lg text-center">Can't play? Give instead</a>
       </div>
+     </div>
+      <PickleballArt name="net" class="text-dark w-full max-w-md mx-auto xl:max-w-none" />
     </div>
   </section>
 
@@ -90,7 +117,7 @@ const optionClass =
         <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
           <p class="label text-primary mb-2">Format</p>
           <p class="font-bold text-dark">Doubles</p>
-          <p class="text-body text-sm">Teams play others at their own skill level</p>
+          <p class="text-body text-sm">Grouped by skill level, for fun or to compete</p>
         </div>
       </div>
     </div>
@@ -100,11 +127,22 @@ const optionClass =
   <section class="bg-light section-padding">
     <div class="container-narrow">
       <div class="max-w-3xl">
-        <p class="label text-primary mb-6">Find Your Level</p>
+        <p class="label text-primary mb-6">Find Your Level, Pick Your Style</p>
         <h2 class="mb-4">Every level is welcome.</h2>
         <p class="text-body leading-relaxed mb-8">
-          We group teams by skill so every game is a good one. Pick the level that sounds most like you — if you have a DUPR rating, you can add it on the form, but you don't need one.
+          Beginner, intermediate, or advanced, we want every game to be close and every player to have a great time. So we'll match teams by skill level <em>and</em> by how you want to play. Pick the level that sounds most like you. If you have a DUPR rating, you can add it on the form, but you don't need one.
         </p>
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          {playStyles.map((style) => (
+            <div class="bg-white rounded-2xl p-6 border border-primary/10 flex gap-5 items-start">
+              <PickleballArt name={style.art} class="text-dark w-14 h-14 shrink-0" />
+              <div>
+                <p class="font-serif text-2xl font-bold text-dark mb-2">{style.name}</p>
+                <p class="text-body text-sm">{style.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
         <div class="grid md:grid-cols-3 gap-4">
           {skillLevels.map((level) => (
             <div class="bg-white rounded-2xl p-6 border border-primary/10">
@@ -129,18 +167,37 @@ const optionClass =
         </p>
         <div class="grid sm:grid-cols-3 gap-4">
           <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <PickleballArt name="sweater" class="text-dark w-12 h-12 mb-4" />
             <p class="font-bold text-dark mb-2">Ugliest sweater</p>
             <p class="text-body text-sm">The tackier, the better. Lights and bells count.</p>
           </div>
           <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <PickleballArt name="santa-hat" class="text-dark w-12 h-12 mb-4" />
             <p class="font-bold text-dark mb-2">Full costume</p>
             <p class="text-body text-sm">Santa, Mrs. Claus, elves, the Grinch — if you can play in it, wear it.</p>
           </div>
           <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
+            <PickleballArt name="crown" class="text-dark w-12 h-12 mb-4" />
             <p class="font-bold text-dark mb-2">Best team look</p>
             <p class="text-body text-sm">Matching outfits and a team name to go with them.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What the event funds -->
+  <section id="projects" class="bg-light section-padding scroll-mt-20">
+    <div class="container-narrow">
+      <div class="max-w-3xl mb-10">
+        <p class="label text-primary mb-6">Where Your Entry Goes</p>
+        <h2 class="mb-4">Every serve helps kids and young adults right here in Phoenix.</h2>
+        <p class="text-body leading-relaxed">
+          This event raises money for two Phoenix-area projects: CalmBoxes for young adults who aged out of foster care, and for kids in a group home. Together they need <strong class="text-dark">${fundedTotal.toLocaleString('en-US')}</strong>. Can't make it on December 5? Open a project to give to it directly.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl">
+        {fundedProjects.map((project) => <ProjectCard project={project} />)}
       </div>
     </div>
   </section>
@@ -185,6 +242,20 @@ const optionClass =
                 <input type="radio" name="entry_type" value="Solo — $20" class={radioClass} />
                 <span class="text-body text-sm"><strong class="text-dark">Solo — $20</strong><br />Pair me with someone at my level</span>
               </label>
+            </div>
+          </fieldset>
+
+          <!-- Play style -->
+          <fieldset class="space-y-6">
+            <legend class="font-serif font-bold text-dark text-2xl mb-2">How do you want to play?</legend>
+            <div class="flex flex-col sm:flex-row gap-3">
+              {playStyles.map((style, i) => (
+                <label class={optionClass}>
+                  <input type="radio" name="play_style" value={style.value} required={i === 0} class={radioClass} />
+                  <PickleballArt name={style.art} class="text-dark w-8 h-8 shrink-0" />
+                  <span class="text-body text-sm"><strong class="text-dark">{style.name}</strong><br />{i === 0 ? "I'm here for the cookies" : 'I want to win'}</span>
+                </label>
+              ))}
             </div>
           </fieldset>
 

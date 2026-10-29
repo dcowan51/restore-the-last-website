@@ -1,0 +1,90 @@
+---
+// Line drawings for the Ugly Sweater Slam page (/pickleball), in the same thin-stroke
+// style as the event's cover graphic. Strokes use currentColor (set by the wrapper's
+// text color); the one violet accent per drawing uses the theme's primary color.
+// Drawn in code: no stock or generated images.
+interface Props {
+  name: 'net' | 'cookie' | 'trophy' | 'sweater' | 'santa-hat' | 'crown';
+  class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+const accent = 'text-primary';
+---
+
+{name === 'net' && (
+  <svg class={className} viewBox="0 50 600 280" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A pickleball net strung with Christmas lights, with a ball arcing over it">
+    <line x1="20" y1="320" x2="580" y2="320" />
+    <g class="text-primary/25" stroke-width="1.5">
+      <line x1="80" y1="210" x2="520" y2="210" /><line x1="80" y1="240" x2="520" y2="240" /><line x1="80" y1="270" x2="520" y2="270" />
+      {[124, 168, 212, 256, 300, 344, 388, 432, 476].map((x) => <line x1={x} y1="182" x2={x} y2="300" />)}
+    </g>
+    <line x1="80" y1="170" x2="80" y2="320" />
+    <line x1="520" y1="170" x2="520" y2="320" />
+    <line x1="80" y1="180" x2="520" y2="180" stroke-width="4" />
+    <line x1="80" y1="300" x2="520" y2="300" stroke-width="1.5" />
+    <path d="M80 180 Q124 218 168 180 Q212 218 256 180 Q300 218 344 180 Q388 218 432 180 Q476 218 520 180" stroke-width="1.5" />
+    <g stroke-width="2">
+      {[102, 146, 190, 234, 278, 322, 366, 410, 454, 498].map((x, i) => (
+        <g transform={`translate(${x} 196) rotate(${i % 2 ? 30 : -30})`}>
+          <rect x="-3" y="-2" width="6" height="5" />
+          {i % 3 === 0
+            ? <ellipse class={accent} cx="0" cy="11" rx="6" ry="9" fill="currentColor" stroke="currentColor" />
+            : <ellipse cx="0" cy="11" rx="6" ry="9" />}
+        </g>
+      ))}
+    </g>
+    <path class={accent} d="M120 150 Q300 20 480 150" stroke="currentColor" stroke-width="2" stroke-dasharray="2 9" />
+    <g transform="translate(300 85)">
+      <circle r="16" />
+      <g fill="currentColor" stroke="none"><circle cx="-6" cy="-5" r="2" /><circle cx="5" cy="-7" r="2" /><circle cx="7" cy="4" r="2" /><circle cx="-4" cy="7" r="2" /><circle cx="0" cy="0" r="2" /></g>
+    </g>
+  </svg>
+)}
+
+{name === 'cookie' && (
+  <svg class={className} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- a round cookie with a bite out of the top right -->
+    <path d="M44 9 A24 24 0 1 0 55 26 A6 6 0 0 1 49 19 A6 6 0 0 1 44 9 Z" />
+    <g class={accent} fill="currentColor" stroke="none">
+      <circle cx="22" cy="24" r="2.5" /><circle cx="36" cy="30" r="2.5" /><circle cx="24" cy="40" r="2.5" /><circle cx="40" cy="44" r="2.5" /><circle cx="17" cy="33" r="1.8" />
+    </g>
+  </svg>
+)}
+
+{name === 'trophy' && (
+  <svg class={className} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20 10 H44 V24 A12 12 0 0 1 20 24 Z" />
+    <path d="M20 14 H12 V18 A8 8 0 0 0 20 26" />
+    <path d="M44 14 H52 V18 A8 8 0 0 1 44 26" />
+    <line x1="32" y1="36" x2="32" y2="46" />
+    <path d="M24 54 V50 A4 4 0 0 1 28 46 H36 A4 4 0 0 1 40 50 V54 Z" />
+    <path class={accent} d="M32 15 L33.8 19 L38 19.4 L34.8 22.2 L35.8 26.4 L32 24.2 L28.2 26.4 L29.2 22.2 L26 19.4 L30.2 19 Z" fill="currentColor" stroke="none" />
+  </svg>
+)}
+
+{name === 'sweater' && (
+  <svg class={className} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M24 8 Q32 14 40 8 L52 14 L60 34 L52 37 L48 28 V56 H16 V28 L12 37 L4 34 L12 14 Z" />
+    <path d="M24 8 Q32 18 40 8" />
+    <path d="M16 46 L20 42 L24 46 L28 42 L32 46 L36 42 L40 46 L44 42 L48 46" />
+    <path class={accent} d="M32 22 L37 32 H34 L38 39 H26 L30 32 H27 Z" fill="currentColor" stroke="none" />
+  </svg>
+)}
+
+{name === 'santa-hat' && (
+  <svg class={className} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14 44 Q18 18 36 12 Q50 10 54 26" />
+    <path d="M48 44 Q46 28 54 26" />
+    <rect x="10" y="44" width="42" height="9" rx="4.5" />
+    <circle class={accent} cx="54" cy="30" r="5" fill="currentColor" stroke="currentColor" />
+  </svg>
+)}
+
+{name === 'crown' && (
+  <svg class={className} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M10 46 L8 20 L22 32 L32 14 L42 32 L56 20 L54 46 Z" />
+    <line x1="10" y1="52" x2="54" y2="52" />
+    <g class={accent} fill="currentColor" stroke="none"><circle cx="8" cy="18" r="3" /><circle cx="32" cy="12" r="3" /><circle cx="56" cy="18" r="3" /></g>
+  </svg>
+)}
