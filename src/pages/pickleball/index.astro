@@ -81,7 +81,7 @@ const optionClass =
 
 <BaseLayout
   title="Ugly Sweater Slam — Christmas Pickleball"
-  description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time}, at the ${event.venue}. $20 a player, $40 a team. Every entry fee goes to the field.`}
+  description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time} (warm-up from noon), at the ${event.venue}. $20 a player, $40 a team. Every entry fee goes to the field.`}
   image="/og/ugly-sweater-slam.png"
   socialTitle="Ugly Sweater Slam — Christmas pickleball for Restore the Last"
 >
@@ -116,7 +116,8 @@ const optionClass =
         <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
           <p class="label text-primary mb-2">When</p>
           <p class="font-bold text-dark">{event.date}</p>
-          <p class="text-body text-sm">Play starts at {event.time}</p>
+          <p class="text-body text-sm">Games {event.time}</p>
+          <p class="text-body text-sm">Courts open at {event.warmup} to warm up</p>
           <p class="text-sm mt-3">
             <span class="text-body">Add to calendar:</span>
             <a href={googleCalendarUrl} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">Google</a>

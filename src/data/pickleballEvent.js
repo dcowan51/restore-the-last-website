@@ -4,21 +4,22 @@
 export const event = {
   name: 'Ugly Sweater Slam',
   date: 'Saturday, December 5, 2026',
-  time: '1:00 PM',
+  warmup: '12:00 PM',
+  time: '1:00–5:00 PM',
   venue: 'Anthem Pickleball Courts',
   address: 'Anthem Community Center, 41130 N Freedom Way, Anthem, AZ 85086',
   mapUrl: 'https://maps.google.com/?q=41130+N+Freedom+Way,+Anthem,+AZ+85086',
-  // Arizona has no daylight saving, so it's UTC-7 all year. The end time is an
-  // estimate for calendars; change it once the schedule is set.
-  start: '2026-12-05T13:00:00-07:00',
-  end: '2026-12-05T16:00:00-07:00',
+  // Arizona has no daylight saving, so it's UTC-7 all year. Calendar entries start at
+  // the noon warm-up, so people arrive in time; games run 1–5 PM.
+  start: '2026-12-05T12:00:00-07:00',
+  end: '2026-12-05T17:00:00-07:00',
   url: 'https://restorethelast.org/pickleball',
 };
 
 // Calendar timestamps in UTC, the form both Google Calendar and .ics files take.
 const utc = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
-const details = `Christmas pickleball fundraiser for Restore the Last. Wear your ugliest sweater. Details: ${event.url}`;
+const details = `Christmas pickleball fundraiser for Restore the Last. Courts open at noon for warm-up; games run 1–5 PM. Wear your ugliest sweater. Details: ${event.url}`;
 
 export const googleCalendarUrl =
   'https://calendar.google.com/calendar/render?' +
@@ -39,7 +40,9 @@ export const icsFile = [
   'PRODID:-//Restore the Last//Ugly Sweater Slam//EN',
   'BEGIN:VEVENT',
   'UID:ugly-sweater-slam-2026@restorethelast.org',
-  `DTSTAMP:${utc('2026-10-29T00:00:00Z')}`,
+  `DTSTAMP:${utc('2026-11-02T00:00:00Z')}`,
+  // Bump on every change so calendars that already saved the event update it.
+  'SEQUENCE:1',
   `DTSTART:${utc(event.start)}`,
   `DTEND:${utc(event.end)}`,
   `SUMMARY:${ics(`${event.name} — Restore the Last`)}`,
