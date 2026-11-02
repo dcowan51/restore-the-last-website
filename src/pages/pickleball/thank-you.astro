@@ -26,7 +26,7 @@ const payOptions = [
         {payOptions.length > 0 ? (
           <>
             <p class="text-body text-lg mt-6 leading-relaxed">
-              Pay your entry fee to lock in your spot — <strong class="text-dark">$40 for a team of two, $20 for a solo player.</strong> Every dollar goes to the field.
+              Pay your entry to lock in your spot: <strong class="text-dark">$40 for a team of two, $20 for a solo player.</strong>
             </p>
             <div id="pay-buttons" class="flex flex-col sm:flex-row gap-3 mt-8">
               {payOptions.map((option) => (
@@ -44,6 +44,14 @@ const payOptions = [
             <p class="text-body text-sm mt-4 leading-relaxed">
               The payment page opens in a new tab. Type <strong class="text-dark">$40</strong> for a team or <strong class="text-dark">$20</strong> for a solo player in the amount box.
             </p>
+            <!-- Crowded's amount box is open, so the entry fee is a floor, not a fixed price. -->
+            <div class="bg-light rounded-2xl p-6 mt-6 max-w-xl">
+              <p class="font-bold text-dark mb-2">Want to give a little more?</p>
+              <p class="text-body text-sm leading-relaxed">
+                The amount box is open, so feel free to round up. Your entry covers your spot, and every dollar above it goes straight to the kids and young adults in Phoenix this event serves. For example, a team that types $100 gives $60 on top of their entry.
+              </p>
+              <p class="text-body text-xs mt-3">Anything you give above your entry fee is a tax-deductible donation.</p>
+            </div>
           </>
         ) : (
           <p class="text-body text-lg mt-6 leading-relaxed">
