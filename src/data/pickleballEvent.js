@@ -19,7 +19,7 @@ export const event = {
 // Calendar timestamps in UTC, the form both Google Calendar and .ics files take.
 const utc = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
-const details = `Christmas pickleball fundraiser for Restore the Last. Courts open at noon for warm-up; games run 1–5 PM. Wear your ugliest sweater. Details: ${event.url}`;
+const details = `Christmas pickleball fundraiser for Restore the Last. Courts open at noon for warm-up; games run 1–5 PM. Wear your ugliest Christmas sweater (or tee if it's warm). Details: ${event.url}`;
 
 export const googleCalendarUrl =
   'https://calendar.google.com/calendar/render?' +
@@ -42,7 +42,7 @@ export const icsFile = [
   'UID:ugly-sweater-slam-2026@restorethelast.org',
   `DTSTAMP:${utc('2026-11-02T00:00:00Z')}`,
   // Bump on every change so calendars that already saved the event update it.
-  'SEQUENCE:1',
+  'SEQUENCE:2',
   `DTSTART:${utc(event.start)}`,
   `DTEND:${utc(event.end)}`,
   `SUMMARY:${ics(`${event.name} — Restore the Last`)}`,
