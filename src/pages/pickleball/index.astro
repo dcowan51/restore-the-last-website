@@ -179,6 +179,37 @@ const optionClass =
     </div>
   </section>
 
+  <!-- The courts -->
+  <section class="bg-white section-padding">
+    <div class="container-narrow grid md:grid-cols-[1fr_minmax(0,360px)] gap-10 md:gap-16 items-center">
+      <div class="max-w-xl">
+        <p class="label text-primary mb-6">The Courts</p>
+        <h2 class="mb-4">Take a walk around the courts.</h2>
+        <p class="text-body leading-relaxed mb-4">
+          We're playing on the outdoor courts in Anthem, with tall lights and shaded seating for anyone cheering from the side.
+        </p>
+        <p class="text-body leading-relaxed">
+          Courts open at {event.warmup} to warm up, and games run {event.time}. Bring your paddle, a water bottle, and the ugliest sweater you own.
+        </p>
+        <p class="text-sm mt-6">
+          <a href={event.mapUrl} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">Get directions →</a>
+        </p>
+      </div>
+      <video
+        id="courts-video"
+        class="w-full max-w-[360px] mx-auto aspect-[9/16] rounded-2xl bg-light object-cover"
+        src="/video/anthem-courts.mp4"
+        poster="/video/anthem-courts-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="A walk around the outdoor pickleball courts in Anthem"
+      ></video>
+    </div>
+  </section>
+
   <!-- Skill levels -->
   <section class="bg-light section-padding">
     <div class="container-narrow">
@@ -457,6 +488,15 @@ const optionClass =
 </BaseLayout>
 
 <script>
+  // Respect reduced motion: stop the courts video from autoplaying and hand the
+  // viewer the controls instead.
+  const courtsVideo = document.getElementById('courts-video') as HTMLVideoElement | null;
+  if (courtsVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    courtsVideo.pause();
+    courtsVideo.removeAttribute('autoplay');
+    courtsVideo.controls = true;
+  }
+
   // Partner fields only apply to team entries: hide them and drop `required`
   // for solo players so the browser doesn't block their submission.
   const form = document.querySelector<HTMLFormElement>('form[name="pickleball-registration"]');
