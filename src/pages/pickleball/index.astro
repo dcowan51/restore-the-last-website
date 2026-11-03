@@ -127,9 +127,9 @@ const optionClass =
         <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
         <a href="#projects" class="btn-primary text-lg text-center">Can't play? Give instead</a>
       </div>
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6">
-        <Countdown to={event.firstServe} class="label text-primary" />
-        <ShareButton url={event.url} text={shareText} label="Text a partner →" class="text-primary font-bold text-sm underline hover:text-medium transition-colors" />
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-4 mt-8">
+        <Countdown to={event.firstServe} class="bg-light text-primary rounded-xl px-5 py-3" />
+        <ShareButton url={event.url} text={shareText} label="Text a partner →" class="text-primary font-bold text-lg underline hover:text-medium transition-colors" />
       </div>
      </div>
       <PickleballArt name="net" class="text-dark w-full max-w-md mx-auto xl:max-w-none" />
@@ -565,13 +565,25 @@ const optionClass =
 </BaseLayout>
 
 <script>
-  // Respect reduced motion: stop the courts video from autoplaying and hand the
-  // viewer the controls instead.
+  // The courts video autoplays muted, but some phones block that (iPhone Low Power
+  // Mode, data savers) and it would sit on the still frame with no way to start it.
+  // Whenever it isn't playing on its own — blocked, or reduced motion is on — show
+  // the controls so the viewer can tap play.
   const courtsVideo = document.getElementById('courts-video') as HTMLVideoElement | null;
-  if (courtsVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    courtsVideo.pause();
-    courtsVideo.removeAttribute('autoplay');
-    courtsVideo.controls = true;
+  if (courtsVideo) {
+    const showControls = () => (courtsVideo.controls = true);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      courtsVideo.pause();
+      courtsVideo.removeAttribute('autoplay');
+      showControls();
+    } else {
+      courtsVideo.muted = true;
+      courtsVideo.play().catch(showControls);
+      // Belt and braces: if it still hasn't started after a few seconds, offer play.
+      setTimeout(() => {
+        if (courtsVideo.paused) showControls();
+      }, 3000);
+    }
   }
 
   // Partner fields only apply to team entries: hide them and drop `required`

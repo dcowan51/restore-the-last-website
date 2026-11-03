@@ -28,7 +28,14 @@ const { to, label = 'until the first serve', class: className = '' } = Astro.pro
       const minutes = Math.floor((ms % 3_600_000) / 60_000);
       // Days and hours while it's far off; hours and minutes on the last day.
       const parts = days > 0 ? [plural(days, 'day'), plural(hours, 'hour')] : [plural(hours, 'hour'), plural(minutes, 'minute')];
-      el.textContent = `${parts.join(' · ')} ${el.dataset.label}`;
+      // Big time line, small label under it.
+      const time = document.createElement('span');
+      time.className = 'block font-serif font-bold text-2xl md:text-3xl leading-tight';
+      time.textContent = parts.join(' · ');
+      const label = document.createElement('span');
+      label.className = 'block font-sans font-bold text-xs uppercase tracking-[2px] mt-1';
+      label.textContent = el.dataset.label ?? '';
+      el.replaceChildren(time, label);
       el.hidden = false;
     };
     render();
