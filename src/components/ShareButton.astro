@@ -1,0 +1,39 @@
+---
+// One tap to text someone the event. On phones this opens the share sheet with the
+// message ready; where sharing isn't available (most desktops) it copies the link.
+interface Props {
+  url: string;
+  text: string;
+  label?: string;
+  class?: string;
+}
+
+const { url, text, label = 'Text a partner', class: className = '' } = Astro.props;
+---
+
+<button type="button" class={`share-button ${className}`} data-url={url} data-text={text} data-label={label}>
+  {label}
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.share-button').forEach((button) => {
+    const { url = '', text = '', label = '' } = button.dataset;
+    button.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({ text, url });
+        } catch {
+          // Closing the share sheet counts as an error; nothing to do.
+        }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(`${text} ${url}`);
+        button.textContent = 'Link copied — paste it in a text';
+      } catch {
+        button.textContent = url;
+      }
+      setTimeout(() => (button.textContent = label), 4000);
+    });
+  });
+</script>

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { CONTACT_EMAIL, PICKLEBALL_SOLO_PAY_URL, PICKLEBALL_TEAM_PAY_URL } from '../../config';
-import { googleCalendarUrl } from '../../data/pickleballEvent.js';
+import ShareButton from '../../components/ShareButton.astro';
+import { event, googleCalendarUrl } from '../../data/pickleballEvent.js';
 
 const payOptions = [
   { entry: 'team', label: 'Pay $40 for my team', url: PICKLEBALL_TEAM_PAY_URL },
@@ -64,6 +65,15 @@ const payOptions = [
           <a href={googleCalendarUrl} target="_blank" rel="noopener noreferrer" class="underline text-primary font-bold hover:text-medium transition-colors">Google</a>
           ·
           <a href="/pickleball/calendar.ics" download="ugly-sweater-slam.ics" class="underline text-primary font-bold hover:text-medium transition-colors">Apple / Outlook</a>
+        </p>
+        <p class="text-body mt-4 leading-relaxed">
+          Know someone who'd love this?
+          <ShareButton
+            url={event.url}
+            text={`I just signed up for the ${event.name}, Christmas pickleball for Restore the Last on Sat Dec 5 in Anthem. Come play!`}
+            label="Send them the link"
+            class="underline text-primary font-bold hover:text-medium transition-colors"
+          />
         </p>
         <p class="text-body mt-4 leading-relaxed">
           Signed up solo? We'll pair you with someone at your level and send you their name before the event. Questions in the meantime? Email

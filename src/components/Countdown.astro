@@ -1,0 +1,37 @@
+---
+// "32 days · 4 hours until the first serve." Filled in by the browser so it never
+// goes stale between deploys; hidden entirely once the event has started.
+interface Props {
+  to: string; // ISO date-time
+  label?: string;
+  class?: string;
+}
+
+const { to, label = 'until the first serve', class: className = '' } = Astro.props;
+---
+
+<p class={`countdown ${className}`} data-to={to} data-label={label} hidden></p>
+
+<script>
+  const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+  document.querySelectorAll<HTMLElement>('.countdown').forEach((el) => {
+    const target = new Date(el.dataset.to ?? '').getTime();
+    const render = () => {
+      const ms = target - Date.now();
+      if (!(ms > 0)) {
+        el.hidden = true;
+        return;
+      }
+      const days = Math.floor(ms / 86_400_000);
+      const hours = Math.floor((ms % 86_400_000) / 3_600_000);
+      const minutes = Math.floor((ms % 3_600_000) / 60_000);
+      // Days and hours while it's far off; hours and minutes on the last day.
+      const parts = days > 0 ? [plural(days, 'day'), plural(hours, 'hour')] : [plural(hours, 'hour'), plural(minutes, 'minute')];
+      el.textContent = `${parts.join(' · ')} ${el.dataset.label}`;
+      el.hidden = false;
+    };
+    render();
+    setInterval(render, 60_000);
+  });
+</script>

@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PickleballArt from '../../components/PickleballArt.astro';
+import Countdown from '../../components/Countdown.astro';
+import ShareButton from '../../components/ShareButton.astro';
+import Snowfall from '../../components/Snowfall.astro';
 import { CONTACT_EMAIL } from '../../config';
 import { getProjects } from '../../data/projects.js';
 import { event, googleCalendarUrl } from '../../data/pickleballEvent.js';
@@ -71,6 +74,26 @@ const playStyles = [
   },
 ];
 
+// The day, start to finish. Only noon, 1:00 and 5:00 are fixed; the rest are
+// estimates — adjust once the bracket size is known.
+const schedule = [
+  { time: '12:00 PM', title: 'Courts open', line: 'Warm up, grab a cookie, and find your partner.' },
+  { time: '1:00 PM', title: 'First serve', line: 'Just-for-fun and competitive games start, grouped by skill level.' },
+  { time: '~3:00 PM', title: 'Best-dressed parade', line: 'Every team takes a lap in their Christmas best. The crowd helps judge.' },
+  { time: '~4:15 PM', title: 'Competitive finals', line: 'The top teams in each level play for the title.' },
+  { time: '~4:45 PM', title: 'The crowning', line: 'We crown the best-dressed team and the champions in each level.' },
+  { time: '5:00 PM', title: 'Merry Christmas', line: 'Last cookies, group photo, and home.' },
+];
+
+// TODO: fill in the actual prizes once they're set; until then each card says so.
+const prizes = [
+  { art: 'crown' as const, title: 'Best-dressed team', line: 'The ugliest sweaters (or tees) and the best team look take the crown.', prize: 'Prize to be announced' },
+  { art: 'trophy' as const, title: 'Competitive champions', line: 'One winning team in each level: Beginner, Intermediate, and Advanced.', prize: 'Prize to be announced' },
+  { art: 'cookie' as const, title: 'Everyone else', line: 'Playing just for fun? You still go home with cookies and a good story.', prize: 'Cookies, guaranteed' },
+];
+
+const shareText = `Want to be my partner for the ${event.name}? Christmas pickleball for Restore the Last, Sat Dec 5, 1–5 PM in Anthem. $40 a team.`;
+
 const inputClass =
   'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
 const labelClass = 'label text-dark block mb-2';
@@ -87,8 +110,9 @@ const optionClass =
 >
 
   <!-- Hero -->
-  <section class="bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
-    <div class="container-narrow grid xl:grid-cols-[1fr_minmax(0,480px)] gap-10 items-center">
+  <section class="relative overflow-hidden bg-white pt-10 pb-8 md:pt-16 md:pb-10 border-b border-primary/10">
+    <Snowfall />
+    <div class="relative container-narrow grid xl:grid-cols-[1fr_minmax(0,480px)] gap-10 items-center">
      <div>
       <p class="label text-primary mb-4">A Restore the Last Christmas Pickleball Classic</p>
       <div class="gold-line mb-8"></div>
@@ -102,6 +126,10 @@ const optionClass =
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
         <a href="#projects" class="btn-primary text-lg text-center">Can't play? Give instead</a>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6">
+        <Countdown to={event.firstServe} class="label text-primary" />
+        <ShareButton url={event.url} text={shareText} label="Text a partner →" class="text-primary font-bold text-sm underline hover:text-medium transition-colors" />
       </div>
      </div>
       <PickleballArt name="net" class="text-dark w-full max-w-md mx-auto xl:max-w-none" />
@@ -211,6 +239,27 @@ const optionClass =
     </div>
   </section>
 
+  <!-- The day -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">The Day</p>
+        <h2 class="mb-10">How the afternoon goes.</h2>
+        <ol class="relative border-l-2 border-primary/20 ml-3 space-y-8">
+          {schedule.map((item) => (
+            <li class="pl-8 relative">
+              <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary" aria-hidden="true"></span>
+              <p class="label text-primary mb-1">{item.time}</p>
+              <p class="font-serif font-bold text-dark text-xl">{item.title}</p>
+              <p class="text-body text-sm mt-1">{item.line}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="text-body text-xs mt-8">Times after 1:00 PM are approximate and depend on how many teams sign up.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Skill levels -->
   <section class="bg-light section-padding">
     <div class="container-narrow">
@@ -269,6 +318,26 @@ const optionClass =
             <p class="font-bold text-dark mb-2">Best team look</p>
             <p class="text-body text-sm">Matching outfits and a team name to go with them.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prizes -->
+  <section class="bg-white pb-20">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">Up for Grabs</p>
+        <h2 class="mb-8">Something to play for.</h2>
+        <div class="grid sm:grid-cols-3 gap-4">
+          {prizes.map((p) => (
+            <div class="bg-offwhite rounded-2xl p-6 border border-primary/10 flex flex-col">
+              <PickleballArt name={p.art} class="text-dark w-12 h-12 mb-4" />
+              <p class="font-bold text-dark mb-2">{p.title}</p>
+              <p class="text-body text-sm mb-4">{p.line}</p>
+              <p class="label text-primary mt-auto">{p.prize}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -375,6 +444,11 @@ const optionClass =
           <!-- Partner — shown for team entries only -->
           <fieldset id="partner-fields" class="space-y-6">
             <legend class="font-serif font-bold text-dark text-2xl mb-2">Your partner</legend>
+            <p class="text-body text-sm">
+              Still asking around?
+              <ShareButton url={event.url} text={shareText} label="Text someone the link" class="text-primary font-bold underline hover:text-medium transition-colors" />
+              — or switch to Solo above and we'll pair you up.
+            </p>
 
             <div class="grid md:grid-cols-2 gap-6">
               <div>

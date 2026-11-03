@@ -1,0 +1,48 @@
+---
+// A few faint snowflakes drifting down behind the pickleball hero. Decorative only:
+// hidden from screen readers and turned off for anyone who prefers reduced motion.
+// Positions are fixed (not random) so every build renders the same page.
+const flakes = Array.from({ length: 22 }, (_, i) => ({
+  left: (i * 37 + 11) % 100,
+  size: 4 + ((i * 7) % 5),
+  duration: 9 + ((i * 5) % 8),
+  delay: -((i * 13) % 17),
+  drift: ((i % 2 ? 1 : -1) * (10 + ((i * 3) % 20))),
+}));
+---
+
+<div class="snowfall" aria-hidden="true">
+  {flakes.map((f) => (
+    <span
+      style={`left:${f.left}%;width:${f.size}px;height:${f.size}px;animation-duration:${f.duration}s;animation-delay:${f.delay}s;--drift:${f.drift}px`}
+    />
+  ))}
+</div>
+
+<style>
+  .snowfall {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .snowfall span {
+    position: absolute;
+    top: -12px;
+    border-radius: 9999px;
+    background: rgb(var(--tw-snow, 123 53 193) / 0.18);
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes snowfall {
+    to {
+      transform: translate(var(--drift), 110vh);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .snowfall {
+      display: none;
+    }
+  }
+</style>
