@@ -1,5 +1,6 @@
 // The Ugly Sweater Slam (Dec 5, 2026). Shared by the event page (/pickleball), its
 // add-to-calendar links, and the homepage banner, so a change lands everywhere.
+import signups from './pickleballSignups.json';
 // TODO before launch: confirm the court booking/address with Anthem Community Council.
 export const event = {
   name: 'Ugly Sweater Slam',
@@ -54,3 +55,12 @@ export const icsFile = [
   'END:VEVENT',
   'END:VCALENDAR',
 ].join('\r\n');
+
+// Spots: edited in /admin (Site Settings → Ugly Sweater Slam — Spots). Static site,
+// so the counter and the waiting-list switch update on the next rebuild after a save.
+export const spots = {
+  cap: signups.teamCap,
+  taken: Math.min(signups.teamsRegistered, signups.teamCap),
+  left: Math.max(signups.teamCap - signups.teamsRegistered, 0),
+  full: signups.forceWaitlist || signups.teamsRegistered >= signups.teamCap,
+};

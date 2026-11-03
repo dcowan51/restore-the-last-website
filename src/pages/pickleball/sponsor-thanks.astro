@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL, PICKLEBALL_TEAM_PAY_URL } from '../../config';
+import { event } from '../../data/pickleballEvent.js';
+---
+
+<BaseLayout
+  title="Thank You for Sponsoring a Team"
+  description={`Thank you for sponsoring a team at the ${event.name}. Pay your sponsorship to send someone out to play.`}
+  noindex
+>
+
+  <section class="bg-white section-padding border-b border-primary/10">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-4">{event.name} — Team Sponsor</p>
+        <div class="gold-line mb-8"></div>
+        <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
+          Thank you. One step left.
+        </h1>
+        <p class="text-body text-lg mt-6 leading-relaxed">
+          Pay your sponsorship to put your team on the court: <strong class="text-dark">$40 for each team</strong><span id="sponsor-total"></span>. We'll give your spot to people who couldn't otherwise play.
+        </p>
+        <div class="mt-8">
+          <a href={PICKLEBALL_TEAM_PAY_URL} target="_blank" rel="noopener noreferrer" class="btn-gold text-lg text-center">Pay my sponsorship</a>
+        </div>
+        <p class="text-body text-sm mt-4 leading-relaxed">
+          The payment page opens in a new tab. Type your total in the amount box. Feel free to round up: every dollar goes to the kids and young adults in Phoenix this event serves.
+        </p>
+        <p class="text-body text-xs mt-3">Because you're giving the spot away, your sponsorship is a tax-deductible donation.</p>
+        <p class="text-body mt-8 leading-relaxed">
+          Questions? Email
+          <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-10">
+          <a href="/pickleball#projects" class="btn-primary text-center">See what your gift funds</a>
+          <a href="/" class="btn-primary text-center">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Show the total for the number of teams picked on the form, if we have it.
+  let teams = 0;
+  try {
+    teams = Number(sessionStorage.getItem('pickleball-sponsor-teams')) || 0;
+  } catch {}
+  const total = document.getElementById('sponsor-total');
+  if (total && teams > 0) {
+    total.textContent = ` (${teams} ${teams === 1 ? 'team' : 'teams'} = $${teams * 40})`;
+  }
+</script>

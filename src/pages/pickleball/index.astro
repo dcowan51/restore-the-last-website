@@ -6,7 +6,7 @@ import ShareButton from '../../components/ShareButton.astro';
 import Snowfall from '../../components/Snowfall.astro';
 import { CONTACT_EMAIL } from '../../config';
 import { getProjects } from '../../data/projects.js';
-import { event, googleCalendarUrl } from '../../data/pickleballEvent.js';
+import { event, googleCalendarUrl, spots } from '../../data/pickleballEvent.js';
 
 // The projects this event raises money for: the Phoenix-area ones, since the event is
 // in Anthem. The page leads with the people each one serves, not the equipment, so each
@@ -92,6 +92,15 @@ const prizes = [
   { art: 'cookie' as const, title: 'Everyone else', line: 'Playing just for fun? You still go home with cookies and a good story.', prize: 'Cookies, guaranteed' },
 ];
 
+// Spots copy. Below a few left it turns urgent; at the cap the form becomes a waiting list.
+const spotsLine = spots.full
+  ? 'Full · join the waiting list'
+  : spots.taken === 0
+    ? `Capped at ${spots.cap} teams`
+    : spots.left <= 5
+      ? `Only ${spots.left} team ${spots.left === 1 ? 'spot' : 'spots'} left`
+      : `${spots.left} of ${spots.cap} team spots left`;
+
 const shareText = `Want to be my partner for the ${event.name}? Christmas pickleball for Restore the Last, Sat Dec 5, 1–5 PM in Anthem. $40 a team.`;
 
 const inputClass =
@@ -125,10 +134,14 @@ const optionClass =
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <a href="#register" class="btn-gold text-lg text-center">Register to play</a>
-        <a href="#projects" class="btn-primary text-lg text-center">Can't play? Give instead</a>
+        <a href="#sponsor" class="btn-primary text-lg text-center">Can't play? Sponsor a team</a>
       </div>
       <div class="flex flex-wrap items-center gap-x-6 gap-y-4 mt-8">
         <Countdown to={event.firstServe} class="bg-light text-primary rounded-xl px-5 py-3" />
+        <a href="#register" class="bg-white border-2 border-primary/20 text-primary rounded-xl px-5 py-3 hover:border-primary/40 transition-colors">
+          <span class="block font-serif font-bold text-2xl md:text-3xl leading-tight">{spots.full ? 'Waiting list' : spots.taken === 0 ? `${spots.cap} teams` : `${spots.left} left`}</span>
+          <span class="block font-sans font-bold text-xs uppercase tracking-[2px] mt-1">{spots.full ? 'All spots are full' : spots.taken === 0 ? 'Max · first come, first served' : `of ${spots.cap} team spots`}</span>
+        </a>
         <ShareButton url={event.url} text={shareText} label="Text a partner →" class="text-primary font-bold text-lg underline hover:text-medium transition-colors" />
       </div>
      </div>
@@ -165,6 +178,7 @@ const optionClass =
           <p class="font-bold text-dark">$40 a team of two</p>
           <p class="text-body text-sm">$20 a player — come solo and we'll pair you up</p>
           <p class="text-body text-sm mt-3">Want to give more? You can add a gift when you pay.</p>
+          <p class="text-body text-sm mt-3"><strong class="text-dark">Capped at {spots.cap} teams</strong> ({spots.cap * 2} players). Once it fills, there's a waiting list.</p>
         </div>
         <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
           <p class="label text-primary mb-2">Format</p>
@@ -203,8 +217,75 @@ const optionClass =
         ))}
       </div>
       <p class="text-white/80 mt-10">
-        Can't make it on December 5? Open any story above to give to it directly.
+        Can't make it on December 5? <a href="#sponsor" class="text-white font-bold underline hover:text-white/80">Sponsor a team</a>, or open any story above to give to it directly.
       </p>
+    </div>
+  </section>
+
+  <!-- Sponsor a team -->
+  <section id="sponsor" class="bg-light section-padding scroll-mt-20">
+    <div class="container-narrow grid lg:grid-cols-[1fr_minmax(0,520px)] gap-10 lg:gap-16 items-start">
+      <div class="max-w-xl">
+        <p class="label text-primary mb-6">Can't Make It?</p>
+        <h2 class="mb-4">Sponsor a team.</h2>
+        <p class="text-body leading-relaxed mb-4">
+          Not free on December 5? You can still put a team on the court. <strong class="text-dark">$40 sponsors one team</strong>, and we'll give that spot to people who couldn't otherwise play, like staff and young adults from the homes this event serves.
+        </p>
+        <p class="text-body leading-relaxed">
+          Every dollar still goes to the same three projects. You just get to send someone else out to play for it.
+        </p>
+        {!spots.full && (
+          <p class="text-body text-sm mt-4">Sponsored teams use one of the {spots.cap} spots, so the earlier the better.</p>
+        )}
+      </div>
+
+      {spots.full ? (
+        <div class="bg-white rounded-2xl p-8 border border-primary/10">
+          <p class="font-bold text-dark mb-2">All team spots are taken.</p>
+          <p class="text-body text-sm mb-6">There's no room left to sponsor a team, but you can still give to the kids and young adults this event serves.</p>
+          <a href="#projects" class="btn-gold text-center">Give to a project</a>
+        </div>
+      ) : (
+        <form
+          name="pickleball-sponsor"
+          method="POST"
+          action="/pickleball/sponsor-thanks"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="bg-white rounded-2xl p-8 border border-primary/10 space-y-6"
+        >
+          <input type="hidden" name="form-name" value="pickleball-sponsor" />
+          <p class="hidden" aria-hidden="true">
+            <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div>
+            <label for="sponsor-name" class={labelClass}>Your Name</label>
+            <input type="text" id="sponsor-name" name="name" required autocomplete="name" class={inputClass} />
+          </div>
+          <div>
+            <label for="sponsor-email" class={labelClass}>Email</label>
+            <input type="email" id="sponsor-email" name="email" required autocomplete="email" class={inputClass} />
+          </div>
+          <div>
+            <label for="sponsor-teams" class={labelClass}>How many teams?</label>
+            <select id="sponsor-teams" name="teams" required class={inputClass}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option value={n}>{n} {n === 1 ? 'team' : 'teams'} · ${n * 40}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label for="sponsor-honor" class={labelClass}>Sponsored by / in honor of <span class="normal-case font-normal tracking-normal">(optional)</span></label>
+            <input type="text" id="sponsor-honor" name="in_honor_of" placeholder="e.g., The Smith Family, or in memory of Grandma Jo" class={inputClass} />
+          </div>
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="thank_publicly" value="Yes" class={`${radioClass} mt-1 shrink-0`} />
+            <span class="text-body text-sm">You can thank me by name at the event. <span class="text-body/70">(optional)</span></span>
+          </label>
+          <button type="submit" class="btn-gold text-lg w-full">Sponsor &amp; continue to payment</button>
+        </form>
+      )}
     </div>
   </section>
 
@@ -347,21 +428,33 @@ const optionClass =
   <section id="register" class="bg-offwhite section-padding scroll-mt-20">
     <div class="container-narrow">
       <div class="max-w-2xl">
-        <p class="label text-primary mb-6">Register</p>
-        <h2 class="mb-4">Save your spot.</h2>
+        <p class="label text-primary mb-6">{spots.full ? 'Waiting List' : 'Register'}</p>
+        <h2 class="mb-4">{spots.full ? 'Join the waiting list.' : 'Save your spot.'}</h2>
+        <div class="bg-light rounded-xl px-5 py-4 mb-6">
+          <p class="font-bold text-dark">{spotsLine}</p>
+          <p class="text-body text-sm mt-1">
+            {spots.full
+              ? `We're full at ${spots.cap} teams. Fill this out and we'll text you, in the order people signed up, if a spot opens. Don't pay yet.`
+              : `We have room for ${spots.cap} teams on 10 courts, first come, first served. Once they're gone, this form becomes a waiting list.`}
+          </p>
+        </div>
         <p class="text-body mb-10 leading-relaxed">
-          Register here, then pay on the next page to lock in your spot. Fields marked optional can be skipped.
+          {spots.full
+            ? 'Fields marked optional can be skipped.'
+            : 'Register here, then pay on the next page to lock in your spot. Fields marked optional can be skipped.'}
         </p>
 
         <form
           name="pickleball-registration"
           method="POST"
-          action="/pickleball/thank-you"
+          action={spots.full ? '/pickleball/waitlist' : '/pickleball/thank-you'}
           data-netlify="true"
           netlify-honeypot="bot-field"
           class="space-y-10"
         >
           <input type="hidden" name="form-name" value="pickleball-registration" />
+          <!-- Marks waiting-list entries in the Netlify dashboard. -->
+          <input type="hidden" name="waitlist" value={spots.full ? 'Yes' : 'No'} />
 
           <!-- Honeypot — hidden from people, catches bots. -->
           <p class="hidden" aria-hidden="true">
@@ -551,7 +644,7 @@ const optionClass =
           </fieldset>
 
           <div>
-            <button type="submit" class="btn-gold text-lg">Register &amp; continue to payment</button>
+            <button type="submit" class="btn-gold text-lg">{spots.full ? 'Join the waiting list' : <>Register &amp; continue to payment</>}</button>
             <p class="text-body text-sm mt-4">
               Questions? Email
               <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
@@ -585,6 +678,14 @@ const optionClass =
       }, 3000);
     }
   }
+
+  // Sponsor form: remember the team count for the thank-you page's total.
+  const sponsorForm = document.querySelector<HTMLFormElement>('form[name="pickleball-sponsor"]');
+  sponsorForm?.addEventListener('submit', () => {
+    try {
+      sessionStorage.setItem('pickleball-sponsor-teams', (sponsorForm.elements.namedItem('teams') as HTMLSelectElement).value);
+    } catch {}
+  });
 
   // Partner fields only apply to team entries: hide them and drop `required`
   // for solo players so the browser doesn't block their submission.

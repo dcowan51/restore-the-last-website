@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ShareButton from '../../components/ShareButton.astro';
+import { CONTACT_EMAIL } from '../../config';
+import { event, spots } from '../../data/pickleballEvent.js';
+---
+
+<BaseLayout
+  title="You're on the Waiting List"
+  description={`You're on the waiting list for the ${event.name}. We'll text you if a spot opens.`}
+  noindex
+>
+
+  <section class="bg-white section-padding border-b border-primary/10">
+    <div class="container-narrow">
+      <div class="max-w-2xl">
+        <p class="label text-primary mb-4">{event.name} — Waiting List</p>
+        <div class="gold-line mb-8"></div>
+        <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
+          You're on the waiting list.
+        </h1>
+        <p class="text-body text-lg mt-6 leading-relaxed">
+          All {spots.cap} team spots are taken right now. If one opens up, we'll text you in the order people joined the list. <strong class="text-dark">Please don't pay yet</strong>; we'll send you the payment link with your spot.
+        </p>
+        <p class="text-body mt-6 leading-relaxed">
+          Want to help even if you don't get to play? You can
+          <a href="/pickleball#projects" class="underline text-primary font-bold hover:text-medium transition-colors">give to the kids this event serves</a>,
+          or come cheer from the side. Spectators are welcome.
+        </p>
+        <p class="text-body mt-4 leading-relaxed">
+          Know someone who'd love this?
+          <ShareButton
+            url={event.url}
+            text={`The ${event.name} (Christmas pickleball for Restore the Last, Sat Dec 5 in Anthem) is full, but you can join the waiting list.`}
+            label="Send them the link"
+            class="underline text-primary font-bold hover:text-medium transition-colors"
+          />
+          · Questions? Email
+          <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-10">
+          <a href="/pickleball#projects" class="btn-primary text-center">See what the event funds</a>
+          <a href="/" class="btn-gold text-center">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

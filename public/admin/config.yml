@@ -28,6 +28,20 @@ collections:
   - name: settings
     label: Site Settings
     files:
+      - name: pickleballSignups
+        label: Ugly Sweater Slam — Spots
+        file: src/data/pickleballSignups.json
+        description: >-
+          Controls the "spots left" counter on /pickleball. Update "Teams signed
+          up" whenever you check the Netlify form (count two solo
+          players as one team). When it reaches the cap,
+          the form switches to a waiting list on its own after the site rebuilds
+          (a couple of minutes).
+        fields:
+          - { name: teamCap, label: Team cap, widget: number, value_type: int, min: 1, hint: 'Most teams the courts can hold. 32 teams = 64 players on 10 courts.' }
+          - { name: teamsRegistered, label: Teams signed up, widget: number, value_type: int, min: 0, hint: 'Count 2 solo players as 1 team, and include sponsored teams (each sponsored team takes a spot).' }
+          - { name: forceWaitlist, label: Switch to waiting list now, widget: boolean, default: false, hint: 'Turn on to close registration early, even if the count is under the cap.' }
+
       - name: populations
         label: Serving Categories
         file: src/data/populations.json
