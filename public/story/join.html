@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your place · Restore the Last</title>
+<meta name="description" content="Give, equip your home, pray, or follow the work. There&#x27;s a place for you in this.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Restore the Last"><meta property="og:title" content="Your place · Restore the Last"><meta property="og:description" content="Give, equip your home, pray, or follow the work. There&#x27;s a place for you in this."><meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://restorethelast.org/story/join"><meta property="og:url" content="https://restorethelast.org/story/join">
+<link rel="icon" type="image/png" href="rtl-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&display=swap">
+<script>try{var t=localStorage.getItem('rtl-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>/* Restore the Last · story pages. The site's own look: Lora headlines, Lato text, one violet. */
+:root{
+  --bg:#FAFAF7;--sf:#FFFFFF;--sf2:#F3EDFF;--tint:#EDE0FF;--line:rgba(113,43,190,.14);--line2:rgba(113,43,190,.28);
+  --fg:#1C1C2E;--body:#3D3D4F;--dim:#5A5A6E;--vi:#712BBE;--vi2:#3A1470;--gold:#C9A227;--on-vi:#FFFFFF;
+  --serif:Lora,Georgia,serif;--sans:Lato,"Helvetica Neue",Arial,sans-serif;
+  --s1:4px;--s2:8px;--s3:12px;--s4:20px;--s5:28px;--s6:40px;--s7:64px;--s8:96px;--r:20px;--hh:64px;
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --bg:#14111C;--sf:#1D1828;--sf2:#251E35;--tint:#2C2340;--line:rgba(196,168,245,.16);--line2:rgba(196,168,245,.32);
+  --fg:#F5F2FA;--body:#D6CFE3;--dim:#B3AAC4;--vi:#C4A8F5;--vi2:#E2D4FF;--on-vi:#1C1230;color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+[id]{scroll-margin-top:calc(var(--hh) + 16px)}
+body{margin:0;background:var(--bg);color:var(--body);font:400 18px/1.6 var(--sans);overflow-x:hidden}
+h1,h2,h3,p,ol,ul,blockquote,figure{margin:0}
+ol,ul{padding:0;list-style:none}
+a{color:var(--vi)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--vi);outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--sf);color:var(--fg);padding:8px 14px;border-radius:999px;z-index:20}
+.skip:focus{left:12px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:24px}
+@media (min-width:768px){.wrap{padding-inline:48px}}
+em{font-style:italic;color:var(--fg)}
+
+/* header */
+.rt-top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.rt-bar{max-width:1180px;margin-inline:auto;padding:10px 24px;height:var(--hh);display:flex;align-items:center;gap:16px}
+@media (min-width:768px){.rt-bar{padding-inline:48px}}
+.rt-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font:700 18px/1 var(--serif);white-space:nowrap}
+.rt-brand img{width:36px;height:36px;border-radius:6px}
+.rt-nav{margin-left:auto;display:flex;gap:2px;align-items:center}
+.rt-nav a{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--dim);font:700 14px/1 var(--sans);padding:8px 10px;border-radius:999px;min-height:40px}
+.rt-nav a:hover{color:var(--fg);background:var(--sf2)}
+.rt-nav a[aria-current]{color:var(--fg);background:var(--tint)}
+.rt-nav .num{font-variant-numeric:tabular-nums;color:var(--vi)}
+.rt-theme{flex:none;width:40px;height:40px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
+.rt-theme svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.rt-theme .fill{fill:currentColor;stroke:none}
+@media (max-width:899px){.rt-nav a:not([aria-current]) .cl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (max-width:560px){.rt-brand span{display:none}.rt-nav a{padding:8px 7px}.rt-bar{gap:8px}}
+
+/* hero */
+.rt-hero{padding-block:var(--s7) var(--s6)}
+.rt-kick{font:700 15px/1.3 var(--sans);color:var(--vi)}
+.rt-line{width:56px;height:3px;background:var(--gold);border-radius:2px;margin-block:var(--s4)}
+.rt-hero h1{font:700 clamp(38px,6.4vw,72px)/1.08 var(--serif);color:var(--fg);letter-spacing:-.015em;max-width:17ch;text-wrap:balance}
+.rt-frame{margin-top:var(--s4);font-size:clamp(18px,2.2vw,21px);line-height:1.55;color:var(--body);max-width:44ch}
+.rt-cue{display:inline-flex;gap:8px;align-items:center;margin-top:var(--s5);font:700 16px/1 var(--sans);color:var(--vi);text-decoration:none;padding:12px 18px;border-radius:999px;background:var(--sf2)}
+.rt-cue span{display:inline-block;animation:rt-bob 2s ease-in-out infinite}
+@keyframes rt-bob{50%{transform:translateY(4px)}}
+
+/* scroll story */
+.rv{position:relative}
+.rv-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh));z-index:3;height:40svh;min-height:270px;background:var(--bg);padding-block:var(--s3)}
+.rv-stage::after{content:"";position:absolute;left:0;right:0;top:100%;height:36px;background:linear-gradient(var(--bg),transparent);pointer-events:none}
+.rv-vis{height:100%;display:grid;background:var(--tint);border-radius:var(--r);padding:var(--s4);overflow:hidden}
+.rv-scene{grid-area:1/1;align-self:center;justify-self:center;width:100%;max-width:520px;display:grid;gap:var(--s3);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s;min-height:0}
+.rv-scene.on{opacity:1;visibility:visible}
+.rv-beats .rb{min-height:62svh;padding-block:var(--s6);display:flex;align-items:flex-start}
+.rv-beats .rb:last-child{min-height:52svh}
+.rbx{max-width:34rem;display:grid;gap:var(--s3)}
+.rb .num{font:700 14px/1 var(--sans);color:var(--vi);font-variant-numeric:tabular-nums}
+.rb h2{font:700 clamp(28px,4.4vw,42px)/1.12 var(--serif);color:var(--fg);letter-spacing:-.01em;text-wrap:balance}
+.rbt{font-size:22px;line-height:1.5;color:var(--body)}
+@media (min-width:900px){
+  .rbt{font-size:24px}
+  .rv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--s7)}
+  .rv-stage{grid-column:2;grid-row:1;align-self:start;top:calc(var(--hh) + 24px);height:calc(100svh - var(--hh) - 48px);padding:0}
+  .rv-stage::after{display:none}
+  .rv-vis{padding:var(--s6)}
+  .rv-beats{grid-column:1;grid-row:1}
+  .rv-beats .rb{min-height:86svh;align-items:center;padding-block:var(--s8)}
+}
+
+/* scenes (prefix rs-) */
+.rs-big{font:700 clamp(44px,9vw,92px)/1 var(--serif);color:var(--vi2);letter-spacing:-.02em;text-wrap:balance;text-align:center}
+.rs-big.serif{font-size:clamp(36px,6.4vw,64px)}
+[data-theme="dark"] .rs-big{color:var(--vi2)}
+.rs-lbl{font:700 clamp(16px,2vw,20px)/1.35 var(--sans);color:var(--fg);text-align:center;max-width:30ch;justify-self:center}
+.rs-foot{font:400 15px/1.4 var(--sans);color:var(--dim);text-align:center}
+.rs-q{font:italic 400 clamp(24px,3.8vw,40px)/1.3 var(--serif);color:var(--fg);text-align:center;text-wrap:balance}
+.rs-q::before{content:"“";display:block;font-size:2.2em;line-height:.6;color:var(--vi);font-style:normal;margin-bottom:6px}
+.rs-by{font:700 15px/1.3 var(--sans);color:var(--vi);text-align:center}
+.rs-verse{display:grid;gap:var(--s5);text-align:center}
+.rs-verse p{font:italic 400 clamp(26px,4.2vw,44px)/1.25 var(--serif);color:var(--fg)}
+.rs-verse span{display:block;font:700 14px/1.2 var(--sans);font-style:normal;color:var(--vi);margin-top:8px;letter-spacing:.02em}
+.rs-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.rs-chips li{background:var(--sf);color:var(--fg);border:1px solid var(--line2);border-radius:999px;padding:10px 16px;font:700 16px/1.2 var(--sans);transform:rotate(var(--r,0deg))}
+.rs-chips li:last-child{background:var(--vi);color:var(--on-vi);border-color:transparent}
+.rs-chips.calm li{transform:none;background:var(--sf);color:var(--fg);border-color:var(--line2)}
+.rs-checks{display:grid;gap:10px;width:100%;max-width:380px;justify-self:center}
+.rs-checks li{display:flex;align-items:center;gap:14px;background:var(--sf);border-radius:14px;padding:14px 18px;font:700 18px/1.2 var(--sans);color:var(--fg)}
+.rs-checks i{flex:none;width:30px;height:30px;border-radius:999px;display:grid;place-items:center;font-style:normal;font-size:16px;background:var(--sf2);color:var(--vi)}
+.rs-checks li.no{border:2px dashed var(--vi);background:transparent}
+.rs-checks li.no i{background:var(--vi);color:var(--on-vi)}
+.rs-steps{display:grid;gap:10px;width:100%;max-width:420px;justify-self:center;counter-reset:s}
+.rs-steps li{background:var(--sf);border-radius:14px;padding:14px 18px;display:grid;gap:2px;border:2px solid transparent}
+.rs-steps li b{font:700 18px/1.25 var(--sans);color:var(--fg)}
+.rs-steps li span{font-size:15px;color:var(--dim)}
+.rs-steps li.on{border-color:var(--vi)}
+.rs-card{background:var(--sf);border-radius:18px;padding:22px;display:grid;gap:10px;width:100%;max-width:400px;justify-self:center;box-shadow:0 10px 30px rgba(58,20,112,.10)}
+.rs-tag{font:700 13px/1 var(--sans);color:var(--vi);background:var(--sf2);border-radius:999px;padding:6px 10px;justify-self:start}
+.rs-card b{font:700 21px/1.25 var(--serif);color:var(--fg)}
+.rs-card ul{display:grid;gap:4px}
+.rs-card li{font-size:15px;color:var(--body);padding-left:18px;position:relative}
+.rs-card li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:9px;background:var(--vi)}
+.rs-price{font:700 34px/1 var(--serif);color:var(--vi2);margin-top:4px}
+.rs-pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.rs-pair div{background:var(--sf);border-radius:16px;padding:20px 14px;text-align:center;display:grid;gap:6px}
+.rs-pair b{font:700 clamp(48px,8vw,80px)/1 var(--serif);color:var(--vi2)}
+.rs-pair span{font:700 15px/1.3 var(--sans);color:var(--fg)}
+.rs-names{display:grid;gap:10px;text-align:center}
+.rs-names li{font:400 clamp(22px,3.2vw,30px)/1.25 var(--serif);color:var(--fg)}
+.rs-names li::after{content:"";display:block;width:6px;height:6px;border-radius:9px;background:var(--gold);margin:10px auto 0}
+.rs-names li:last-child::after{display:none}
+.rs-homes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:end}
+.rs-homes li{display:grid;gap:8px;justify-items:center;text-align:center;font:700 14px/1.25 var(--sans);color:var(--fg)}
+.rs-homes svg{width:100%;max-width:110px;height:auto}
+.rs-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;max-width:340px;justify-self:center;width:100%}
+.rs-dots i{aspect-ratio:1;border-radius:99px;background:var(--vi);transform:scale(.6);opacity:.25;transition:transform .5s,opacity .5s;transition-delay:calc(var(--i) * 25ms)}
+.rs-dots i.off{background:transparent;border:2px solid var(--dim)}
+.rv-scene.on .rs-dots i{transform:none;opacity:1}
+.rs-map{display:grid;gap:10px;width:100%;max-width:380px;justify-self:center}
+.rs-map li{display:flex;align-items:center;gap:12px;background:var(--sf);border-radius:14px;padding:14px 18px;font:700 18px/1.2 var(--sans);color:var(--fg)}
+.rs-map li i{width:14px;height:14px;border-radius:99px;background:var(--vi);flex:none}
+.rs-map li.next{background:transparent;border:2px dashed var(--vi);color:var(--vi)}
+.rs-map li.next i{background:transparent;border:2px dashed var(--vi)}
+.rs-svg{width:100%;height:auto;max-height:100%;display:block}
+.rs-art{display:grid;gap:var(--s3);justify-items:center;min-height:0}
+.rs-art svg{width:100%;max-width:360px;height:auto;max-height:24svh}
+@media (min-width:900px){.rs-art svg{max-height:46svh}}
+.st-sky{fill:var(--vi2)}
+.st-win{fill:var(--sf)}
+.st-moon{fill:var(--gold)}
+.st-dot{fill:var(--vi)}
+.st-line{stroke:var(--vi);fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.st-soft{fill:var(--sf2)}
+.st-ink{fill:var(--fg)}
+.st-txt{fill:var(--fg);font:700 15px var(--sans)}
+.st-sub{fill:var(--dim);font:400 13px var(--sans)}
+.rs-home .st-dot{opacity:.2;transition:opacity .4s;transition-delay:calc(var(--i) * 60ms)}
+.rv-scene.on .rs-home .st-dot{opacity:1}
+
+/* after the story */
+.rt-after{display:grid;gap:var(--s5);padding-block:var(--s6)}
+.rt-handoff{display:grid;gap:var(--s4);padding-block:var(--s6) var(--s7)}
+.rt-next{position:relative;display:grid;gap:8px;text-decoration:none;background:var(--vi);color:var(--on-vi);border-radius:24px;padding:var(--s5) calc(var(--s5) + 48px) var(--s5) var(--s5);max-width:46rem}
+.rt-next .k{font:700 15px/1 var(--sans);opacity:.9}
+.rt-next b{font:700 clamp(26px,4vw,38px)/1.15 var(--serif)}
+.rt-next .d{font-size:18px;opacity:.92}
+.rt-next .go{position:absolute;right:var(--s5);top:50%;transform:translateY(-50%);font-size:32px}
+.rt-next:hover{filter:brightness(1.08)}
+.rt-prev{font:700 16px/1 var(--sans);color:var(--vi);text-decoration:none;padding:10px 0}
+.rt-folds{display:grid;gap:var(--s3);max-width:46rem}
+.rt-folds > h2{font:700 15px/1.3 var(--sans);color:var(--dim);margin-bottom:var(--s1)}
+.rt-fold{background:var(--sf);border:1px solid var(--line);border-radius:18px}
+.rt-fold summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;font:700 19px/1.3 var(--serif);color:var(--fg)}
+.rt-fold summary::-webkit-details-marker{display:none}
+.rt-fold summary .x{flex:none;width:30px;height:30px;border-radius:99px;background:var(--sf2);color:var(--vi);display:grid;place-items:center;font:700 20px/1 var(--sans);transition:transform .2s}
+.rt-fold[open] summary .x{transform:rotate(45deg)}
+.rt-fold .b{padding:0 22px 20px;display:grid;gap:12px}
+.rt-fold .b p{font-size:17px;max-width:62ch}
+.rt-fold .b a{font-weight:700}
+
+/* front page */
+.rt-front{padding-block:var(--s7) var(--s5)}
+.rt-by{font:700 15px/1.3 var(--sans);color:var(--vi)}
+.rt-front h1{font:700 clamp(40px,7vw,80px)/1.06 var(--serif);color:var(--fg);letter-spacing:-.015em;max-width:15ch;text-wrap:balance}
+.rt-front h1 .b{display:block;margin-top:var(--s3);font:400 clamp(21px,2.8vw,30px)/1.35 var(--serif);font-style:italic;color:var(--body);letter-spacing:0;max-width:30ch}
+.rt-tl{margin-top:var(--s6);display:grid;gap:0;max-width:46rem;position:relative}
+.rt-tl li{position:relative;padding:0 0 var(--s5) 34px;display:grid;gap:4px}
+.rt-tl li::before{content:"";position:absolute;left:5px;top:6px;width:14px;height:14px;border-radius:99px;background:var(--sf);border:3px solid var(--line2)}
+.rt-tl li::after{content:"";position:absolute;left:11px;top:24px;bottom:0;width:2px;background:var(--line2)}
+.rt-tl li:last-child::after{display:none}
+.rt-tl li.now::before{background:var(--vi);border-color:var(--vi)}
+.rt-tl .w{font:700 15px/1.3 var(--sans);color:var(--vi)}
+.rt-tl .x{font-size:18px;color:var(--body)}
+.rt-tl .tag{justify-self:start;font:700 13px/1 var(--sans);color:var(--vi);background:var(--sf2);border-radius:999px;padding:6px 10px;margin-top:4px}
+@media (min-width:900px){
+  .rt-tl{grid-template-columns:repeat(3,1fr);gap:var(--s4);max-width:none}
+  .rt-tl li{padding:34px 0 0}
+  .rt-tl li::before{left:0;top:0}
+  .rt-tl li::after{left:24px;right:-20px;top:9px;bottom:auto;width:auto;height:2px}
+}
+.rt-btn{display:inline-flex;align-items:center;gap:10px;background:var(--vi);color:var(--on-vi);text-decoration:none;font:700 18px/1 var(--sans);padding:16px 26px;border-radius:999px;min-height:52px}
+.rt-btn:hover{filter:brightness(1.08)}
+.rt-btn.ghost{background:transparent;color:var(--vi);border:2px solid var(--vi)}
+.rt-short{margin-top:var(--s6);background:var(--tint);border-radius:24px;padding:var(--s5);display:grid;gap:var(--s3);max-width:46rem}
+.rt-short h2{font:700 15px/1.3 var(--sans);color:var(--vi)}
+.rt-short p{font:400 clamp(19px,2.3vw,23px)/1.5 var(--serif);color:var(--fg)}
+.rt-sec{margin-top:var(--s7)}
+.rt-sec > h2{font:700 clamp(28px,4vw,40px)/1.15 var(--serif);color:var(--fg);margin-bottom:var(--s4)}
+.rt-g3{display:grid;gap:var(--s3)}
+@media (min-width:900px){.rt-g3{grid-template-columns:repeat(3,1fr)}}
+.rt-g2{display:grid;gap:var(--s3)}
+@media (min-width:700px){.rt-g2{grid-template-columns:1fr 1fr}}
+.rt-c{background:var(--sf);border:1px solid var(--line);border-radius:20px;padding:var(--s5);display:grid;gap:8px;align-content:start;height:100%}
+.rt-c .k{font:700 15px/1.3 var(--sans);color:var(--vi)}
+.rt-c .t{font:400 19px/1.45 var(--serif);color:var(--fg)}
+a.rt-c{text-decoration:none;position:relative;padding-right:calc(var(--s5) + 32px)}
+a.rt-c b{font:700 24px/1.2 var(--serif);color:var(--fg)}
+a.rt-c .s{font-size:16px;color:var(--dim)}
+a.rt-c .ar{position:absolute;right:var(--s4);top:50%;transform:translateY(-50%);font-size:24px;color:var(--vi)}
+a.rt-c:hover{border-color:var(--vi)}
+a.rt-c.go{background:var(--vi);border-color:var(--vi)}
+a.rt-c.go .k,a.rt-c.go b,a.rt-c.go .s,a.rt-c.go .ar{color:var(--on-vi)}
+.rt-small{margin-top:var(--s4);font-size:17px;color:var(--dim)}
+.rt-small a{font-weight:700}
+
+.rt-close{background:var(--vi2);color:#fff;border-radius:28px;padding:var(--s6) var(--s5);display:grid;gap:var(--s3);justify-items:start;max-width:46rem}
+[data-theme="dark"] .rt-close{background:var(--tint)}
+.rt-close h2{font:700 clamp(30px,4.6vw,46px)/1.12 var(--serif);color:#fff}
+.rt-close p{font-size:19px;color:rgba(255,255,255,.88)}
+.rt-close .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s2)}
+.rt-close .rt-btn{background:#fff;color:#3A1470}
+.rt-close .rt-btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+
+.rt-foot{padding-block:var(--s6);border-top:1px solid var(--line);margin-top:var(--s6)}
+.rt-foot p{font-size:15px;color:var(--dim);max-width:70ch}
+
+@media (max-width:600px){
+  .rt-hero,.rt-front{padding-top:var(--s6)}
+  .rv-beats .rb{padding-block:var(--s5)}
+  .rt-next{padding:var(--s4) calc(var(--s4) + 40px) var(--s4) var(--s4)}
+  .rt-short,.rt-c,.rt-close{padding:var(--s4)}
+  a.rt-c{padding-right:calc(var(--s4) + 32px)}
+  .rs-checks li,.rs-map li{font-size:16px;padding:11px 14px}
+  .rs-steps li{padding:11px 14px}
+  .rs-steps li b{font-size:16px}
+  .rs-card{padding:16px;gap:6px}
+  .rs-card b{font-size:18px}
+  .rs-pair div{padding:12px 8px}
+}
+@media (max-height:760px) and (max-width:899px){.rs-chips li{font-size:14px;padding:7px 12px}.rs-q{font-size:22px}}
+@media (prefers-reduced-motion:reduce){
+  .rv-scene,.rs-dots i,.rs-home .st-dot{transition:none!important}
+  .rt-cue span{animation:none}
+}
+.rs-home svg{width:auto;max-height:16svh}
+@media (min-width:900px){.rs-home svg{max-height:34svh}}
+@media (min-width:900px){.rs-art svg{max-width:460px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="rt-top"><div class="rt-bar">
+  <a class="rt-brand" href="index.html"><img src="rtl-logo.png" alt="" width="36" height="36"><span>Restore the Last</span></a>
+  <nav class="rt-nav" aria-label="The story, page by page"><a href="why.html"><span class="num">1</span><span class="cl">The story</span></a><a href="moments.html"><span class="num">2</span><span class="cl">Restoration</span></a><a href="gift.html"><span class="num">3</span><span class="cl">Your gift</span></a><a href="field.html"><span class="num">4</span><span class="cl">The proof</span></a><a href="join.html" aria-current="page"><span class="num">5</span><span class="cl">Your place</span></a></nav>
+  <button class="rt-theme" type="button" data-theme-toggle aria-label="Switch between dark and light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" class="fill"/></svg></button>
+</div></header>
+<main id="main" class="wrap">
+<section class="rt-hero" id="top" aria-labelledby="h-top">
+  <p class="rt-kick">5 of 5 · Your place</p>
+  <div class="rt-line" aria-hidden="true"></div>
+  <h1 id="h-top">There&#x27;s a place for you in this.</h1>
+  <p class="rt-frame">Restore the Last is a nonprofit that places nervous system regulation tools, simple ways to help a body stuck in survival mode find calm, inside homes already caring for trauma survivors.</p>
+  <a class="rt-cue" href="#story">Scroll down · 7 steps · 2 min <span aria-hidden="true">↓</span></a>
+</section><section class="story" id="story" aria-label="There&#x27;s a place for you in this. One step at a time."><div class="rv" data-reveal><div class="rv-stage" aria-hidden="true" data-at="0" data-scene="night"><div class="rv-vis"><div class="rv-scene on" data-scene-id="night"><div class="rs-art"><svg class="rs-svg" viewBox="0 0 280 224" aria-hidden="true"><rect class="st-win" x="4" y="4" width="272" height="132" rx="18"/><rect class="st-sky" x="10" y="10" width="260" height="120" rx="14"/><circle class="st-win" cx="40" cy="30" r="1.6"/><circle class="st-win" cx="70" cy="52" r="1.6"/><circle class="st-win" cx="118" cy="24" r="1.6"/><circle class="st-win" cx="150" cy="60" r="1.6"/><circle class="st-win" cx="210" cy="30" r="1.6"/><circle class="st-win" cx="238" cy="64" r="1.6"/><circle class="st-win" cx="98" cy="74" r="1.6"/><circle class="st-moon" cx="214" cy="48" r="18"/><circle class="st-sky" cx="222" cy="42" r="15"/><rect class="st-ink" x="40" y="172" width="200" height="12" rx="5"/><rect class="st-ink" x="40" y="146" width="10" height="38" rx="3"/><rect class="st-ink" x="230" y="158" width="10" height="26" rx="3"/><rect class="st-win" x="56" y="150" width="38" height="16" rx="7"/><path class="st-dot" d="M84 172c4-22 22-30 50-30h70c14 0 24 8 26 30Z"/><text class="st-txt" x="140" y="214" text-anchor="middle">Tonight</text></svg></div></div><div class="rv-scene" data-scene-id="box"><p class="rs-big">$300</p><p class="rs-lbl">one CalmBox, in one home</p></div><div class="rv-scene" data-scene-id="monthly"><ol class="rs-steps"><li class=""><b>Give once</b><span>A gift to a project or the fund</span></li><li class="on"><b>Give monthly</b><span>So we can move the moment a home is ready</span></li></ol></div><div class="rv-scene" data-scene-id="apply"><ol class="rs-steps"><li class=""><b>You bring the people</b><span>And the commitment</span></li><li class=""><b>We bring the rest</b><span>Technology, training, support</span></li></ol></div><div class="rv-scene" data-scene-id="names"><ul class="rs-names"><li>La Casa de mi Padre</li><li>Thrive</li><li>Rite Path</li><li>A group home in Phoenix</li></ul><p class="rs-by">Pray for them by name.</p></div><div class="rv-scene" data-scene-id="notes"><div class="rs-card"><span class="rs-tag">Field Notes</span><b>One email a month</b><ul><li>Every deployment</li><li>Straight from the homes</li></ul></div></div><div class="rv-scene" data-scene-id="verse"><div class="rs-verse"><p>The last shall be first.<span>Matthew 20:16</span></p></div></div></div></div><ol class="rv-beats"><li class="rb on" data-scene="night"><div class="rbx"><p class="num">1 / 7</p><h2>Somewhere tonight, a kid can&#x27;t sleep.</h2><p class="rbt">Safe, fed and cared for, and still awake, with a body braced for what already happened.</p></div></li><li class="rb" data-scene="box"><div class="rbx"><p class="num">2 / 7</p><h2>$300 puts calm within reach.</h2><p class="rbt">One CalmBox, in one home, for any child or staff member who needs it, any time of day or night.</p></div></li><li class="rb" data-scene="monthly"><div class="rbx"><p class="num">3 / 7</p><h2>Give once, or every month.</h2><p class="rbt">Monthly gifts let us move the moment a home is ready, instead of waiting for a goal to fill.</p></div></li><li class="rb" data-scene="apply"><div class="rbx"><p class="num">4 / 7</p><h2>Run a home or program? We&#x27;ll equip you.</h2><p class="rbt">We fund the technology, the training and the support. You bring the people. The application takes about ten minutes.</p></div></li><li class="rb" data-scene="names"><div class="rbx"><p class="num">5 / 7</p><h2>Pray for them by name.</h2><p class="rbt">La Casa de mi Padre. Thrive. Rite Path. A group home in Phoenix we don&#x27;t name, to protect the kids.</p></div></li><li class="rb" data-scene="notes"><div class="rbx"><p class="num">6 / 7</p><h2>Not ready? Follow the work.</h2><p class="rbt">Field Notes: one email a month with the story of every deployment, straight from the homes.</p></div></li><li class="rb" data-scene="verse"><div class="rbx"><p class="num">7 / 7</p><h2>The last shall be first.</h2><p class="rbt">We start with the forgotten. We&#x27;d be honored if you started with us.</p></div></li></ol></div></section><div class="rt-after"><section class="rt-close" aria-labelledby="h-close"><h2 id="h-close">Help restore the last.</h2><p>Give to a named project, or to the fund behind them all.</p>
+  <div class="row"><a class="rt-btn" href="/give">Give now <span aria-hidden="true">→</span></a><a class="rt-btn ghost" href="/apply">Apply for your home</a><a class="rt-btn ghost" href="/projects">See the projects</a></div></section><section class="rt-folds" aria-labelledby="h-deeper"><h2 id="h-deeper">Optional · go deeper</h2><details class="rt-fold" id="board"><summary>Thinking about serving on the board?<span class="x" aria-hidden="true">+</span></summary><div class="b"><p>Our board oversees the finances, the partnerships and the direction of the work. If you bring clinical, field, nonprofit or business experience and share the conviction that restoration is possible, we&#x27;d love to talk.</p><p><a href="mailto:dallas@restorethelast.org?subject=Board%20interest">Email dallas@restorethelast.org</a></p></div></details><details class="rt-fold" id="big"><summary>Planning a larger gift?<span class="x" aria-hidden="true">+</span></summary><div class="b"><p>Email us and we&#x27;ll walk you through it, whether that&#x27;s a designated gift, a full project, or giving another way.</p><p><a href="mailto:dallas@restorethelast.org?subject=A%20larger%20gift">Email dallas@restorethelast.org</a></p></div></details></section></div><nav class="rt-handoff" aria-label="The other pages"><a class="rt-prev" href="field.html"><span aria-hidden="true">←</span> Back: The proof</a></nav>
+</main>
+<footer class="wrap rt-foot">
+  <p>Restore the Last is a 501(c)(3) nonprofit (EIN 42-3445245). Gifts are tax-deductible to the extent allowed by law. We are legally separate from CalmWaves, which makes the technology. Stories shared with permission; names of homes withheld where needed to protect children. As of November 6, 2026 · <a href="/">restorethelast.org</a></p>
+</footer>
+<script>
+// Every page opens at the top, so the story starts at step one. A link to a section keeps its place.
+(() => {
+  if (location.hash) return;
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
+  const top = () => { window.scrollTo(0, 0); document.getElementById('top')?.scrollIntoView({ block: 'start' }); };
+  top();
+  addEventListener('load', top, { once: true });
+  addEventListener('pageshow', (ev) => { if (ev.persisted) top(); });
+})();
+
+// Scroll stories: the visual stays pinned while the beats scroll past it, one at a time.
+// Each beat names its scene (data-scene) and, where it has one, the number on the counter
+// (data-n, data-lbl) and how many tests have failed so far (data-k). Without script every beat
+// still reads in order and the first scene shows.
+(() => {
+  document.querySelectorAll('[data-reveal]').forEach((rv) => {
+    const stage = rv.querySelector('.rv-stage');
+    const beats = [...rv.querySelectorAll('.rb')];
+    const scenes = [...rv.querySelectorAll('[data-scene-id]')];
+    const num = rv.querySelector('[data-rnum]');
+    const lbl = rv.querySelector('[data-rlbl]');
+    const rows = [...rv.querySelectorAll('[data-t]')];
+    let at = -1;
+    const show = (n) => {
+      if (n === at) return;
+      at = n;
+      const b = beats[n].dataset;
+      stage.dataset.at = n;
+      stage.dataset.scene = b.scene;
+      scenes.forEach((s) => s.classList.toggle('on', s.dataset.sceneId === b.scene));
+      if (num) {
+        num.parentElement.hidden = !b.n;
+        num.textContent = b.n || '';
+        lbl.textContent = b.lbl || '';
+        stage.toggleAttribute('data-zero', b.n === '0');
+      }
+      const k = +(b.k || 0);
+      rows.forEach((r) => {
+        r.classList.toggle('x', +r.dataset.t <= k);
+        r.classList.toggle('cur', +r.dataset.t === k && beats[n].querySelector('h2')?.textContent.startsWith('Test'));
+      });
+      beats.forEach((x, i) => x.classList.toggle('on', i === n));
+    };
+    rv.classList.add('js');
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const wide = innerWidth >= 900;
+      const line = wide ? innerHeight * 0.55 : stage.getBoundingClientRect().bottom + innerHeight * 0.14;
+      let n = 0;
+      beats.forEach((b, i) => { if (b.getBoundingClientRect().top <= line) n = i; });
+      show(n);
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; setTimeout(update, 30); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+  });
+
+  // A link to something inside a closed fold opens the fold first.
+  const openTo = (id, instant) => {
+    const el = id && document.getElementById(decodeURIComponent(id));
+    if (!el) return;
+    let d = el.closest('details');
+    while (d) { d.open = true; d = d.parentElement.closest('details'); }
+    if (el.tagName === 'DETAILS') el.open = true;
+    setTimeout(() => el.scrollIntoView(instant ? { behavior: 'instant' } : undefined), 0);
+  };
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('a[href^="#"]');
+    if (a) openTo(a.getAttribute('href').slice(1));
+  });
+  addEventListener('hashchange', () => openTo(location.hash.slice(1)));
+  // Arriving from another page: open the fold, then jump once the page has laid out.
+  if (location.hash) {
+    openTo(location.hash.slice(1), true);
+    addEventListener('load', () => openTo(location.hash.slice(1), true), { once: true });
+  }
+})();
+
+(() => {
+  const b = document.querySelector('[data-theme-toggle]');
+  if (!b) return;
+  b.addEventListener('click', () => {
+    const r = document.documentElement;
+    const dark = r.dataset.theme === 'dark';
+    r.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('rtl-theme', r.dataset.theme); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

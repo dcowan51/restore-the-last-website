@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "brand": "Restore the Last",
+    "site": "https://restorethelast.org",
+    "asOf": "2026-11-06",
+    "frame": "Restore the Last is a nonprofit that places nervous system regulation tools, simple ways to help a body stuck in survival mode find calm, inside homes already caring for trauma survivors.",
+    "ein": "42-3445245",
+    "email": "dallas@restorethelast.org"
+  },
+  "chain": [
+    {"href": "why.html", "n": 1, "t": "The story", "q": "Rescued is not the same as restored."},
+    {"href": "moments.html", "n": 2, "t": "Restoration", "q": "What it looks like when a body finally rests."},
+    {"href": "gift.html", "n": 3, "t": "Your gift", "q": "How a gift becomes a calm night."},
+    {"href": "field.html", "n": 4, "t": "The proof", "q": "Three homes where it's already happening."},
+    {"href": "join.html", "n": 5, "t": "Your place", "q": "There's a place for you in this."}
+  ],
+  "front": {
+    "h1": "What would it take to restore the last?",
+    "h1b": "It's already happening. Here's where you come in.",
+    "moments": [
+      {"when": "2022", "what": "At a children's home in El Salvador, a study followed 29 children and caregivers through their sessions. *26 of 28* got better."},
+      {"when": "Aug 2026", "what": "Restore the Last became a 501(c)(3), so more homes could have the same.", "tag": "Where we begin"},
+      {"when": "Now", "what": "Homes in Arizona are asking for help. Each project names the people, the place and the cost.", "now": true}
+    ],
+    "cta": "Start with the story",
+    "short": [
+      "Rescue gets people out of danger. It rarely gets the danger out of them. Their bodies stay braced, so they can't sleep, learn or rest.",
+      "We put *nervous system regulation* tools inside the homes already caring for them. Where they run, people are sleeping again. Your gift pays only for the work."
+    ],
+    "stakesHead": "Why it matters",
+    "stakes": [
+      {"k": "Who they are", "t": "Trafficking survivors. Kids in foster care. Children growing up after violence. The least, the lost and the last."},
+      {"k": "What changes", "t": "A first full night of sleep. A teenager who starts to talk. A caregiver with patience left at the end of the day."},
+      {"k": "What you make possible", "t": "$300 puts one CalmBox in a home, for any child or staff member to reach for when they need it."}
+    ],
+    "pathsHead": "Pick where to start",
+    "paths": [
+      {"who": "New here?", "t": "Start with the story", "s": "Why we began", "time": "2 min", "href": "why.html", "go": true},
+      {"who": "Want to see the change?", "t": "What restoration looks like", "s": "Sleep, words, patience", "time": "2 min", "href": "moments.html"},
+      {"who": "Where does the money go?", "t": "Follow a gift", "s": "From you to a calm night", "time": "2 min", "href": "gift.html"},
+      {"who": "Need to see proof?", "t": "Visit the homes", "s": "El Salvador and Arizona", "time": "2 min", "href": "field.html"}
+    ]
+  },
+  "why": {
+    "label": "1 of 5 · The story",
+    "h1": "Rescued is not the same as restored.",
+    "scenes": {
+      "night": {"type": "night", "time": "2:14 AM"},
+      "weight": {"type": "chips", "items": ["Medication", "Talk therapy", "Tell it again", "Another new counselor", "Still braced"]},
+      "gap": {"type": "checks", "items": [["A safe place", 1], ["A bed", 1], ["People who care", 1], ["Calm", 0]]},
+      "doug": {"type": "big", "n": "30,000+", "l": "sessions given by Dr. Doug Cowan"},
+      "home": {"type": "home", "n": "18,000+", "l": "sessions in one children's home"},
+      "calm": {"type": "quote", "q": "When I'm calm, I can help the kids stay calm.", "by": "A staff member, El Salvador"},
+      "bridge": {"type": "checks", "items": [["The tools", 1], ["The caring homes", 1], ["The money to join them", 0]], "foot": "That's the part you can change."},
+      "verse": {"type": "verse", "lines": [{"q": "He restores my soul.", "ref": "Psalm 23:3"}, {"q": "The last shall be first.", "ref": "Matthew 20:16"}]}
+    },
+    "beats": [
+      {"scene": "night", "h": "Safe at last, and still awake at night.", "t": "Thrive's campus in Arizona houses young adults who aged out of foster care. The beds were safe. Many residents still couldn't sleep."},
+      {"scene": "weight", "h": "Years of talk therapy hadn't reached it.", "t": "Most arrived over-medicated and tired of retelling their story. Their bodies were still braced for danger that had already passed."},
+      {"scene": "gap", "h": "Rescue gets people out. It rarely gets trauma out.", "t": "Shelters and children's homes give safety, beds and caring staff. What they rarely have is a way to calm a body stuck in survival."},
+      {"scene": "doug", "h": "Dr. Doug Cowan had seen what calms it.", "t": "A licensed therapist, he has given more than 30,000 sessions to veterans, trauma survivors and people ordinary care struggled to reach."},
+      {"scene": "home", "h": "In El Salvador, a children's home tried it for everyone.", "t": "At La Casa de mi Padre, children, house parents and staff all receive sessions on-site. More than 18,000 so far."},
+      {"scene": "calm", "h": "Sleep came back. The adults grew patient.", "t": "“When I'm calm, I can help the kids stay calm,” one staff member said. Calmer adults made a calmer home."},
+      {"scene": "bridge", "h": "It isn't about permission. It's about resources.", "t": "The tools exist. The caring homes exist. What's missing is the money to put one inside the other. So we started Restore the Last."},
+      {"scene": "verse", "h": "Restore. The last.", "t": "“He restores my soul.” “The last shall be first.” Two verses gave us our name, and our order of work: start with the forgotten."}
+    ],
+    "folds": [
+      {"id": "who", "q": "Who we are", "a": [
+        "Restore the Last was started by a father and son. Dr. Doug Cowan is a licensed therapist whose clinical work spans veterans, trauma survivors and PTSD. Dallas Cowan has worked directly with kids in foster care and helped build brain health centers across the country.",
+        "A board oversees the finances, the partnerships and the direction of the work: Dr. Doug Cowan (chair), Dallas Cowan, Tiffany Lewis, Chris Singleton and CJ Watson."
+      ]},
+      {"id": "isnt", "q": "What we are, and what we aren't", "a": [
+        "We are a funding and deployment nonprofit. We don't run clinics. We equip the homes and programs that already exist, train their staff, and stay with them.",
+        "Restore the Last and CalmWaves are legally and operationally separate. CalmWaves develops the technology. Restore the Last funds getting it to the people who need it most."
+      ]},
+      {"id": "name", "q": "Why the name", "a": [
+        "“Restore” comes from Psalm 23: “He restores my soul.” Not fixing what's broken, but returning what was always there.",
+        "“The last” comes from Matthew 20:16, “The last shall be first,” and Matthew 25, “Whatever you did for the least of these, you did for me.” The ones who aged out. The ones trafficked. The ones born into violence they didn't choose. We start there."
+      ]}
+    ]
+  },
+  "moments": {
+    "label": "2 of 5 · Restoration",
+    "h1": "What it looks like when a body finally rests.",
+    "scenes": {
+      "sleep": {"type": "night", "time": "Morning", "rest": true},
+      "eight": {"type": "big", "n": "8 hours", "l": "of sleep, after two years of waking at 2 a.m."},
+      "talk": {"type": "quote", "q": "Suddenly they just start talking.", "by": "Steve Vogel, Thrive"},
+      "feel": {"type": "feel"},
+      "safe": {"type": "quote", "q": "It makes me feel more calm. It makes me feel safe.", "by": "A teenager, El Salvador"},
+      "grow": {"type": "quote", "q": "Levels of worry, anxiety, sadness, and insomnia have decreased and happiness keeps growing.", "by": "An educator, El Salvador"},
+      "life": {"type": "pair", "items": [{"n": "10", "l": "driver's licenses"}, {"n": "5", "l": "high school graduates"}], "foot": "Thrive residents"},
+      "quiet": {"type": "chips", "items": ["No talking required", "Painless", "Run by people they trust"], "calm": true}
+    },
+    "beats": [
+      {"scene": "sleep", "h": "It starts with one night of sleep.", "t": "At Thrive, the biggest change was the simplest. Residents who lay awake in a safe place began sleeping through the night."},
+      {"scene": "eight", "h": "Eight hours, after two years awake.", "t": "A staff member in El Salvador woke between 2 and 4 a.m. for two years. After the first session: more than eight hours of sleep."},
+      {"scene": "talk", "h": "Then, sometimes, they start to talk.", "t": "“It's not uncommon,” says Thrive's CEO, “that suddenly they just start talking. Things are starting to unlock in their brain.”"},
+      {"scene": "feel", "h": "A boy who felt nothing learned to feel.", "t": "At first, a 12-year-old rated his anger zero: numb. By session four, eight out of ten. Later, real calm. Feeling came back first."},
+      {"scene": "safe", "h": "“It makes me feel safe.”", "t": "A teenager with autism, on why they keep coming back: “Because it makes me feel more calm. It makes me feel safe.”"},
+      {"scene": "grow", "h": "And happiness keeps growing.", "t": "An educator at a partner school: “Levels of worry, anxiety, sadness, and insomnia have decreased and happiness keeps growing.”"},
+      {"scene": "life", "h": "Then life opens up.", "t": "At Thrive, ten residents earned driver's licenses. Five graduated high school. Calm came first. Everything else followed."},
+      {"scene": "quiet", "h": "Nobody had to relive their story.", "t": "Sessions are quiet and painless. Nobody has to talk about what happened. For kids who have no words for it, that matters."}
+    ],
+    "folds": [
+      {"id": "session", "q": "What happens in a session", "a": [
+        "*Direct neurofeedback*: painless sessions with small sensors on the scalp, run on-site by trained staff. A very small signal is delivered, usually not even noticeable, and the brain self-corrects.",
+        "*A CalmBox*: a small personal device, FDA-cleared for anxiety and insomnia. It uses a gentle current through small clips on the earlobes, often too faint to feel, and nudges the brain's own rhythm toward calm. Kids and staff can reach for it whenever they need it."
+      ]},
+      {"id": "honest", "q": "A word about these stories", "a": [
+        "These are real moments, told by the people who lived them or cared for them. They are stories, not a clinical trial. Not everyone changes this much, and some change more slowly. The numbers behind them, and their limits, are on the proof page."
+      ]}
+    ]
+  },
+  "gift": {
+    "label": "3 of 5 · Your gift",
+    "h1": "How a gift becomes a calm night.",
+    "scenes": {
+      "homes": {"type": "homes", "items": ["A children's home", "A group home", "A campus for kids who aged out"]},
+      "card": {"type": "card", "tag": "Open project", "title": "3 CalmBoxes for a Phoenix group home", "rows": ["Foster care youth", "Phoenix, Arizona", "3 × $300"], "price": "$900"},
+      "two": {"type": "steps", "items": [["Give to a project", "Your gift stays with that home"], ["Give to the fund", "It goes to the home that's ready first"]]},
+      "field": {"type": "big", "n": "Every dollar", "l": "goes to the work in the field"},
+      "train": {"type": "steps", "items": [["The box arrives", "Delivered to the home"], ["Staff learn it", "Hands-on training"], ["It stays", "Their program, their people"]], "on": 2},
+      "visit": {"type": "night", "time": "After the visit", "rest": true},
+      "notes": {"type": "card", "tag": "Field Notes", "title": "From the homes, once a month", "rows": ["Sessions run", "What changed", "The stories"], "price": ""}
+    },
+    "beats": [
+      {"scene": "homes", "h": "It starts with a home that's already there.", "t": "We look for places already caring for the last: a children's home, a group home, a campus for young adults who aged out."},
+      {"scene": "card", "h": "We name it and publish the cost.", "t": "Every project names the people, the place and the price. Three CalmBoxes for a Phoenix group home: $900."},
+      {"scene": "two", "h": "You give to it, or to the fund.", "t": "Pick a project and your gift stays with it. Give to the fund and it goes to whichever home is ready first."},
+      {"scene": "field", "h": "Every dollar goes to the field.", "t": "Our founders and board cover the operating costs themselves. Your gift pays for equipment, training and support at the homes."},
+      {"scene": "train", "h": "The box arrives. The staff learn it.", "t": "We train the people who already love these kids, so the calm stays after we leave. Their program, their schedule, their people."},
+      {"scene": "visit", "h": "After a hard visit, there's a way back down.", "t": "Family visits can stir everything up. In that Phoenix home, kids will reach for a CalmBox afterward to find their footing again."},
+      {"scene": "notes", "h": "And you hear what changed.", "t": "Reports from the field: the sessions, the sleep, the stories. You see where your gift went, and who it reached."}
+    ],
+    "folds": [
+      {"id": "steps", "q": "The five steps, in full", "a": [
+        "*Find.* We look for established homes with community trust, staff willing to learn, and leaders committed to outcomes.",
+        "*Fund.* Donors give to a named project or the shared fund. Every project is published, with outcomes attached.",
+        "*Deploy.* The technology goes into the home itself. No referrals. Residents just walk down the hall, so far more of them take part.",
+        "*Train.* On-site staff learn hands-on until they can run sessions with confidence.",
+        "*Support.* We stay: troubleshooting, encouragement, retraining when staff change."
+      ]},
+      {"id": "money", "q": "Where every dollar goes", "a": [
+        "Our founders and board pay Restore the Last's operating costs out of their own pockets. Donations pay only for the work: equipment, training and support at partner homes.",
+        "At checkout you can choose to cover the card processing fee, so your full gift reaches the field. It's optional."
+      ]}
+    ]
+  },
+  "field": {
+    "label": "4 of 5 · The proof",
+    "h1": "Three homes where it's already happening.",
+    "scenes": {
+      "casa": {"type": "big", "n": "My Father's House", "l": "La Casa de mi Padre · El Salvador", "serif": true},
+      "all": {"type": "home", "n": "Everyone", "l": "children, house parents, teachers, staff"},
+      "count": {"type": "big", "n": "18,000+", "l": "sessions over more than two years"},
+      "dots": {"type": "dots", "total": 28, "lit": 26, "l": "26 of 28 scored improved"},
+      "thrive": {"type": "big", "n": "25 acres", "l": "Thrive · a home for young adults who aged out of foster care"},
+      "paid": {"type": "quote", "q": "The results have paid for itself just exponentially.", "by": "Steve Vogel, President and CEO of Thrive"},
+      "rite": {"type": "pair", "items": [{"n": "2", "l": "CalmBoxes, used every day"}, {"n": "10", "l": "asked for next"}], "foot": "Rite Path Behavioral Health · Phoenix"},
+      "map": {"type": "map", "items": ["El Salvador", "Thrive, Arizona", "Rite Path, Arizona"], "next": "The next home"}
+    },
+    "beats": [
+      {"scene": "casa", "h": "La Casa de mi Padre: My Father's House.", "t": "A Christ-centered children's home in El Salvador. Courts place children there after abuse, neglect or abandonment."},
+      {"scene": "all", "h": "Everyone gets a session. Kids and grown-ups.", "t": "Children, house parents, teachers and staff. When the adults around them are calm, the children have a real chance."},
+      {"scene": "count", "h": "More than 18,000 sessions, and counting.", "t": "Delivered on-site, day after day, by a trained practitioner who also serves the children at a partner school."},
+      {"scene": "dots", "h": "26 of 28 people got better.", "t": "In a 2022 study there, 26 of the 28 people scored improved. On average, symptoms fell by about half after one session."},
+      {"scene": "thrive", "h": "Thrive: a home for kids who aged out.", "t": "A 25-acre campus in Arizona for young adults who left foster care. Many arrived with no family to call."},
+      {"scene": "paid", "h": "“The results have paid for itself.”", "t": "After three years of sessions on campus, Thrive's CEO Steve Vogel says the results have paid for themselves, “just exponentially.”"},
+      {"scene": "rite", "h": "Rite Path: two boxes, used every day.", "t": "In Phoenix, Rite Path's staff have used two CalmBoxes for two years, several times a day. Now they're asking for ten."},
+      {"scene": "map", "h": "Three homes so far. The next one is waiting.", "t": "Each began with someone who believed it could help. The next home is waiting on the same thing."}
+    ],
+    "folds": [
+      {"id": "limits", "q": "What the El Salvador study can't tell you", "a": [
+        "No control group: everyone received sessions, so we can't separate their effect from time, attention or hope.",
+        "Self-reported: symptoms were rated by the participants, some of them children, with hopeful adults around them.",
+        "Uneven spacing: sessions fit around a working school, not a research design. What would settle it is a controlled study with fixed intervals and follow-up. We haven't run one yet.",
+        "The 26 of 28 counts the people who could be scored (29 took part; one had no symptoms to start with)."
+      ], "link": {"t": "Read the full El Salvador case study", "href": "/impact/el-salvador"}},
+      {"id": "watch", "q": "Watch it for yourself", "a": [
+        "Footage from El Salvador, and Thrive's CEO in his own words, are on our Impact page."
+      ], "link": {"t": "Go to the Impact page", "href": "/impact"}}
+    ]
+  },
+  "join": {
+    "label": "5 of 5 · Your place",
+    "h1": "There's a place for you in this.",
+    "scenes": {
+      "night": {"type": "night", "time": "Tonight"},
+      "box": {"type": "big", "n": "$300", "l": "one CalmBox, in one home"},
+      "monthly": {"type": "steps", "items": [["Give once", "A gift to a project or the fund"], ["Give monthly", "So we can move the moment a home is ready"]], "on": 1},
+      "apply": {"type": "steps", "items": [["You bring the people", "And the commitment"], ["We bring the rest", "Technology, training, support"]]},
+      "names": {"type": "names", "items": ["La Casa de mi Padre", "Thrive", "Rite Path", "A group home in Phoenix"], "foot": "Pray for them by name."},
+      "notes": {"type": "card", "tag": "Field Notes", "title": "One email a month", "rows": ["Every deployment", "Straight from the homes"], "price": ""},
+      "verse": {"type": "verse", "lines": [{"q": "The last shall be first.", "ref": "Matthew 20:16"}]}
+    },
+    "beats": [
+      {"scene": "night", "h": "Somewhere tonight, a kid can't sleep.", "t": "Safe, fed and cared for, and still awake, with a body braced for what already happened."},
+      {"scene": "box", "h": "$300 puts calm within reach.", "t": "One CalmBox, in one home, for any child or staff member who needs it, any time of day or night."},
+      {"scene": "monthly", "h": "Give once, or every month.", "t": "Monthly gifts let us move the moment a home is ready, instead of waiting for a goal to fill."},
+      {"scene": "apply", "h": "Run a home or program? We'll equip you.", "t": "We fund the technology, the training and the support. You bring the people. The application takes about ten minutes."},
+      {"scene": "names", "h": "Pray for them by name.", "t": "La Casa de mi Padre. Thrive. Rite Path. A group home in Phoenix we don't name, to protect the kids."},
+      {"scene": "notes", "h": "Not ready? Follow the work.", "t": "Field Notes: one email a month with the story of every deployment, straight from the homes."},
+      {"scene": "verse", "h": "The last shall be first.", "t": "We start with the forgotten. We'd be honored if you started with us."}
+    ],
+    "closeHead": "Help restore the last.",
+    "closeSub": "Give to a named project, or to the fund behind them all.",
+    "folds": [
+      {"id": "board", "q": "Thinking about serving on the board?", "a": [
+        "Our board oversees the finances, the partnerships and the direction of the work. If you bring clinical, field, nonprofit or business experience and share the conviction that restoration is possible, we'd love to talk."
+      ], "mail": "Board interest"},
+      {"id": "big", "q": "Planning a larger gift?", "a": [
+        "Email us and we'll walk you through it, whether that's a designated gift, a full project, or giving another way."
+      ], "mail": "A larger gift"}
+    ]
+  }
+}
