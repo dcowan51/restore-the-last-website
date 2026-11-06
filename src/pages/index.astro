@@ -60,6 +60,11 @@ const showEventBanner = Date.now() < new Date(event.end).getTime();
             <a href="/give" class="text-primary font-bold font-sans hover:text-medium transition-colors inline-block py-3">Give now →</a>
           </div>
 
+          {/* Quiet door to the story section: /story/ is static pages built from story-src/. */}
+          <p class="text-body/80 text-sm -mt-5 md:-mt-7 mb-4 md:mb-6">
+            New here? <a href="/story/" class="text-primary font-bold hover:text-medium transition-colors inline-block py-3">Read the story in five short pages →</a>
+          </p>
+
           <!-- Proof card -->
           <div class="flex items-center gap-4 bg-light rounded-xl p-4 max-w-sm">
             <img src="/placeholder-young-adults.jpg" alt="Direct neurofeedback in action" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover flex-shrink-0" />

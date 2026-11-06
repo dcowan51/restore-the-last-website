@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# story-src preview builds (the real pages live in public/story/)
+story-src/*.html
