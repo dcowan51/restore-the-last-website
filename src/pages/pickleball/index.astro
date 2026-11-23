@@ -74,21 +74,22 @@ const playStyles = [
   },
 ];
 
-// The day, start to finish. Only noon, 1:00 and 5:00 are fixed; the rest are
-// estimates — adjust once the bracket size is known.
+// The day, start to finish. Noon, 12:45, 1:00 and 4:00 are fixed; the medal rounds
+// start whenever the round robin finishes, so they carry no clock time.
 const schedule = [
-  { time: '12:00 PM', title: 'Courts open', line: 'Warm up, grab a cookie, and find your partner.' },
-  { time: '1:00 PM', title: 'First serve', line: 'Just-for-fun and competitive games start, grouped by skill level.' },
-  { time: '~3:00 PM', title: 'Best-dressed parade', line: 'Every team takes a lap in their Christmas best. The crowd helps judge.' },
-  { time: '~4:15 PM', title: 'Competitive finals', line: 'The top teams in each level play for the title.' },
-  { time: '~4:45 PM', title: 'The crowning', line: 'We crown the best-dressed team and the champions in each level.' },
-  { time: '5:00 PM', title: 'Merry Christmas', line: 'Last cookies, group photo, and home.' },
+  { time: event.warmup, title: 'Courts open', line: 'Warm up, grab a cookie, and find your partner.' },
+  { time: event.checkIn, title: 'Check-in', line: 'Check in your team and find out where you play first.' },
+  { time: '1:00 PM', title: 'First serve', line: 'Round-robin play starts, grouped by skill level. You can play up to 6 games.' },
+  { time: 'All afternoon', title: 'Prizes and surprises', line: "Prizes for the best-dressed team and the best team name, plus a few surprises we're still planning. More to come." },
+  { time: 'After the round robin', title: 'Medal rounds', line: 'The top teams play for the medals.' },
+  { time: '4:00 PM', title: 'Merry Christmas', line: 'Last cookies, group photo, and home.' },
 ];
 
 // TODO: fill in the actual prizes once they're set; until then each card says so.
 const prizes = [
   { art: 'crown' as const, title: 'Best-dressed team', line: 'The ugliest sweaters (or tees) and the best team look take the crown.', prize: 'Prize to be announced' },
-  { art: 'trophy' as const, title: 'Competitive champions', line: 'One winning team in each level: Beginner, Intermediate, and Advanced.', prize: 'Prize to be announced' },
+  { art: 'santa-hat' as const, title: 'Best team name', line: 'Christmas puns win. Pick your team name when you register.', prize: 'Prize to be announced' },
+  { art: 'trophy' as const, title: 'Medal rounds', line: 'After the round robin, the top teams play for the medals.', prize: 'Prize to be announced' },
   { art: 'cookie' as const, title: 'Everyone else', line: 'Playing just for fun? You still go home with cookies and a good story.', prize: 'Cookies, guaranteed' },
 ];
 
@@ -101,7 +102,7 @@ const spotsLine = spots.full
       ? `Only ${spots.left} team ${spots.left === 1 ? 'spot' : 'spots'} left`
       : `${spots.left} of ${spots.cap} team spots left`;
 
-const shareText = `Want to be my partner for the ${event.name}? Christmas pickleball for Restore the Last, Sat Dec 5, 1–5 PM in Anthem. $40 a team.`;
+const shareText = `Want to be my partner for the ${event.name}? Christmas pickleball for Restore the Last, Sat Dec 5, 1–4 PM in Anthem. $40 a team. Sign up by Dec 1.`;
 
 const inputClass =
   'w-full px-4 py-3 rounded-xl border border-primary/20 bg-white focus:outline-none focus:border-primary transition-colors';
@@ -113,7 +114,7 @@ const optionClass =
 
 <BaseLayout
   title="Ugly Sweater Slam — Christmas Pickleball"
-  description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time} (warm-up from noon), at the ${event.venue}. $20 a player, $40 a team. Every entry fee goes to the field.`}
+  description={`Ugly Sweater Slam: a Restore the Last Christmas pickleball classic — ${event.date}, ${event.time} (warm-up from noon), at the ${event.venue}. $20 a player, $40 a team. Sign up by December 1. Every entry fee goes to the field.`}
   image="/og/ugly-sweater-slam.png"
   socialTitle="Ugly Sweater Slam — Christmas pickleball for Restore the Last"
 >
@@ -159,6 +160,7 @@ const optionClass =
           <p class="font-bold text-dark">{event.date}</p>
           <p class="text-body text-sm">Games {event.time}</p>
           <p class="text-body text-sm">Courts open at {event.warmup} to warm up</p>
+          <p class="text-body text-sm">Check-in at {event.checkIn}</p>
           <p class="text-sm mt-3">
             <span class="text-body">Add to calendar:</span>
             <a href={googleCalendarUrl} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">Google</a>
@@ -177,13 +179,15 @@ const optionClass =
           <p class="label text-primary mb-2">Entry</p>
           <p class="font-bold text-dark">$40 a team of two</p>
           <p class="text-body text-sm">$20 a player — come solo and we'll pair you up</p>
+          <p class="text-body text-sm mt-3"><strong class="text-dark">Sign up and pay by {event.deadline}.</strong></p>
           <p class="text-body text-sm mt-3">Want to give more? You can add a gift when you pay.</p>
           <p class="text-body text-sm mt-3"><strong class="text-dark">Capped at {spots.cap} teams</strong> ({spots.cap * 2} players). Once it fills, there's a waiting list.</p>
         </div>
         <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
           <p class="label text-primary mb-2">Format</p>
-          <p class="font-bold text-dark">Doubles</p>
-          <p class="text-body text-sm">Grouped by skill level, for fun or to compete</p>
+          <p class="font-bold text-dark">Doubles round robin</p>
+          <p class="text-body text-sm">Play up to 6 games, then medal rounds</p>
+          <p class="text-body text-sm mt-3">Grouped by skill level, for fun or to compete</p>
         </div>
       </div>
     </div>
@@ -299,7 +303,7 @@ const optionClass =
           We're playing on the outdoor courts in Anthem, with tall lights and shaded seating for anyone cheering from the side.
         </p>
         <p class="text-body leading-relaxed">
-          Courts open at {event.warmup} to warm up, and games run {event.time}. Bring your paddle, a water bottle, and the ugliest Christmas sweater you own. Arizona in December can be warm, so an ugly Christmas T-shirt works too.
+          Courts open at {event.warmup} to warm up, check-in is at {event.checkIn}, and games run {event.time}. Bring your paddle, a water bottle, and the ugliest Christmas sweater you own. Arizona in December can be warm, so an ugly Christmas T-shirt works too.
         </p>
         <p class="text-sm mt-6">
           <a href={event.mapUrl} target="_blank" rel="noopener noreferrer" class="text-primary font-bold underline hover:text-medium transition-colors">Get directions →</a>
@@ -336,7 +340,7 @@ const optionClass =
             </li>
           ))}
         </ol>
-        <p class="text-body text-xs mt-8">Times after 1:00 PM are approximate and depend on how many teams sign up.</p>
+        <p class="text-body text-xs mt-8">Medal rounds start as soon as the round robin wraps up.</p>
       </div>
     </div>
   </section>
@@ -381,7 +385,7 @@ const optionClass =
         <p class="label text-primary mb-6">Best Dressed — Christmas Edition</p>
         <h2 class="mb-4">Come dressed for Christmas.</h2>
         <p class="text-body leading-relaxed mb-8">
-          It's three weeks before Christmas, so we're making it festive. Ugly sweaters (or ugly Christmas tees if it's warm), Santa suits, elf ears, reindeer antlers, matching team outfits — the bolder the better. We'll crown the best-dressed team on the courts.
+          It's three weeks before Christmas, so we're making it festive. Ugly sweaters (or ugly Christmas tees if it's warm), Santa suits, elf ears, reindeer antlers, matching team outfits — the bolder the better. There's a prize for the best-dressed team, and another for the best team name.
         </p>
         <div class="grid sm:grid-cols-3 gap-4">
           <div class="bg-offwhite rounded-2xl p-6 border border-primary/10">
@@ -410,7 +414,7 @@ const optionClass =
       <div class="max-w-3xl">
         <p class="label text-primary mb-6">Up for Grabs</p>
         <h2 class="mb-8">Something to play for.</h2>
-        <div class="grid sm:grid-cols-3 gap-4">
+        <div class="grid sm:grid-cols-2 gap-4">
           {prizes.map((p) => (
             <div class="bg-offwhite rounded-2xl p-6 border border-primary/10 flex flex-col">
               <PickleballArt name={p.art} class="text-dark w-12 h-12 mb-4" />
@@ -432,6 +436,7 @@ const optionClass =
         <h2 class="mb-4">{spots.full ? 'Join the waiting list.' : 'Save your spot.'}</h2>
         <div class="bg-light rounded-xl px-5 py-4 mb-6">
           <p class="font-bold text-dark">{spotsLine}</p>
+          {!spots.full && <p class="text-dark text-sm font-bold mt-1">Deadline: teams must be signed up and paid by {event.deadline}.</p>}
           <p class="text-body text-sm mt-1">
             {spots.full
               ? `We're full at ${spots.cap} teams. Fill this out and we'll text you, in the order people signed up, if a spot opens. Don't pay yet.`

@@ -6,14 +6,17 @@ export const event = {
   name: 'Ugly Sweater Slam',
   date: 'Saturday, December 5, 2026',
   warmup: '12:00 PM',
-  time: '1:00–5:00 PM',
+  checkIn: '12:45 PM',
+  time: '1:00–4:00 PM',
+  // Teams must be signed up and paid by this date.
+  deadline: 'Tuesday, December 1',
   venue: 'Anthem Pickleball Courts',
   address: 'Anthem Community Center, 41130 N Freedom Way, Anthem, AZ 85086',
   mapUrl: 'https://maps.google.com/?q=41130+N+Freedom+Way,+Anthem,+AZ+85086',
   // Arizona has no daylight saving, so it's UTC-7 all year. Calendar entries start at
-  // the noon warm-up, so people arrive in time; games run 1–5 PM.
+  // the noon warm-up, so people arrive in time; games run 1–4 PM.
   start: '2026-12-05T12:00:00-07:00',
-  end: '2026-12-05T17:00:00-07:00',
+  end: '2026-12-05T16:00:00-07:00',
   // The countdown counts to the first game, not the warm-up.
   firstServe: '2026-12-05T13:00:00-07:00',
   url: 'https://restorethelast.org/pickleball',
@@ -22,7 +25,7 @@ export const event = {
 // Calendar timestamps in UTC, the form both Google Calendar and .ics files take.
 const utc = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
-const details = `Christmas pickleball fundraiser for Restore the Last. Courts open at noon for warm-up; games run 1–5 PM. Wear your ugliest Christmas sweater (or tee if it's warm). Details: ${event.url}`;
+const details = `Christmas pickleball fundraiser for Restore the Last. Courts open at noon for warm-up, check-in is at 12:45, and games run 1–4 PM. Wear your ugliest Christmas sweater (or tee if it's warm). Details: ${event.url}`;
 
 export const googleCalendarUrl =
   'https://calendar.google.com/calendar/render?' +
@@ -45,7 +48,7 @@ export const icsFile = [
   'UID:ugly-sweater-slam-2026@restorethelast.org',
   `DTSTAMP:${utc('2026-11-02T00:00:00Z')}`,
   // Bump on every change so calendars that already saved the event update it.
-  'SEQUENCE:2',
+  'SEQUENCE:3',
   `DTSTART:${utc(event.start)}`,
   `DTEND:${utc(event.end)}`,
   `SUMMARY:${ics(`${event.name} — Restore the Last`)}`,
