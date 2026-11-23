@@ -17,7 +17,9 @@ export const event = {
   // the noon warm-up, so people arrive in time; games run 1–4 PM.
   start: '2026-12-05T12:00:00-07:00',
   end: '2026-12-05T16:00:00-07:00',
-  // The countdown counts to the first game, not the warm-up.
+  // The hero countdown counts to the sign-up cutoff: end of Dec 1, Arizona time.
+  deadlineAt: '2026-12-01T23:59:00-07:00',
+  // When the first game starts.
   firstServe: '2026-12-05T13:00:00-07:00',
   url: 'https://restorethelast.org/pickleball',
 };

@@ -74,9 +74,10 @@ const playStyles = [
   },
 ];
 
-// The day, start to finish. Noon, 12:45, 1:00 and 4:00 are fixed; the medal rounds
+// The day, start to finish, led by the sign-up cutoff. Noon, 12:45, 1:00 and 4:00 are fixed; the medal rounds
 // start whenever the round robin finishes, so they carry no clock time.
 const schedule = [
+  { time: `By ${event.deadline}`, title: 'Team sign-up cutoff', line: 'Teams must be signed up and paid by December 1. No sign-ups after that.' },
   { time: event.warmup, title: 'Courts open', line: 'Warm up, grab a cookie, and find your partner.' },
   { time: event.checkIn, title: 'Check-in', line: 'Check in your team and find out where you play first.' },
   { time: '1:00 PM', title: 'First serve', line: 'Round-robin play starts, grouped by skill level. You can play up to 6 games.' },
@@ -138,7 +139,7 @@ const optionClass =
         <a href="#sponsor" class="btn-primary text-lg text-center">Can't play? Sponsor a team</a>
       </div>
       <div class="flex flex-wrap items-center gap-x-6 gap-y-4 mt-8">
-        <Countdown to={event.firstServe} class="bg-light text-primary rounded-xl px-5 py-3" />
+        <Countdown to={event.deadlineAt} label="left to sign up" class="bg-light text-primary rounded-xl px-5 py-3" />
         <a href="#register" class="bg-white border-2 border-primary/20 text-primary rounded-xl px-5 py-3 hover:border-primary/40 transition-colors">
           <span class="block font-serif font-bold text-2xl md:text-3xl leading-tight">{spots.full ? 'Waiting list' : spots.taken === 0 ? `${spots.cap} teams` : `${spots.left} left`}</span>
           <span class="block font-sans font-bold text-xs uppercase tracking-[2px] mt-1">{spots.full ? 'All spots are full' : spots.taken === 0 ? 'Max · first come, first served' : `of ${spots.cap} team spots`}</span>
@@ -189,6 +190,27 @@ const optionClass =
           <p class="text-body text-sm">Play up to 6 games, then medal rounds</p>
           <p class="text-body text-sm mt-3">Grouped by skill level, for fun or to compete</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The day -->
+  <section class="bg-offwhite section-padding">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="label text-primary mb-6">The Day</p>
+        <h2 class="mb-10">How the afternoon goes.</h2>
+        <ol class="relative border-l-2 border-primary/20 ml-3 space-y-8">
+          {schedule.map((item) => (
+            <li class="pl-8 relative">
+              <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary" aria-hidden="true"></span>
+              <p class="label text-primary mb-1">{item.time}</p>
+              <p class="font-serif font-bold text-dark text-xl">{item.title}</p>
+              <p class="text-body text-sm mt-1">{item.line}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="text-body text-xs mt-8">Medal rounds start as soon as the round robin wraps up.</p>
       </div>
     </div>
   </section>
@@ -321,27 +343,6 @@ const optionClass =
         preload="metadata"
         aria-label="A walk around the outdoor pickleball courts in Anthem"
       ></video>
-    </div>
-  </section>
-
-  <!-- The day -->
-  <section class="bg-offwhite section-padding">
-    <div class="container-narrow">
-      <div class="max-w-3xl">
-        <p class="label text-primary mb-6">The Day</p>
-        <h2 class="mb-10">How the afternoon goes.</h2>
-        <ol class="relative border-l-2 border-primary/20 ml-3 space-y-8">
-          {schedule.map((item) => (
-            <li class="pl-8 relative">
-              <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary" aria-hidden="true"></span>
-              <p class="label text-primary mb-1">{item.time}</p>
-              <p class="font-serif font-bold text-dark text-xl">{item.title}</p>
-              <p class="text-body text-sm mt-1">{item.line}</p>
-            </li>
-          ))}
-        </ol>
-        <p class="text-body text-xs mt-8">Medal rounds start as soon as the round robin wraps up.</p>
-      </div>
     </div>
   </section>
 
