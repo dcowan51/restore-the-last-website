@@ -27,7 +27,7 @@ const payOptions = [
         {payOptions.length > 0 ? (
           <>
             <p class="text-body text-lg mt-6 leading-relaxed">
-              Pay your entry to lock in your spot: <strong class="text-dark">$40 for a team of two, $20 for a solo player.</strong>
+              Pay your entry by {event.deadline} to lock in your spot: <strong class="text-dark">$40 for a team of two, $20 for a solo player.</strong>
             </p>
             <div id="pay-buttons" class="flex flex-col sm:flex-row gap-3 mt-8">
               {payOptions.map((option) => (
