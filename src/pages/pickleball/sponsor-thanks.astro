@@ -5,7 +5,7 @@ import { event } from '../../data/pickleballEvent.js';
 ---
 
 <BaseLayout
-  title="Thank You for Sponsoring a Team"
+  title="Almost Done — Pay Your Sponsorship"
   description={`Thank you for sponsoring a team at the ${event.name}. Pay your sponsorship to send someone out to play.`}
   noindex
 >
@@ -16,13 +16,13 @@ import { event } from '../../data/pickleballEvent.js';
         <p class="label text-primary mb-4">{event.name} — Team Sponsor</p>
         <div class="gold-line mb-8"></div>
         <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
-          Thank you. One step left.
+          Almost done. Your sponsorship isn't paid yet.
         </h1>
         <p class="text-body text-lg mt-6 leading-relaxed">
           Pay your sponsorship to put your team on the court: <strong class="text-dark">$40 for each team</strong><span id="sponsor-total"></span>. We'll give your spot to people who couldn't otherwise play.
         </p>
         <div class="mt-8">
-          <a href={PICKLEBALL_TEAM_PAY_URL} target="_blank" rel="noopener noreferrer" class="btn-gold text-lg text-center">Pay my sponsorship</a>
+          <a id="pay-button" href={PICKLEBALL_TEAM_PAY_URL} target="_blank" rel="noopener noreferrer" class="btn-gold text-lg text-center w-full sm:w-auto">Pay my sponsorship now</a>
         </div>
         <p class="text-body text-sm mt-4 leading-relaxed">
           The payment page opens in a new tab. Type your total in the amount box. Feel free to round up: every dollar goes to the kids and young adults in Phoenix this event serves.
@@ -32,10 +32,13 @@ import { event } from '../../data/pickleballEvent.js';
           Questions? Email
           <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
         </p>
-        <div class="flex flex-col sm:flex-row gap-3 mt-10">
-          <a href="/pickleball#projects" class="btn-primary text-center">See what your gift funds</a>
-          <a href="/" class="btn-primary text-center">Back to home</a>
-        </div>
+        <!-- Quiet text links on purpose: as big buttons, sponsors tapped these instead of paying. -->
+        <p class="text-body text-sm mt-6">
+          After you've paid:
+          <a href="/pickleball#projects" class="underline text-primary hover:text-medium transition-colors">see what your gift funds</a>
+          ·
+          <a href="/" class="underline text-primary hover:text-medium transition-colors">back to home</a>
+        </p>
       </div>
     </div>
   </section>
@@ -49,7 +52,9 @@ import { event } from '../../data/pickleballEvent.js';
     teams = Number(sessionStorage.getItem('pickleball-sponsor-teams')) || 0;
   } catch {}
   const total = document.getElementById('sponsor-total');
-  if (total && teams > 0) {
-    total.textContent = ` (${teams} ${teams === 1 ? 'team' : 'teams'} = $${teams * 40})`;
+  const payButton = document.getElementById('pay-button');
+  if (teams > 0) {
+    if (total) total.textContent = ` (${teams} ${teams === 1 ? 'team' : 'teams'} = $${teams * 40})`;
+    if (payButton) payButton.textContent = `Pay my $${teams * 40} sponsorship now`;
   }
 </script>
