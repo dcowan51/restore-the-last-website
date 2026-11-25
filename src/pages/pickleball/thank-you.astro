@@ -21,7 +21,7 @@ const payOptions = [
         <p class="label text-primary mb-4">Ugly Sweater Slam — Registration Received</p>
         <div class="gold-line mb-8"></div>
         <h1 class="text-dark text-4xl md:text-5xl font-serif font-bold leading-tight">
-          You're on the list. One step left.
+          Almost done. Your spot isn't locked in until you pay.
         </h1>
 
         {payOptions.length > 0 ? (
@@ -36,7 +36,7 @@ const payOptions = [
                   target="_blank"
                   rel="noopener noreferrer"
                   data-entry={option.entry}
-                  class="btn-gold text-lg text-center"
+                  class="btn-gold text-lg text-center w-full sm:w-auto"
                 >
                   {option.label}
                 </a>
@@ -79,10 +79,13 @@ const payOptions = [
           Signed up solo? We'll pair you with someone at your level and send you their name before the event. Questions in the meantime? Email
           <a href={`mailto:${CONTACT_EMAIL}`} class="underline text-primary hover:text-medium transition-colors">{CONTACT_EMAIL}</a>.
         </p>
-        <div class="flex flex-col sm:flex-row gap-3 mt-10">
-          <a href="/projects" class="btn-primary text-center">See what your entry funds</a>
-          <a href="/" class="btn-primary text-center">Back to home</a>
-        </div>
+        <!-- Quiet text links on purpose: as big buttons, people tapped these instead of paying. -->
+        <p class="text-body text-sm mt-6">
+          After you've paid:
+          <a href="/projects" class="underline text-primary hover:text-medium transition-colors">see what your entry funds</a>
+          ·
+          <a href="/" class="underline text-primary hover:text-medium transition-colors">back to home</a>
+        </p>
       </div>
     </div>
   </section>
